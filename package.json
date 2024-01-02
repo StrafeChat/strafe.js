@@ -1,14 +1,15 @@
 {
   "name": "@strafechat/strafe.js",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJS library for interacting with the Strafe API and websocket.",
+  "repository": "https://github.com/StrafeChat/strafe.js",
   "main": "dist/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "StrafeChat <docs.strafe.chat>",
+  "license": "MIT",
   "dependencies": {
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.16.0"
