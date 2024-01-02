@@ -1,8 +1,8 @@
 {
-  "name": "strafe",
+  "name": "@strafechat/strafe.js",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "main": "dist/index",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,5 +16,8 @@
   "devDependencies": {
     "@types/node": "^20.10.6",
     "@types/ws": "^8.5.10"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
