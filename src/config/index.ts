@@ -3,6 +3,6 @@ export const GATEWAY = API + "/gateway";
 
 export enum OpCodes {
     IDENTIFY = 0,
-    HEARTBEAT = 1,
-    HELLO = 2,
+    HELLO = 1,
+    HEARTBEAT = 2,
 }
