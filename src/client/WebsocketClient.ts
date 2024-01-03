@@ -12,7 +12,7 @@ export class WebsocketClient {
 
     public async connect() {
         const res = await fetch(GATEWAY);
-        const data = await res.json();
+        const data = await res.json() as { ws: string };
         if (!res.ok) throw new Error(`Looks like ${GATEWAY} might be down!`);
         this.gateway = data.ws;
         this._ws = new WebSocket(data.ws);

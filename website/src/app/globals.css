@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(160, 5%, 12%);
+  --foreground: hsl(180, 16%, 85%);
+  --border: hsl(160, 5%, 10%);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  height: 100vh;
+  user-select: none;
+}
+
+h1 {
+  font-size: x-large;
+}
