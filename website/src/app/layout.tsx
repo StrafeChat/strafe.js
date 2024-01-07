@@ -1,8 +1,8 @@
+import SidebarProvider from '@/providers/SidebarProvider'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
 import Navbar from '../components/Navbar'
-import Sidebar from '@/components/Sidebar'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,8 +22,9 @@ export default function RootLayout({
         <div className='h-full flex flex-col'>
           <Navbar />
           <div className='flex flex-grow'>
-            <Sidebar />
-            {children}
+            <SidebarProvider>
+              {children}
+            </SidebarProvider>
           </div>
         </div>
       </body>

@@ -5,7 +5,7 @@
   "repository": "https://github.com/StrafeChat/strafe.js",
   "main": "dist/index",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc -p . && typedoc --json website/docs.json"
   },
   "keywords": [],
   "author": "StrafeChat <docs.strafe.chat>",
@@ -16,7 +16,8 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
-    "@types/ws": "^8.5.10"
+    "@types/ws": "^8.5.10",
+    "typedoc": "^0.25.6"
   },
   "files": [
     "dist"

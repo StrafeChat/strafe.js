@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(160, 5%, 12%);
+  --background: hsl(0, 0%, 11%);
   --foreground: hsl(180, 16%, 85%);
   --border: hsl(160, 5%, 10%);
+  --sidebar: hsl(0, 0%, 12%);
+  --card: hsl(0, 0%, 15%);
 }
 
 body {
@@ -13,8 +15,20 @@ body {
   color: var(--foreground);
   height: 100vh;
   user-select: none;
+  overflow: hidden;
 }
 
 h1 {
   font-size: x-large;
+}
+
+ul.jumpto-wrapper {
+  overflow: hidden;
+  margin-left: 1.5rem;
+  width: fit-content;
+}
+
+a.link {
+  color: #22c55e;
+  text-decoration: underline;
 }

@@ -1,100 +1,200 @@
-export interface Doc {
-    metadata: Metadata;
-    kind: string;
-    canonicalReference: string;
-    docComment: string;
+import { Dispatch, SetStateAction } from "react";
+
+export type SidebarButton = "class" | "enum";
+
+export interface SidebarProps {
+    classes: Class[];
+    enums: Enum[];
+    open: number;
+    setOpen: Dispatch<SetStateAction<number>>;
+}
+
+export interface Property {
+    id: number;
     name: string;
-    preserveMemberOrder: boolean;
-    members: DocMember[];
+    variant: string;
+    kind: number;
+    flags: Flags;
+    sources: Source[];
+    type: PropertyType;
+    comment?: Comment;
+    defaultValue?: string;
 }
 
-export interface DocMember {
-    kind: string;
-    canonicalReference: string;
-    name: string;
-    preserveMemberOrder: boolean;
-    members: PurpleMember[];
-}
-
-export interface PurpleMember {
-    kind: string;
-    canonicalReference: string;
-    docComment: string;
-    excerptTokens: ExcerptToken[];
-    fileUrlPath: string;
-    isReadonly?: boolean;
-    releaseTag: ReleaseTag;
-    name: string;
-    variableTypeTokenRange?: TokenRange;
-    isAbstract?: boolean;
-    preserveMemberOrder?: boolean;
-    members?: FluffyMember[];
-    implementsTokenRanges?: TokenRange[];
-    extendsTokenRanges?: any[];
-}
-
-export interface ExcerptToken {
-    kind: ExcerptTokenKind;
-    text: string;
-    canonicalReference?: string;
-}
-
-export type ExcerptTokenKind = "Content" | "Reference";
-
-export interface TokenRange {
-    startIndex: number;
-    endIndex: number;
-}
-
-export interface FluffyMember {
-    kind: MemberKind;
-    canonicalReference: string;
-    docComment: string;
-    excerptTokens: ExcerptToken[];
-    releaseTag: ReleaseTag;
-    isProtected?: boolean;
-    overloadIndex?: number;
-    parameters?: Parameter[];
-    isStatic?: boolean;
-    returnTypeTokenRange?: TokenRange;
-    isOptional?: boolean;
-    isAbstract?: boolean;
+interface PropertyType {
+    type: string;
+    types?: PropertyType[];
+    target?: number;
     name?: string;
-    isReadonly?: boolean;
-    propertyTypeTokenRange?: TokenRange;
-    initializerTokenRange?: TokenRange;
+    package?: string;
+    value?: null;
 }
 
-export type MemberKind = "Constructor" | "Method" | "Property" | "PropertySignature" | "EnumMember";
+export interface Enum {
+    id: number;
+    name: string;
+    variant: string;
+    kind: number;
+    flags: Flags;
+    children?: EnumChild[];
+    groups?: Group[];
+    sources: Source[];
+    type?: Type;
+}
+
+export interface EnumChild {
+    id: number;
+    name: string;
+    variant: string;
+    kind: number;
+    flags: Flags;
+    comment?: Comment;
+    sources: Source[];
+    type: Type;
+}
+
+export interface Flags {
+}
+
+export interface Source {
+    fileName: string;
+    line: number;
+    character: number;
+    url: string;
+}
+
+export interface Type {
+    type: string;
+    value: number;
+}
+
+export interface Class {
+    id: number;
+    name: string;
+    variant: ChildVariant;
+    kind: number;
+    flags: SignatureFlags;
+    comment?: Comment;
+    children: Child[];
+    groups: Group[];
+    sources: Source[];
+    extendedTypes?: ExtendedBy[];
+    extendedBy?: ExtendedBy[];
+    implementedTypes?: ExtendedBy[];
+}
+
+export interface Child {
+    id: number;
+    name: string;
+    variant: ChildVariant;
+    kind: number;
+    flags: ChildFlags;
+    sources: Source[];
+    signatures?: Signature[];
+    type?: ExtendedBy;
+    defaultValue?: DefaultValue;
+    overwrites?: ExtendedBy;
+    inheritedFrom?: ExtendedBy;
+    implementationOf?: ExtendedBy;
+}
+
+export type DefaultValue = "null";
+
+export interface ChildFlags {
+    isPublic?: boolean;
+    isReadonly?: boolean;
+    isPrivate?: boolean;
+}
+
+export interface ExtendedBy {
+    type: ExtendedByTypeEnum;
+    target?: number;
+    name?: string;
+    package?: Package;
+    types?: TypeElement[];
+}
+
+export type Package = "@strafechat/strafe.js" | "typescript";
+
+export type ExtendedByTypeEnum = "reference" | "intrinsic" | "union";
+
+export interface TypeElement {
+    type: PurpleType;
+    value?: null;
+    name?: Name;
+    target?: TargetUnion;
+    package?: string;
+    qualifiedName?: string;
+}
+
+export type Name = "string" | "ClientUser" | "number" | "WebSocket" | "Timeout";
+
+export type TargetUnion = TargetClass | number;
+
+export interface TargetClass {
+    sourceFileName: string;
+    qualifiedName: string;
+}
+
+export type PurpleType = "literal" | "intrinsic" | "reference";
+
+export interface Signature {
+    id: number;
+    name: string;
+    variant: SignatureVariant;
+    kind: number;
+    flags: SignatureFlags;
+    sources: Source[];
+    type: SignatureType;
+    comment?: Comment;
+    parameters?: Parameter[];
+    overwrites?: ExtendedBy;
+}
+
+export interface Comment {
+    summary: Summary[];
+}
+
+export interface Summary {
+    kind: string;
+    text: string;
+}
+
+export interface SignatureFlags {
+}
 
 export interface Parameter {
-    parameterName: string;
-    parameterTypeTokenRange: TokenRange;
-    isOptional: boolean;
+    id: number;
+    name: string;
+    variant: ParameterVariant;
+    kind: number;
+    flags: SignatureFlags;
+    comment?: Comment;
+    type: ExtendedBy;
 }
 
-export type ReleaseTag = "Public";
+export type ParameterVariant = "param";
 
-export interface Metadata {
-    toolPackage: string;
-    toolVersion: string;
-    schemaVersion: number;
-    oldestForwardsCompatibleVersion: number;
-    tsdocConfig: TsdocConfig;
+export interface SignatureType {
+    type: ExtendedByTypeEnum;
+    target?: TargetUnion;
+    name: string;
+    package?: Package;
+    typeArguments?: TypeArgument[];
 }
 
-export interface TsdocConfig {
-    schema: string;
-    noStandardTags: boolean;
-    tagDefinitions: TagDefinition[];
-    supportForTags: { [key: string]: boolean };
-    reportUnsupportedHtmlElements: boolean;
+export interface TypeArgument {
+    type: ExtendedByTypeEnum;
+    name: string;
 }
 
-export interface TagDefinition {
-    tagName: string;
-    syntaxKind: SyntaxKind;
-    allowMultiple?: boolean;
+export type SignatureVariant = "signature";
+
+export type ChildVariant = "declaration";
+
+export interface Group {
+    title: Title;
+    children: number[];
 }
 
-export type SyntaxKind = "modifier" | "block" | "inline";
+export type Title = "Constructors" | "Properties" | "Methods";

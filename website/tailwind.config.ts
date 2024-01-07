@@ -9,7 +9,11 @@ const config: Config = {
   theme: {
     extend: {
       borderColor: {
-        DEFAULT: "var(--border)"
+        DEFAULT: "var(--border)",
+      },
+      backgroundColor: {
+        sidebar: "var(--sidebar)",
+        card: "var(--card)",
       }
     },
   },
