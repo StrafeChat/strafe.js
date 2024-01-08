@@ -1,5 +1,4 @@
-export const API = process.env.STRAFE_API ?? "https://equinox.strafe.chat/v1"
-export const GATEWAY = API + "/gateway";
+export const API = "https://equinox.strafe.chat/v1"
 
 /**
  * List of opcodes used for interacting with strafe.

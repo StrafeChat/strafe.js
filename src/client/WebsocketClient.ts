@@ -1,5 +1,5 @@
 import WebSocket from "isomorphic-ws";
-import { GATEWAY, OpCodes } from "../config";
+import { OpCodes } from "../config";
 import { Client } from "./Client";
 
 export class WebsocketClient {
@@ -11,9 +11,9 @@ export class WebsocketClient {
     constructor(private client: Client) { }
 
     public async connect() {
-        const res = await fetch(GATEWAY);
+        const res = await fetch(this.client.config.equinox + "/gateway");
         const data = await res.json() as { ws: string };
-        if (!res.ok) throw new Error(`Looks like ${GATEWAY} might be down!`);
+        if (!res.ok) throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
         this.gateway = data.ws;
         this._ws = new WebSocket(data.ws);
 

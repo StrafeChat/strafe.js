@@ -1,5 +1,9 @@
+export interface ClientConfig {
+    equinox: string;
+}
+
 export interface ClientOptions {
-    
+    config?: ClientConfig
 }
 
 export interface UserPresence {

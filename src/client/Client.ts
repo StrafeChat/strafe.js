@@ -1,4 +1,6 @@
+import { API } from "../config";
 import { ClientUser } from "../structure/ClientUser";
+import { ClientOptions } from "../types";
 import { WebsocketClient } from "./WebsocketClient";
 
 /**
@@ -6,11 +8,16 @@ import { WebsocketClient } from "./WebsocketClient";
  */
 export class Client {
 
+    public config = {
+        equinox: API,
+    };
+
     public token: string | null = null;
     public user: ClientUser | null = null;
     public readonly ws: WebsocketClient;
 
-    constructor() {
+    constructor(options?: ClientOptions) {
+        if (options && options.config) this.config.equinox = options.config.equinox ?? this.config.equinox;
         this.ws = new WebsocketClient(this);
     }
 
