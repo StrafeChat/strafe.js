@@ -1,3 +1,6 @@
+/**
+ * The default url that will be used for equinox.
+ */
 export const API = "https://equinox.strafe.chat/v1"
 
 /**

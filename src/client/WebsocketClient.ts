@@ -8,8 +8,15 @@ export class WebsocketClient {
     private _ws: WebSocket | null = null;
     private heartbeatInterval: NodeJS.Timeout | null = null;
 
+    /**
+     * Constructs a new WebsocketClient.
+     * @param client The client associated with the websocket connection.
+     */
     constructor(private client: Client) { }
 
+    /**
+     * Establishes a websocket connection to stargate.
+     */
     public async connect() {
         const res = await fetch(this.client.config.equinox + "/gateway");
         const data = await res.json() as { ws: string };
@@ -34,7 +41,9 @@ export class WebsocketClient {
         });
 
         this._ws.addEventListener("close", (event) => {
-            this.reconnect();
+            setTimeout(() => {
+                this.reconnect();
+            }, 5000);
             console.error("CLOSED ->", event);
         })
     }

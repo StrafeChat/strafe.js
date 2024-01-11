@@ -12,6 +12,7 @@
   "author": "StrafeChat <docs.strafe.chat>",
   "license": "MIT",
   "dependencies": {
+    "eventemitter2": "^6.4.9",
     "isomorphic-ws": "^5.0.0",
     "ws": "^8.16.0"
   },
