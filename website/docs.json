@@ -6,7 +6,7 @@
 	"flags": {},
 	"children": [
 		{
-			"id": 36,
+			"id": 152,
 			"name": "OpCodes",
 			"variant": "declaration",
 			"kind": 8,
@@ -21,7 +21,7 @@
 			},
 			"children": [
 				{
-					"id": 39,
+					"id": 155,
 					"name": "HEARTBEAT",
 					"variant": "declaration",
 					"kind": 16,
@@ -36,10 +36,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "config/index.ts",
-							"line": 20,
+							"fileName": "src/config/index.ts",
+							"line": 23,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/config/index.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/config/index.ts#L23"
 						}
 					],
 					"type": {
@@ -48,7 +48,7 @@
 					}
 				},
 				{
-					"id": 38,
+					"id": 154,
 					"name": "HELLO",
 					"variant": "declaration",
 					"kind": 16,
@@ -63,10 +63,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "config/index.ts",
-							"line": 15,
+							"fileName": "src/config/index.ts",
+							"line": 18,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/config/index.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/config/index.ts#L18"
 						}
 					],
 					"type": {
@@ -75,7 +75,7 @@
 					}
 				},
 				{
-					"id": 37,
+					"id": 153,
 					"name": "IDENTIFY",
 					"variant": "declaration",
 					"kind": 16,
@@ -90,10 +90,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "config/index.ts",
-							"line": 10,
+							"fileName": "src/config/index.ts",
+							"line": 13,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/config/index.ts#L10"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/config/index.ts#L13"
 						}
 					],
 					"type": {
@@ -106,18 +106,18 @@
 				{
 					"title": "Enumeration Members",
 					"children": [
-						39,
-						38,
-						37
+						155,
+						154,
+						153
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "config/index.ts",
-					"line": 6,
+					"fileName": "src/config/index.ts",
+					"line": 9,
 					"character": 12,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/config/index.ts#L6"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/config/index.ts#L9"
 				}
 			]
 		},
@@ -137,46 +137,62 @@
 			},
 			"children": [
 				{
-					"id": 2,
+					"id": 8,
 					"name": "constructor",
 					"variant": "declaration",
 					"kind": 512,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "client/Client.ts",
-							"line": 19,
+							"fileName": "src/client/Client.ts",
+							"line": 35,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L35"
 						}
 					],
 					"signatures": [
 						{
-							"id": 3,
+							"id": 9,
 							"name": "new Client",
 							"variant": "signature",
 							"kind": 16384,
 							"flags": {},
+							"comment": {
+								"summary": [
+									{
+										"kind": "text",
+										"text": "Constructs a new Client"
+									}
+								]
+							},
 							"sources": [
 								{
-									"fileName": "client/Client.ts",
-									"line": 19,
+									"fileName": "src/client/Client.ts",
+									"line": 35,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L19"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L35"
 								}
 							],
 							"parameters": [
 								{
-									"id": 4,
+									"id": 10,
 									"name": "options",
 									"variant": "param",
 									"kind": 32768,
 									"flags": {
 										"isOptional": true
 									},
+									"comment": {
+										"summary": [
+											{
+												"kind": "text",
+												"text": "The options for the client."
+											}
+										]
+									},
 									"type": {
 										"type": "reference",
-										"target": 86,
+										"target": 202,
 										"name": "ClientOptions",
 										"package": "@strafechat/strafe.js"
 									}
@@ -187,12 +203,22 @@
 								"target": 1,
 								"name": "Client",
 								"package": "@strafechat/strafe.js"
+							},
+							"overwrites": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.constructor"
 							}
 						}
-					]
+					],
+					"overwrites": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.constructor"
+					}
 				},
 				{
-					"id": 5,
+					"id": 11,
 					"name": "config",
 					"variant": "declaration",
 					"kind": 1024,
@@ -201,33 +227,33 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/Client.ts",
-							"line": 11,
+							"fileName": "src/client/Client.ts",
+							"line": 12,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L12"
 						}
 					],
 					"type": {
 						"type": "reflection",
 						"declaration": {
-							"id": 6,
+							"id": 12,
 							"name": "__type",
 							"variant": "declaration",
 							"kind": 65536,
 							"flags": {},
 							"children": [
 								{
-									"id": 7,
+									"id": 13,
 									"name": "equinox",
 									"variant": "declaration",
 									"kind": 1024,
 									"flags": {},
 									"sources": [
 										{
-											"fileName": "client/Client.ts",
-											"line": 12,
+											"fileName": "src/client/Client.ts",
+											"line": 13,
 											"character": 8,
-											"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L12"
+											"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L13"
 										}
 									],
 									"type": {
@@ -241,16 +267,16 @@
 								{
 									"title": "Properties",
 									"children": [
-										7
+										13
 									]
 								}
 							],
 							"sources": [
 								{
-									"fileName": "client/Client.ts",
-									"line": 11,
+									"fileName": "src/client/Client.ts",
+									"line": 12,
 									"character": 20,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L11"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L12"
 								}
 							]
 						}
@@ -258,19 +284,27 @@
 					"defaultValue": "..."
 				},
 				{
-					"id": 8,
+					"id": 14,
 					"name": "token",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {
 						"isPublic": true
 					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "The token associated with the client."
+							}
+						]
+					},
 					"sources": [
 						{
-							"fileName": "client/Client.ts",
-							"line": 15,
+							"fileName": "src/client/Client.ts",
+							"line": 19,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L19"
 						}
 					],
 					"type": {
@@ -289,19 +323,27 @@
 					"defaultValue": "null"
 				},
 				{
-					"id": 9,
+					"id": 15,
 					"name": "user",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {
 						"isPublic": true
 					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "The user associated with the client."
+							}
+						]
+					},
 					"sources": [
 						{
-							"fileName": "client/Client.ts",
-							"line": 16,
+							"fileName": "src/client/Client.ts",
+							"line": 24,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L16"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L24"
 						}
 					],
 					"type": {
@@ -313,7 +355,7 @@
 							},
 							{
 								"type": "reference",
-								"target": 40,
+								"target": 156,
 								"name": "ClientUser",
 								"package": "@strafechat/strafe.js"
 							}
@@ -322,7 +364,7 @@
 					"defaultValue": "null"
 				},
 				{
-					"id": 10,
+					"id": 16,
 					"name": "ws",
 					"variant": "declaration",
 					"kind": 1024,
@@ -330,23 +372,1133 @@
 						"isPublic": true,
 						"isReadonly": true
 					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "The websocket connection associated with the client."
+							}
+						]
+					},
 					"sources": [
 						{
-							"fileName": "client/Client.ts",
-							"line": 17,
+							"fileName": "src/client/Client.ts",
+							"line": 29,
 							"character": 20,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L29"
 						}
 					],
 					"type": {
 						"type": "reference",
-						"target": 14,
+						"target": 130,
 						"name": "WebsocketClient",
 						"package": "@strafechat/strafe.js"
 					}
 				},
 				{
-					"id": 11,
+					"id": 7,
+					"name": "defaultMaxListeners",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isStatic": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 153,
+							"character": 11
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					},
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.defaultMaxListeners"
+					}
+				},
+				{
+					"id": 28,
+					"name": "addListener",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 125,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 29,
+							"name": "addListener",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 125,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 30,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 31,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.addListener"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.addListener"
+					}
+				},
+				{
+					"id": 20,
+					"name": "emit",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 123,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 21,
+							"name": "emit",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 123,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 22,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 23,
+									"name": "values",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isRest": true
+									},
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "boolean"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.emit"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.emit"
+					}
+				},
+				{
+					"id": 24,
+					"name": "emitAsync",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 124,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 25,
+							"name": "emitAsync",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 124,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 26,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 27,
+									"name": "values",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isRest": true
+									},
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/typescript/lib/lib.es5.d.ts",
+									"qualifiedName": "Promise"
+								},
+								"typeArguments": [
+									{
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								],
+								"name": "Promise",
+								"package": "typescript"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.emitAsync"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.emitAsync"
+					}
+				},
+				{
+					"id": 89,
+					"name": "eventNames",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 140,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 90,
+							"name": "eventNames",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 140,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 91,
+									"name": "nsAsArray",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "boolean"
+									}
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "union",
+									"types": [
+										{
+											"type": "intrinsic",
+											"name": "string"
+										},
+										{
+											"type": "intrinsic",
+											"name": "symbol"
+										},
+										{
+											"type": "array",
+											"elementType": {
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "event"
+												},
+												"name": "event",
+												"package": "eventemitter2"
+											}
+										}
+									]
+								}
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.eventNames"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.eventNames"
+					}
+				},
+				{
+					"id": 87,
+					"name": "getMaxListeners",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 139,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 88,
+							"name": "getMaxListeners",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 139,
+									"character": 4
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.getMaxListeners"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.getMaxListeners"
+					}
+				},
+				{
+					"id": 127,
+					"name": "hasListeners",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 151,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 128,
+							"name": "hasListeners",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 151,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 129,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/typescript/lib/lib.es5.d.ts",
+											"qualifiedName": "String"
+										},
+										"name": "String",
+										"package": "typescript"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/typescript/lib/lib.es5.d.ts",
+									"qualifiedName": "Boolean"
+								},
+								"name": "Boolean",
+								"package": "typescript"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.hasListeners"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.hasListeners"
+					}
+				},
+				{
+					"id": 110,
+					"name": "listenTo",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 147,
+							"character": 4
+						},
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 148,
+							"character": 4
+						},
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 149,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 111,
+							"name": "listenTo",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 147,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 112,
+									"name": "target",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "GeneralEventEmitter"
+										},
+										"name": "GeneralEventEmitter",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 113,
+									"name": "events",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 114,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenToOptions"
+										},
+										"name": "ListenToOptions",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.listenTo"
+							}
+						},
+						{
+							"id": 115,
+							"name": "listenTo",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 148,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 116,
+									"name": "target",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "GeneralEventEmitter"
+										},
+										"name": "GeneralEventEmitter",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 117,
+									"name": "events",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "array",
+										"elementType": {
+											"type": "reference",
+											"target": {
+												"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+												"qualifiedName": "event"
+											},
+											"name": "event",
+											"package": "eventemitter2"
+										}
+									}
+								},
+								{
+									"id": 118,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenToOptions"
+										},
+										"name": "ListenToOptions",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.listenTo"
+							}
+						},
+						{
+							"id": 119,
+							"name": "listenTo",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 149,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 120,
+									"name": "target",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "GeneralEventEmitter"
+										},
+										"name": "GeneralEventEmitter",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 121,
+									"name": "events",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/typescript/lib/lib.es5.d.ts",
+											"qualifiedName": "Object"
+										},
+										"name": "Object",
+										"package": "typescript"
+									}
+								},
+								{
+									"id": 122,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenToOptions"
+										},
+										"name": "ListenToOptions",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.listenTo"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.listenTo"
+					}
+				},
+				{
+					"id": 92,
+					"name": "listenerCount",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 141,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 93,
+							"name": "listenerCount",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 141,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 94,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "number"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.listenerCount"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.listenerCount"
+					}
+				},
+				{
+					"id": 95,
+					"name": "listeners",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 142,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 96,
+							"name": "listeners",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 142,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 97,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "reference",
+									"target": {
+										"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+										"qualifiedName": "ListenerFn"
+									},
+									"name": "ListenerFn",
+									"package": "eventemitter2"
+								}
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.listeners"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.listeners"
+					}
+				},
+				{
+					"id": 98,
+					"name": "listenersAny",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 143,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 99,
+							"name": "listenersAny",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 143,
+									"character": 4
+								}
+							],
+							"type": {
+								"type": "array",
+								"elementType": {
+									"type": "reference",
+									"target": {
+										"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+										"qualifiedName": "ListenerFn"
+									},
+									"name": "ListenerFn",
+									"package": "eventemitter2"
+								}
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.listenersAny"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.listenersAny"
+					}
+				},
+				{
+					"id": 17,
 					"name": "login",
 					"variant": "declaration",
 					"kind": 2048,
@@ -355,15 +1507,15 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/Client.ts",
-							"line": 28,
+							"fileName": "src/client/Client.ts",
+							"line": 45,
 							"character": 17,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L28"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L45"
 						}
 					],
 					"signatures": [
 						{
-							"id": 12,
+							"id": 18,
 							"name": "login",
 							"variant": "signature",
 							"kind": 4096,
@@ -378,15 +1530,15 @@
 							},
 							"sources": [
 								{
-									"fileName": "client/Client.ts",
-									"line": 28,
+									"fileName": "src/client/Client.ts",
+									"line": 45,
 									"character": 17,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L28"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L45"
 								}
 							],
 							"parameters": [
 								{
-									"id": 13,
+									"id": 19,
 									"name": "token",
 									"variant": "param",
 									"kind": 32768,
@@ -422,86 +1574,2145 @@
 							}
 						}
 					]
+				},
+				{
+					"id": 52,
+					"name": "many",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 130,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 53,
+							"name": "many",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 130,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 54,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 55,
+									"name": "timesToListen",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 56,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 57,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											{
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "OnOptions"
+												},
+												"name": "OnOptions",
+												"package": "eventemitter2"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.many"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.many"
+					}
+				},
+				{
+					"id": 77,
+					"name": "off",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 136,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 78,
+							"name": "off",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 136,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 79,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 80,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.off"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.off"
+					}
+				},
+				{
+					"id": 70,
+					"name": "offAny",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 134,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 71,
+							"name": "offAny",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 134,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 72,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.offAny"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.offAny"
+					}
+				},
+				{
+					"id": 32,
+					"name": "on",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 126,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 33,
+							"name": "on",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 126,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 34,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 35,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 36,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											{
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "OnOptions"
+												},
+												"name": "OnOptions",
+												"package": "eventemitter2"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.on"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.on"
+					}
+				},
+				{
+					"id": 64,
+					"name": "onAny",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 132,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 65,
+							"name": "onAny",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 132,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 66,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "EventAndListener"
+										},
+										"name": "EventAndListener",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.onAny"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.onAny"
+					}
+				},
+				{
+					"id": 42,
+					"name": "once",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 128,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 43,
+							"name": "once",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 128,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 44,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 45,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 46,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "literal",
+												"value": true
+											},
+											{
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "OnOptions"
+												},
+												"name": "OnOptions",
+												"package": "eventemitter2"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.once"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.once"
+					}
+				},
+				{
+					"id": 67,
+					"name": "prependAny",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 133,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 68,
+							"name": "prependAny",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 133,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 69,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "EventAndListener"
+										},
+										"name": "EventAndListener",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.prependAny"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.prependAny"
+					}
+				},
+				{
+					"id": 37,
+					"name": "prependListener",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 127,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 38,
+							"name": "prependListener",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 127,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 39,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 40,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 41,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											{
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "OnOptions"
+												},
+												"name": "OnOptions",
+												"package": "eventemitter2"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.prependListener"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.prependListener"
+					}
+				},
+				{
+					"id": 58,
+					"name": "prependMany",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 131,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 59,
+							"name": "prependMany",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 131,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 60,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 61,
+									"name": "timesToListen",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								},
+								{
+									"id": 62,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 63,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											{
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "OnOptions"
+												},
+												"name": "OnOptions",
+												"package": "eventemitter2"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.prependMany"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.prependMany"
+					}
+				},
+				{
+					"id": 47,
+					"name": "prependOnceListener",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 129,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 48,
+							"name": "prependOnceListener",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 129,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 49,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 50,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 51,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "boolean"
+											},
+											{
+												"type": "reference",
+												"target": {
+													"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+													"qualifiedName": "OnOptions"
+												},
+												"name": "OnOptions",
+												"package": "eventemitter2"
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "union",
+								"types": [
+									{
+										"type": "reference",
+										"target": 1,
+										"name": "Client",
+										"package": "@strafechat/strafe.js"
+									},
+									{
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "Listener"
+										},
+										"name": "Listener",
+										"package": "eventemitter2"
+									}
+								]
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.prependOnceListener"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.prependOnceListener"
+					}
+				},
+				{
+					"id": 81,
+					"name": "removeAllListeners",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 137,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 82,
+							"name": "removeAllListeners",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 137,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 83,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.removeAllListeners"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.removeAllListeners"
+					}
+				},
+				{
+					"id": 73,
+					"name": "removeListener",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 135,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 74,
+							"name": "removeListener",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 135,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 75,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 76,
+									"name": "listener",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "ListenerFn"
+										},
+										"name": "ListenerFn",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "this"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.removeListener"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.removeListener"
+					}
+				},
+				{
+					"id": 84,
+					"name": "setMaxListeners",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 138,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 85,
+							"name": "setMaxListeners",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 138,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 86,
+									"name": "n",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"type": {
+								"type": "intrinsic",
+								"name": "void"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.setMaxListeners"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.setMaxListeners"
+					}
+				},
+				{
+					"id": 123,
+					"name": "stopListeningTo",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 150,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 124,
+							"name": "stopListeningTo",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 150,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 125,
+									"name": "target",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "GeneralEventEmitter"
+										},
+										"name": "GeneralEventEmitter",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 126,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/typescript/lib/lib.es5.d.ts",
+									"qualifiedName": "Boolean"
+								},
+								"name": "Boolean",
+								"package": "typescript"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.stopListeningTo"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.stopListeningTo"
+					}
+				},
+				{
+					"id": 100,
+					"name": "waitFor",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 144,
+							"character": 4
+						},
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 145,
+							"character": 4
+						},
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 146,
+							"character": 4
+						}
+					],
+					"signatures": [
+						{
+							"id": 101,
+							"name": "waitFor",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 144,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 102,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 103,
+									"name": "timeout",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "intrinsic",
+										"name": "number"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"qualifiedName": "CancelablePromise"
+								},
+								"typeArguments": [
+									{
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								],
+								"name": "CancelablePromise",
+								"package": "eventemitter2"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.waitFor"
+							}
+						},
+						{
+							"id": 104,
+							"name": "waitFor",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 145,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 105,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 106,
+									"name": "filter",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "WaitForFilter"
+										},
+										"name": "WaitForFilter",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"qualifiedName": "CancelablePromise"
+								},
+								"typeArguments": [
+									{
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								],
+								"name": "CancelablePromise",
+								"package": "eventemitter2"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.waitFor"
+							}
+						},
+						{
+							"id": 107,
+							"name": "waitFor",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 146,
+									"character": 4
+								}
+							],
+							"parameters": [
+								{
+									"id": 108,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 109,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "WaitForOptions"
+										},
+										"name": "WaitForOptions",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"qualifiedName": "CancelablePromise"
+								},
+								"typeArguments": [
+									{
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								],
+								"name": "CancelablePromise",
+								"package": "eventemitter2"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.waitFor"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.waitFor"
+					}
+				},
+				{
+					"id": 2,
+					"name": "once",
+					"variant": "declaration",
+					"kind": 2048,
+					"flags": {
+						"isStatic": true,
+						"isExternal": true
+					},
+					"sources": [
+						{
+							"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+							"line": 152,
+							"character": 11
+						}
+					],
+					"signatures": [
+						{
+							"id": 3,
+							"name": "once",
+							"variant": "signature",
+							"kind": 4096,
+							"flags": {
+								"isExternal": true
+							},
+							"sources": [
+								{
+									"fileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"line": 152,
+									"character": 11
+								}
+							],
+							"parameters": [
+								{
+									"id": 4,
+									"name": "emitter",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "EventEmitter2"
+										},
+										"name": "EventEmitter2",
+										"package": "eventemitter2"
+									}
+								},
+								{
+									"id": 5,
+									"name": "event",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true
+									},
+									"type": {
+										"type": "union",
+										"types": [
+											{
+												"type": "intrinsic",
+												"name": "string"
+											},
+											{
+												"type": "intrinsic",
+												"name": "symbol"
+											},
+											{
+												"type": "array",
+												"elementType": {
+													"type": "reference",
+													"target": {
+														"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+														"qualifiedName": "event"
+													},
+													"name": "event",
+													"package": "eventemitter2"
+												}
+											}
+										]
+									}
+								},
+								{
+									"id": 6,
+									"name": "options",
+									"variant": "param",
+									"kind": 32768,
+									"flags": {
+										"isExternal": true,
+										"isOptional": true
+									},
+									"type": {
+										"type": "reference",
+										"target": {
+											"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+											"qualifiedName": "OnceOptions"
+										},
+										"name": "OnceOptions",
+										"package": "eventemitter2"
+									}
+								}
+							],
+							"type": {
+								"type": "reference",
+								"target": {
+									"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+									"qualifiedName": "CancelablePromise"
+								},
+								"typeArguments": [
+									{
+										"type": "array",
+										"elementType": {
+											"type": "intrinsic",
+											"name": "any"
+										}
+									}
+								],
+								"name": "CancelablePromise",
+								"package": "eventemitter2"
+							},
+							"inheritedFrom": {
+								"type": "reference",
+								"target": -1,
+								"name": "EventEmitter2.once"
+							}
+						}
+					],
+					"inheritedFrom": {
+						"type": "reference",
+						"target": -1,
+						"name": "EventEmitter2.once"
+					}
 				}
 			],
 			"groups": [
 				{
 					"title": "Constructors",
 					"children": [
-						2
+						8
 					]
 				},
 				{
 					"title": "Properties",
 					"children": [
-						5,
-						8,
-						9,
-						10
+						11,
+						14,
+						15,
+						16,
+						7
 					]
 				},
 				{
 					"title": "Methods",
 					"children": [
-						11
+						28,
+						20,
+						24,
+						89,
+						87,
+						127,
+						110,
+						92,
+						95,
+						98,
+						17,
+						52,
+						77,
+						70,
+						32,
+						64,
+						42,
+						67,
+						37,
+						58,
+						47,
+						81,
+						73,
+						84,
+						123,
+						100,
+						2
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "client/Client.ts",
-					"line": 9,
+					"fileName": "src/client/Client.ts",
+					"line": 10,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/Client.ts#L9"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/Client.ts#L10"
+				}
+			],
+			"extendedTypes": [
+				{
+					"type": "reference",
+					"target": {
+						"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+						"qualifiedName": "EventEmitter2"
+					},
+					"name": "EventEmitter2",
+					"package": "eventemitter2"
 				}
 			]
 		},
 		{
-			"id": 40,
+			"id": 156,
 			"name": "ClientUser",
 			"variant": "declaration",
 			"kind": 128,
 			"flags": {},
+			"comment": {
+				"summary": [
+					{
+						"kind": "text",
+						"text": "The current client user connected to strafe."
+					}
+				]
+			},
 			"children": [
 				{
-					"id": 41,
+					"id": 157,
 					"name": "constructor",
 					"variant": "declaration",
 					"kind": 512,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "structure/ClientUser.ts",
-							"line": 6,
+							"fileName": "src/structure/ClientUser.ts",
+							"line": 9,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/ClientUser.ts#L6"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/ClientUser.ts#L9"
 						}
 					],
 					"signatures": [
 						{
-							"id": 42,
+							"id": 158,
 							"name": "new ClientUser",
 							"variant": "signature",
 							"kind": 16384,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "structure/ClientUser.ts",
-									"line": 6,
+									"fileName": "src/structure/ClientUser.ts",
+									"line": 9,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/ClientUser.ts#L6"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/ClientUser.ts#L9"
 								}
 							],
 							"parameters": [
 								{
-									"id": 43,
+									"id": 159,
 									"name": "data",
 									"variant": "param",
 									"kind": 32768,
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"target": 92,
+										"target": 208,
 										"name": "IUser",
 										"package": "@strafechat/strafe.js"
 									}
@@ -509,25 +3720,25 @@
 							],
 							"type": {
 								"type": "reference",
-								"target": 40,
+								"target": 156,
 								"name": "ClientUser",
 								"package": "@strafechat/strafe.js"
 							},
 							"overwrites": {
 								"type": "reference",
-								"target": 64,
+								"target": 180,
 								"name": "User.constructor"
 							}
 						}
 					],
 					"overwrites": {
 						"type": "reference",
-						"target": 63,
+						"target": 179,
 						"name": "User.constructor"
 					}
 				},
 				{
-					"id": 45,
+					"id": 161,
 					"name": "accent_color",
 					"variant": "declaration",
 					"kind": 1024,
@@ -536,10 +3747,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 6,
+							"fileName": "src/structure/User.ts",
+							"line": 9,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L6"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L9"
 						}
 					],
 					"type": {
@@ -557,12 +3768,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 67,
+						"target": 183,
 						"name": "User.accent_color"
 					}
 				},
 				{
-					"id": 46,
+					"id": 162,
 					"name": "avatar",
 					"variant": "declaration",
 					"kind": 1024,
@@ -571,10 +3782,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 7,
+							"fileName": "src/structure/User.ts",
+							"line": 10,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L7"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L10"
 						}
 					],
 					"type": {
@@ -592,12 +3803,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 68,
+						"target": 184,
 						"name": "User.avatar"
 					}
 				},
 				{
-					"id": 47,
+					"id": 163,
 					"name": "avatar_decoration",
 					"variant": "declaration",
 					"kind": 1024,
@@ -606,10 +3817,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 8,
+							"fileName": "src/structure/User.ts",
+							"line": 11,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L8"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L11"
 						}
 					],
 					"type": {
@@ -627,12 +3838,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 69,
+						"target": 185,
 						"name": "User.avatar_decoration"
 					}
 				},
 				{
-					"id": 48,
+					"id": 164,
 					"name": "banned",
 					"variant": "declaration",
 					"kind": 1024,
@@ -641,10 +3852,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 9,
+							"fileName": "src/structure/User.ts",
+							"line": 12,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L12"
 						}
 					],
 					"type": {
@@ -653,12 +3864,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 70,
+						"target": 186,
 						"name": "User.banned"
 					}
 				},
 				{
-					"id": 49,
+					"id": 165,
 					"name": "banner",
 					"variant": "declaration",
 					"kind": 1024,
@@ -667,10 +3878,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 10,
+							"fileName": "src/structure/User.ts",
+							"line": 13,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L10"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L13"
 						}
 					],
 					"type": {
@@ -688,12 +3899,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 71,
+						"target": 187,
 						"name": "User.banner"
 					}
 				},
 				{
-					"id": 50,
+					"id": 166,
 					"name": "bot",
 					"variant": "declaration",
 					"kind": 1024,
@@ -702,10 +3913,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 11,
+							"fileName": "src/structure/User.ts",
+							"line": 14,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L14"
 						}
 					],
 					"type": {
@@ -714,12 +3925,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 72,
+						"target": 188,
 						"name": "User.bot"
 					}
 				},
 				{
-					"id": 51,
+					"id": 167,
 					"name": "created_at",
 					"variant": "declaration",
 					"kind": 1024,
@@ -728,10 +3939,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 12,
+							"fileName": "src/structure/User.ts",
+							"line": 15,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L15"
 						}
 					],
 					"type": {
@@ -740,12 +3951,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 73,
+						"target": 189,
 						"name": "User.created_at"
 					}
 				},
 				{
-					"id": 52,
+					"id": 168,
 					"name": "discriminator",
 					"variant": "declaration",
 					"kind": 1024,
@@ -754,10 +3965,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 13,
+							"fileName": "src/structure/User.ts",
+							"line": 16,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L13"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L16"
 						}
 					],
 					"type": {
@@ -766,12 +3977,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 74,
+						"target": 190,
 						"name": "User.discriminator"
 					}
 				},
 				{
-					"id": 53,
+					"id": 169,
 					"name": "edited_at",
 					"variant": "declaration",
 					"kind": 1024,
@@ -780,10 +3991,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 14,
+							"fileName": "src/structure/User.ts",
+							"line": 17,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L14"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L17"
 						}
 					],
 					"type": {
@@ -792,12 +4003,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 75,
+						"target": 191,
 						"name": "User.edited_at"
 					}
 				},
 				{
-					"id": 54,
+					"id": 170,
 					"name": "flags",
 					"variant": "declaration",
 					"kind": 1024,
@@ -806,10 +4017,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 15,
+							"fileName": "src/structure/User.ts",
+							"line": 18,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L18"
 						}
 					],
 					"type": {
@@ -818,12 +4029,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 76,
+						"target": 192,
 						"name": "User.flags"
 					}
 				},
 				{
-					"id": 55,
+					"id": 171,
 					"name": "global_name",
 					"variant": "declaration",
 					"kind": 1024,
@@ -832,10 +4043,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 16,
+							"fileName": "src/structure/User.ts",
+							"line": 19,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L16"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L19"
 						}
 					],
 					"type": {
@@ -844,12 +4055,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 77,
+						"target": 193,
 						"name": "User.global_name"
 					}
 				},
 				{
-					"id": 44,
+					"id": 160,
 					"name": "id",
 					"variant": "declaration",
 					"kind": 1024,
@@ -858,10 +4069,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 5,
+							"fileName": "src/structure/User.ts",
+							"line": 8,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L5"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L8"
 						}
 					],
 					"type": {
@@ -870,12 +4081,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 66,
+						"target": 182,
 						"name": "User.id"
 					}
 				},
 				{
-					"id": 56,
+					"id": 172,
 					"name": "premium_type",
 					"variant": "declaration",
 					"kind": 1024,
@@ -884,10 +4095,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 17,
+							"fileName": "src/structure/User.ts",
+							"line": 20,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L20"
 						}
 					],
 					"type": {
@@ -896,12 +4107,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 78,
+						"target": 194,
 						"name": "User.premium_type"
 					}
 				},
 				{
-					"id": 57,
+					"id": 173,
 					"name": "presence",
 					"variant": "declaration",
 					"kind": 1024,
@@ -910,26 +4121,26 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 18,
+							"fileName": "src/structure/User.ts",
+							"line": 21,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L18"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L21"
 						}
 					],
 					"type": {
 						"type": "reference",
-						"target": 88,
+						"target": 204,
 						"name": "UserPresence",
 						"package": "@strafechat/strafe.js"
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 79,
+						"target": 195,
 						"name": "User.presence"
 					}
 				},
 				{
-					"id": 58,
+					"id": 174,
 					"name": "public_flags",
 					"variant": "declaration",
 					"kind": 1024,
@@ -938,10 +4149,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 19,
+							"fileName": "src/structure/User.ts",
+							"line": 22,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L22"
 						}
 					],
 					"type": {
@@ -950,12 +4161,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 80,
+						"target": 196,
 						"name": "User.public_flags"
 					}
 				},
 				{
-					"id": 59,
+					"id": 175,
 					"name": "system",
 					"variant": "declaration",
 					"kind": 1024,
@@ -964,10 +4175,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 20,
+							"fileName": "src/structure/User.ts",
+							"line": 23,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L23"
 						}
 					],
 					"type": {
@@ -976,12 +4187,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 81,
+						"target": 197,
 						"name": "User.system"
 					}
 				},
 				{
-					"id": 60,
+					"id": 176,
 					"name": "username",
 					"variant": "declaration",
 					"kind": 1024,
@@ -990,10 +4201,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 21,
+							"fileName": "src/structure/User.ts",
+							"line": 24,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L21"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L24"
 						}
 					],
 					"type": {
@@ -1002,12 +4213,12 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 82,
+						"target": 198,
 						"name": "User.username"
 					}
 				},
 				{
-					"id": 61,
+					"id": 177,
 					"name": "verified",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1016,10 +4227,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 22,
+							"fileName": "src/structure/User.ts",
+							"line": 25,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L25"
 						}
 					],
 					"type": {
@@ -1028,7 +4239,7 @@
 					},
 					"inheritedFrom": {
 						"type": "reference",
-						"target": 83,
+						"target": 199,
 						"name": "User.verified"
 					}
 				}
@@ -1037,96 +4248,104 @@
 				{
 					"title": "Constructors",
 					"children": [
-						41
+						157
 					]
 				},
 				{
 					"title": "Properties",
 					"children": [
-						45,
-						46,
-						47,
-						48,
-						49,
-						50,
-						51,
-						52,
-						53,
-						54,
-						55,
-						44,
-						56,
-						57,
-						58,
-						59,
-						60,
-						61
+						161,
+						162,
+						163,
+						164,
+						165,
+						166,
+						167,
+						168,
+						169,
+						170,
+						171,
+						160,
+						172,
+						173,
+						174,
+						175,
+						176,
+						177
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "structure/ClientUser.ts",
-					"line": 4,
+					"fileName": "src/structure/ClientUser.ts",
+					"line": 7,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/ClientUser.ts#L4"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/ClientUser.ts#L7"
 				}
 			],
 			"extendedTypes": [
 				{
 					"type": "reference",
-					"target": 62,
+					"target": 178,
 					"name": "User",
 					"package": "@strafechat/strafe.js"
 				}
 			]
 		},
 		{
-			"id": 62,
+			"id": 178,
 			"name": "User",
 			"variant": "declaration",
 			"kind": 128,
 			"flags": {},
+			"comment": {
+				"summary": [
+					{
+						"kind": "text",
+						"text": "Represents a user on strafe."
+					}
+				]
+			},
 			"children": [
 				{
-					"id": 63,
+					"id": 179,
 					"name": "constructor",
 					"variant": "declaration",
 					"kind": 512,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 24,
+							"fileName": "src/structure/User.ts",
+							"line": 27,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L24"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L27"
 						}
 					],
 					"signatures": [
 						{
-							"id": 64,
+							"id": 180,
 							"name": "new User",
 							"variant": "signature",
 							"kind": 16384,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "structure/User.ts",
-									"line": 24,
+									"fileName": "src/structure/User.ts",
+									"line": 27,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L24"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L27"
 								}
 							],
 							"parameters": [
 								{
-									"id": 65,
+									"id": 181,
 									"name": "data",
 									"variant": "param",
 									"kind": 32768,
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"target": 92,
+										"target": 208,
 										"name": "IUser",
 										"package": "@strafechat/strafe.js"
 									}
@@ -1134,7 +4353,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"target": 62,
+								"target": 178,
 								"name": "User",
 								"package": "@strafechat/strafe.js"
 							}
@@ -1142,7 +4361,7 @@
 					]
 				},
 				{
-					"id": 67,
+					"id": 183,
 					"name": "accent_color",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1151,10 +4370,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 6,
+							"fileName": "src/structure/User.ts",
+							"line": 9,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L6"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L9"
 						}
 					],
 					"type": {
@@ -1172,12 +4391,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 94,
+						"target": 210,
 						"name": "IUser.accent_color"
 					}
 				},
 				{
-					"id": 68,
+					"id": 184,
 					"name": "avatar",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1186,10 +4405,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 7,
+							"fileName": "src/structure/User.ts",
+							"line": 10,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L7"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L10"
 						}
 					],
 					"type": {
@@ -1207,12 +4426,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 95,
+						"target": 211,
 						"name": "IUser.avatar"
 					}
 				},
 				{
-					"id": 69,
+					"id": 185,
 					"name": "avatar_decoration",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1221,10 +4440,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 8,
+							"fileName": "src/structure/User.ts",
+							"line": 11,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L8"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L11"
 						}
 					],
 					"type": {
@@ -1242,12 +4461,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 96,
+						"target": 212,
 						"name": "IUser.avatar_decoration"
 					}
 				},
 				{
-					"id": 70,
+					"id": 186,
 					"name": "banned",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1256,10 +4475,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 9,
+							"fileName": "src/structure/User.ts",
+							"line": 12,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L12"
 						}
 					],
 					"type": {
@@ -1268,12 +4487,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 97,
+						"target": 213,
 						"name": "IUser.banned"
 					}
 				},
 				{
-					"id": 71,
+					"id": 187,
 					"name": "banner",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1282,10 +4501,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 10,
+							"fileName": "src/structure/User.ts",
+							"line": 13,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L10"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L13"
 						}
 					],
 					"type": {
@@ -1303,12 +4522,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 98,
+						"target": 214,
 						"name": "IUser.banner"
 					}
 				},
 				{
-					"id": 72,
+					"id": 188,
 					"name": "bot",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1317,10 +4536,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 11,
+							"fileName": "src/structure/User.ts",
+							"line": 14,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L14"
 						}
 					],
 					"type": {
@@ -1329,12 +4548,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 99,
+						"target": 215,
 						"name": "IUser.bot"
 					}
 				},
 				{
-					"id": 73,
+					"id": 189,
 					"name": "created_at",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1343,10 +4562,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 12,
+							"fileName": "src/structure/User.ts",
+							"line": 15,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L15"
 						}
 					],
 					"type": {
@@ -1355,12 +4574,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 100,
+						"target": 216,
 						"name": "IUser.created_at"
 					}
 				},
 				{
-					"id": 74,
+					"id": 190,
 					"name": "discriminator",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1369,10 +4588,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 13,
+							"fileName": "src/structure/User.ts",
+							"line": 16,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L13"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L16"
 						}
 					],
 					"type": {
@@ -1381,12 +4600,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 101,
+						"target": 217,
 						"name": "IUser.discriminator"
 					}
 				},
 				{
-					"id": 75,
+					"id": 191,
 					"name": "edited_at",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1395,10 +4614,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 14,
+							"fileName": "src/structure/User.ts",
+							"line": 17,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L14"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L17"
 						}
 					],
 					"type": {
@@ -1407,12 +4626,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 102,
+						"target": 218,
 						"name": "IUser.edited_at"
 					}
 				},
 				{
-					"id": 76,
+					"id": 192,
 					"name": "flags",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1421,10 +4640,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 15,
+							"fileName": "src/structure/User.ts",
+							"line": 18,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L18"
 						}
 					],
 					"type": {
@@ -1433,12 +4652,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 103,
+						"target": 219,
 						"name": "IUser.flags"
 					}
 				},
 				{
-					"id": 77,
+					"id": 193,
 					"name": "global_name",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1447,10 +4666,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 16,
+							"fileName": "src/structure/User.ts",
+							"line": 19,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L16"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L19"
 						}
 					],
 					"type": {
@@ -1459,12 +4678,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 104,
+						"target": 220,
 						"name": "IUser.global_name"
 					}
 				},
 				{
-					"id": 66,
+					"id": 182,
 					"name": "id",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1473,10 +4692,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 5,
+							"fileName": "src/structure/User.ts",
+							"line": 8,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L5"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L8"
 						}
 					],
 					"type": {
@@ -1485,12 +4704,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 93,
+						"target": 209,
 						"name": "IUser.id"
 					}
 				},
 				{
-					"id": 78,
+					"id": 194,
 					"name": "premium_type",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1499,10 +4718,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 17,
+							"fileName": "src/structure/User.ts",
+							"line": 20,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L20"
 						}
 					],
 					"type": {
@@ -1511,12 +4730,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 105,
+						"target": 221,
 						"name": "IUser.premium_type"
 					}
 				},
 				{
-					"id": 79,
+					"id": 195,
 					"name": "presence",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1525,26 +4744,26 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 18,
+							"fileName": "src/structure/User.ts",
+							"line": 21,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L18"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L21"
 						}
 					],
 					"type": {
 						"type": "reference",
-						"target": 88,
+						"target": 204,
 						"name": "UserPresence",
 						"package": "@strafechat/strafe.js"
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 106,
+						"target": 222,
 						"name": "IUser.presence"
 					}
 				},
 				{
-					"id": 80,
+					"id": 196,
 					"name": "public_flags",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1553,10 +4772,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 19,
+							"fileName": "src/structure/User.ts",
+							"line": 22,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L22"
 						}
 					],
 					"type": {
@@ -1565,12 +4784,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 107,
+						"target": 223,
 						"name": "IUser.public_flags"
 					}
 				},
 				{
-					"id": 81,
+					"id": 197,
 					"name": "system",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1579,10 +4798,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 20,
+							"fileName": "src/structure/User.ts",
+							"line": 23,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L23"
 						}
 					],
 					"type": {
@@ -1591,12 +4810,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 108,
+						"target": 224,
 						"name": "IUser.system"
 					}
 				},
 				{
-					"id": 82,
+					"id": 198,
 					"name": "username",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1605,10 +4824,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 21,
+							"fileName": "src/structure/User.ts",
+							"line": 24,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L21"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L24"
 						}
 					],
 					"type": {
@@ -1617,12 +4836,12 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 109,
+						"target": 225,
 						"name": "IUser.username"
 					}
 				},
 				{
-					"id": 83,
+					"id": 199,
 					"name": "verified",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1631,10 +4850,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "structure/User.ts",
-							"line": 22,
+							"fileName": "src/structure/User.ts",
+							"line": 25,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L25"
 						}
 					],
 					"type": {
@@ -1643,7 +4862,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 110,
+						"target": 226,
 						"name": "IUser.verified"
 					}
 				}
@@ -1652,100 +4871,116 @@
 				{
 					"title": "Constructors",
 					"children": [
-						63
+						179
 					]
 				},
 				{
 					"title": "Properties",
 					"children": [
-						67,
-						68,
-						69,
-						70,
-						71,
-						72,
-						73,
-						74,
-						75,
-						76,
-						77,
-						66,
-						78,
-						79,
-						80,
-						81,
-						82,
-						83
+						183,
+						184,
+						185,
+						186,
+						187,
+						188,
+						189,
+						190,
+						191,
+						192,
+						193,
+						182,
+						194,
+						195,
+						196,
+						197,
+						198,
+						199
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "structure/User.ts",
-					"line": 3,
+					"fileName": "src/structure/User.ts",
+					"line": 6,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/structure/User.ts#L3"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/structure/User.ts#L6"
 				}
 			],
 			"extendedBy": [
 				{
 					"type": "reference",
-					"target": 40,
+					"target": 156,
 					"name": "ClientUser"
 				}
 			],
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"target": 92,
+					"target": 208,
 					"name": "IUser",
 					"package": "@strafechat/strafe.js"
 				}
 			]
 		},
 		{
-			"id": 14,
+			"id": 130,
 			"name": "WebsocketClient",
 			"variant": "declaration",
 			"kind": 128,
 			"flags": {},
 			"children": [
 				{
-					"id": 15,
+					"id": 131,
 					"name": "constructor",
 					"variant": "declaration",
 					"kind": 512,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 11,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 15,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L15"
 						}
 					],
 					"signatures": [
 						{
-							"id": 16,
+							"id": 132,
 							"name": "new WebsocketClient",
 							"variant": "signature",
 							"kind": 16384,
 							"flags": {},
+							"comment": {
+								"summary": [
+									{
+										"kind": "text",
+										"text": "Constructs a new WebsocketClient."
+									}
+								]
+							},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 11,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 15,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L11"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L15"
 								}
 							],
 							"parameters": [
 								{
-									"id": 17,
+									"id": 133,
 									"name": "client",
 									"variant": "param",
 									"kind": 32768,
 									"flags": {},
+									"comment": {
+										"summary": [
+											{
+												"kind": "text",
+												"text": "The client associated with the websocket connection."
+											}
+										]
+									},
 									"type": {
 										"type": "reference",
 										"target": 1,
@@ -1756,7 +4991,7 @@
 							],
 							"type": {
 								"type": "reference",
-								"target": 14,
+								"target": 130,
 								"name": "WebsocketClient",
 								"package": "@strafechat/strafe.js"
 							}
@@ -1764,7 +4999,7 @@
 					]
 				},
 				{
-					"id": 19,
+					"id": 135,
 					"name": "_ws",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1773,10 +5008,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
+							"fileName": "src/client/WebsocketClient.ts",
 							"line": 8,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L8"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L8"
 						}
 					],
 					"type": {
@@ -1800,19 +5035,27 @@
 					"defaultValue": "null"
 				},
 				{
-					"id": 21,
+					"id": 137,
 					"name": "client",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {
 						"isPrivate": true
 					},
+					"comment": {
+						"summary": [
+							{
+								"kind": "text",
+								"text": "The client associated with the websocket connection."
+							}
+						]
+					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 11,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 15,
 							"character": 24,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L15"
 						}
 					],
 					"type": {
@@ -1823,7 +5066,7 @@
 					}
 				},
 				{
-					"id": 18,
+					"id": 134,
 					"name": "gateway",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1832,10 +5075,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
+							"fileName": "src/client/WebsocketClient.ts",
 							"line": 7,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L7"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L7"
 						}
 					],
 					"type": {
@@ -1854,7 +5097,7 @@
 					"defaultValue": "null"
 				},
 				{
-					"id": 20,
+					"id": 136,
 					"name": "heartbeatInterval",
 					"variant": "declaration",
 					"kind": 1024,
@@ -1863,10 +5106,10 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
+							"fileName": "src/client/WebsocketClient.ts",
 							"line": 9,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L9"
 						}
 					],
 					"type": {
@@ -1891,7 +5134,7 @@
 					"defaultValue": "null"
 				},
 				{
-					"id": 22,
+					"id": 138,
 					"name": "connect",
 					"variant": "declaration",
 					"kind": 2048,
@@ -1900,25 +5143,33 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 13,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 20,
 							"character": 17,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L13"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L20"
 						}
 					],
 					"signatures": [
 						{
-							"id": 23,
+							"id": 139,
 							"name": "connect",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
+							"comment": {
+								"summary": [
+									{
+										"kind": "text",
+										"text": "Establishes a websocket connection to stargate."
+									}
+								]
+							},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 13,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 20,
 									"character": 17,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L13"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L20"
 								}
 							],
 							"type": {
@@ -1940,7 +5191,7 @@
 					]
 				},
 				{
-					"id": 24,
+					"id": 140,
 					"name": "identify",
 					"variant": "declaration",
 					"kind": 2048,
@@ -1949,25 +5200,25 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 43,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 51,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L43"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L51"
 						}
 					],
 					"signatures": [
 						{
-							"id": 25,
+							"id": 141,
 							"name": "identify",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 43,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 51,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L43"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L51"
 								}
 							],
 							"type": {
@@ -1978,7 +5229,7 @@
 					]
 				},
 				{
-					"id": 26,
+					"id": 142,
 					"name": "reconnect",
 					"variant": "declaration",
 					"kind": 2048,
@@ -1987,25 +5238,25 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 56,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 64,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L56"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L64"
 						}
 					],
 					"signatures": [
 						{
-							"id": 27,
+							"id": 143,
 							"name": "reconnect",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 56,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 64,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L56"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L64"
 								}
 							],
 							"type": {
@@ -2016,7 +5267,7 @@
 					]
 				},
 				{
-					"id": 33,
+					"id": 149,
 					"name": "sendHeartbeat",
 					"variant": "declaration",
 					"kind": 2048,
@@ -2025,25 +5276,25 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 72,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 80,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L72"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L80"
 						}
 					],
 					"signatures": [
 						{
-							"id": 34,
+							"id": 150,
 							"name": "sendHeartbeat",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 72,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 80,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L72"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L80"
 								}
 							],
 							"type": {
@@ -2054,7 +5305,7 @@
 					]
 				},
 				{
-					"id": 28,
+					"id": 144,
 					"name": "startHeartbeat",
 					"variant": "declaration",
 					"kind": 2048,
@@ -2063,30 +5314,30 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 62,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 70,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L62"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L70"
 						}
 					],
 					"signatures": [
 						{
-							"id": 29,
+							"id": 145,
 							"name": "startHeartbeat",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 62,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 70,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L62"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L70"
 								}
 							],
 							"parameters": [
 								{
-									"id": 30,
+									"id": 146,
 									"name": "interval",
 									"variant": "param",
 									"kind": 32768,
@@ -2105,7 +5356,7 @@
 					]
 				},
 				{
-					"id": 31,
+					"id": 147,
 					"name": "stopHeartbeat",
 					"variant": "declaration",
 					"kind": 2048,
@@ -2114,25 +5365,25 @@
 					},
 					"sources": [
 						{
-							"fileName": "client/WebsocketClient.ts",
-							"line": 68,
+							"fileName": "src/client/WebsocketClient.ts",
+							"line": 76,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L68"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L76"
 						}
 					],
 					"signatures": [
 						{
-							"id": 32,
+							"id": 148,
 							"name": "stopHeartbeat",
 							"variant": "signature",
 							"kind": 4096,
 							"flags": {},
 							"sources": [
 								{
-									"fileName": "client/WebsocketClient.ts",
-									"line": 68,
+									"fileName": "src/client/WebsocketClient.ts",
+									"line": 76,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L68"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L76"
 								}
 							],
 							"type": {
@@ -2147,58 +5398,58 @@
 				{
 					"title": "Constructors",
 					"children": [
-						15
+						131
 					]
 				},
 				{
 					"title": "Properties",
 					"children": [
-						19,
-						21,
-						18,
-						20
+						135,
+						137,
+						134,
+						136
 					]
 				},
 				{
 					"title": "Methods",
 					"children": [
-						22,
-						24,
-						26,
-						33,
-						28,
-						31
+						138,
+						140,
+						142,
+						149,
+						144,
+						147
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "client/WebsocketClient.ts",
+					"fileName": "src/client/WebsocketClient.ts",
 					"line": 5,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/client/WebsocketClient.ts#L5"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/client/WebsocketClient.ts#L5"
 				}
 			]
 		},
 		{
-			"id": 84,
+			"id": 200,
 			"name": "ClientConfig",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 85,
+					"id": 201,
 					"name": "equinox",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 2,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L2"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L2"
 						}
 					],
 					"type": {
@@ -2211,28 +5462,28 @@
 				{
 					"title": "Properties",
 					"children": [
-						85
+						201
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "src/types/index.ts",
 					"line": 1,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L1"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L1"
 				}
 			]
 		},
 		{
-			"id": 86,
+			"id": 202,
 			"name": "ClientOptions",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 87,
+					"id": 203,
 					"name": "config",
 					"variant": "declaration",
 					"kind": 1024,
@@ -2241,15 +5492,15 @@
 					},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 6,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L6"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L6"
 						}
 					],
 					"type": {
 						"type": "reference",
-						"target": 84,
+						"target": 200,
 						"name": "ClientConfig",
 						"package": "@strafechat/strafe.js"
 					}
@@ -2259,38 +5510,38 @@
 				{
 					"title": "Properties",
 					"children": [
-						87
+						203
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "src/types/index.ts",
 					"line": 5,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L5"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L5"
 				}
 			]
 		},
 		{
-			"id": 92,
+			"id": 208,
 			"name": "IUser",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 94,
+					"id": 210,
 					"name": "accent_color",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 17,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L17"
 						}
 					],
 					"type": {
@@ -2308,17 +5559,17 @@
 					}
 				},
 				{
-					"id": 95,
+					"id": 211,
 					"name": "avatar",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 18,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L18"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L18"
 						}
 					],
 					"type": {
@@ -2336,17 +5587,17 @@
 					}
 				},
 				{
-					"id": 96,
+					"id": 212,
 					"name": "avatar_decoration",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 19,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L19"
 						}
 					],
 					"type": {
@@ -2364,17 +5615,17 @@
 					}
 				},
 				{
-					"id": 97,
+					"id": 213,
 					"name": "banned",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 20,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L20"
 						}
 					],
 					"type": {
@@ -2383,17 +5634,17 @@
 					}
 				},
 				{
-					"id": 98,
+					"id": 214,
 					"name": "banner",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 21,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L21"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L21"
 						}
 					],
 					"type": {
@@ -2411,17 +5662,17 @@
 					}
 				},
 				{
-					"id": 99,
+					"id": 215,
 					"name": "bot",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 22,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L22"
 						}
 					],
 					"type": {
@@ -2430,17 +5681,17 @@
 					}
 				},
 				{
-					"id": 100,
+					"id": 216,
 					"name": "created_at",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 23,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L23"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L23"
 						}
 					],
 					"type": {
@@ -2449,17 +5700,17 @@
 					}
 				},
 				{
-					"id": 101,
+					"id": 217,
 					"name": "discriminator",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 24,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L24"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L24"
 						}
 					],
 					"type": {
@@ -2468,17 +5719,17 @@
 					}
 				},
 				{
-					"id": 102,
+					"id": 218,
 					"name": "edited_at",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 25,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L25"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L25"
 						}
 					],
 					"type": {
@@ -2487,17 +5738,17 @@
 					}
 				},
 				{
-					"id": 103,
+					"id": 219,
 					"name": "flags",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 26,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L26"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L26"
 						}
 					],
 					"type": {
@@ -2506,17 +5757,17 @@
 					}
 				},
 				{
-					"id": 104,
+					"id": 220,
 					"name": "global_name",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 27,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L27"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L27"
 						}
 					],
 					"type": {
@@ -2525,17 +5776,17 @@
 					}
 				},
 				{
-					"id": 93,
+					"id": 209,
 					"name": "id",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 16,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L16"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L16"
 						}
 					],
 					"type": {
@@ -2544,17 +5795,17 @@
 					}
 				},
 				{
-					"id": 105,
+					"id": 221,
 					"name": "premium_type",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 28,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L28"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L28"
 						}
 					],
 					"type": {
@@ -2563,38 +5814,38 @@
 					}
 				},
 				{
-					"id": 106,
+					"id": 222,
 					"name": "presence",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 29,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L29"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L29"
 						}
 					],
 					"type": {
 						"type": "reference",
-						"target": 88,
+						"target": 204,
 						"name": "UserPresence",
 						"package": "@strafechat/strafe.js"
 					}
 				},
 				{
-					"id": 107,
+					"id": 223,
 					"name": "public_flags",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 30,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L30"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L30"
 						}
 					],
 					"type": {
@@ -2603,17 +5854,17 @@
 					}
 				},
 				{
-					"id": 108,
+					"id": 224,
 					"name": "system",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 31,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L31"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L31"
 						}
 					],
 					"type": {
@@ -2622,17 +5873,17 @@
 					}
 				},
 				{
-					"id": 109,
+					"id": 225,
 					"name": "username",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 32,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L32"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L32"
 						}
 					],
 					"type": {
@@ -2641,17 +5892,17 @@
 					}
 				},
 				{
-					"id": 110,
+					"id": 226,
 					"name": "verified",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 33,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L33"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L33"
 						}
 					],
 					"type": {
@@ -2664,62 +5915,62 @@
 				{
 					"title": "Properties",
 					"children": [
-						94,
-						95,
-						96,
-						97,
-						98,
-						99,
-						100,
-						101,
-						102,
-						103,
-						104,
-						93,
-						105,
-						106,
-						107,
-						108,
-						109,
-						110
+						210,
+						211,
+						212,
+						213,
+						214,
+						215,
+						216,
+						217,
+						218,
+						219,
+						220,
+						209,
+						221,
+						222,
+						223,
+						224,
+						225,
+						226
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "src/types/index.ts",
 					"line": 15,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L15"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L15"
 				}
 			],
 			"implementedBy": [
 				{
 					"type": "reference",
-					"target": 62,
+					"target": 178,
 					"name": "User"
 				}
 			]
 		},
 		{
-			"id": 88,
+			"id": 204,
 			"name": "UserPresence",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 89,
+					"id": 205,
 					"name": "online",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 10,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L10"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L10"
 						}
 					],
 					"type": {
@@ -2728,17 +5979,17 @@
 					}
 				},
 				{
-					"id": 90,
+					"id": 206,
 					"name": "status",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 11,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L11"
 						}
 					],
 					"type": {
@@ -2747,17 +5998,17 @@
 					}
 				},
 				{
-					"id": 91,
+					"id": 207,
 					"name": "status_text",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
-							"fileName": "types/index.ts",
+							"fileName": "src/types/index.ts",
 							"line": 12,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L12"
 						}
 					],
 					"type": {
@@ -2770,35 +6021,43 @@
 				{
 					"title": "Properties",
 					"children": [
-						89,
-						90,
-						91
+						205,
+						206,
+						207
 					]
 				}
 			],
 			"sources": [
 				{
-					"fileName": "types/index.ts",
+					"fileName": "src/types/index.ts",
 					"line": 9,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/types/index.ts#L9"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/types/index.ts#L9"
 				}
 			]
 		},
 		{
-			"id": 35,
+			"id": 151,
 			"name": "API",
 			"variant": "declaration",
 			"kind": 32,
 			"flags": {
 				"isConst": true
 			},
+			"comment": {
+				"summary": [
+					{
+						"kind": "text",
+						"text": "The default url that will be used for equinox."
+					}
+				]
+			},
 			"sources": [
 				{
-					"fileName": "config/index.ts",
-					"line": 1,
+					"fileName": "src/config/index.ts",
+					"line": 4,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/620a10b/src/config/index.ts#L1"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/ef7ef37/src/config/index.ts#L4"
 				}
 			],
 			"type": {
@@ -2812,31 +6071,31 @@
 		{
 			"title": "Enumerations",
 			"children": [
-				36
+				152
 			]
 		},
 		{
 			"title": "Classes",
 			"children": [
 				1,
-				40,
-				62,
-				14
+				156,
+				178,
+				130
 			]
 		},
 		{
 			"title": "Interfaces",
 			"children": [
-				84,
-				86,
-				92,
-				88
+				200,
+				202,
+				208,
+				204
 			]
 		},
 		{
 			"title": "Variables",
 			"children": [
-				35
+				151
 			]
 		}
 	],
@@ -2858,438 +6117,902 @@
 			"qualifiedName": "Client"
 		},
 		"2": {
-			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.__constructor"
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.once"
 		},
 		"3": {
-			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client"
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.once"
 		},
 		"4": {
-			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "options"
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "emitter"
 		},
 		"5": {
-			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.config"
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
 		},
 		"6": {
-			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "__object"
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
 		},
 		"7": {
-			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "__object.equinox"
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.defaultMaxListeners"
 		},
 		"8": {
 			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.token"
+			"qualifiedName": "Client.__constructor"
 		},
 		"9": {
 			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.user"
+			"qualifiedName": "Client"
 		},
 		"10": {
 			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.ws"
+			"qualifiedName": "options"
 		},
 		"11": {
 			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.login"
+			"qualifiedName": "Client.config"
 		},
 		"12": {
 			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "Client.login"
+			"qualifiedName": "__object"
 		},
 		"13": {
 			"sourceFileName": "src/client/Client.ts",
-			"qualifiedName": "token"
+			"qualifiedName": "__object.equinox"
 		},
 		"14": {
+			"sourceFileName": "src/client/Client.ts",
+			"qualifiedName": "Client.token"
+		},
+		"15": {
+			"sourceFileName": "src/client/Client.ts",
+			"qualifiedName": "Client.user"
+		},
+		"16": {
+			"sourceFileName": "src/client/Client.ts",
+			"qualifiedName": "Client.ws"
+		},
+		"17": {
+			"sourceFileName": "src/client/Client.ts",
+			"qualifiedName": "Client.login"
+		},
+		"18": {
+			"sourceFileName": "src/client/Client.ts",
+			"qualifiedName": "Client.login"
+		},
+		"19": {
+			"sourceFileName": "src/client/Client.ts",
+			"qualifiedName": "token"
+		},
+		"20": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.emit"
+		},
+		"21": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.emit"
+		},
+		"22": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"23": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "values"
+		},
+		"24": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.emitAsync"
+		},
+		"25": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.emitAsync"
+		},
+		"26": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"27": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "values"
+		},
+		"28": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.addListener"
+		},
+		"29": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.addListener"
+		},
+		"30": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"31": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"32": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.on"
+		},
+		"33": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.on"
+		},
+		"34": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"35": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"36": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"37": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependListener"
+		},
+		"38": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependListener"
+		},
+		"39": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"40": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"41": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"42": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.once"
+		},
+		"43": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.once"
+		},
+		"44": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"45": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"46": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"47": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependOnceListener"
+		},
+		"48": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependOnceListener"
+		},
+		"49": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"50": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"51": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"52": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.many"
+		},
+		"53": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.many"
+		},
+		"54": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"55": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "timesToListen"
+		},
+		"56": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"57": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"58": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependMany"
+		},
+		"59": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependMany"
+		},
+		"60": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"61": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "timesToListen"
+		},
+		"62": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"63": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"64": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.onAny"
+		},
+		"65": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.onAny"
+		},
+		"66": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"67": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependAny"
+		},
+		"68": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.prependAny"
+		},
+		"69": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"70": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.offAny"
+		},
+		"71": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.offAny"
+		},
+		"72": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"73": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.removeListener"
+		},
+		"74": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.removeListener"
+		},
+		"75": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"76": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"77": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.off"
+		},
+		"78": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.off"
+		},
+		"79": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"80": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "listener"
+		},
+		"81": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.removeAllListeners"
+		},
+		"82": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.removeAllListeners"
+		},
+		"83": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"84": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.setMaxListeners"
+		},
+		"85": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.setMaxListeners"
+		},
+		"86": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "n"
+		},
+		"87": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.getMaxListeners"
+		},
+		"88": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.getMaxListeners"
+		},
+		"89": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.eventNames"
+		},
+		"90": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.eventNames"
+		},
+		"91": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "nsAsArray"
+		},
+		"92": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenerCount"
+		},
+		"93": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenerCount"
+		},
+		"94": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"95": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listeners"
+		},
+		"96": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listeners"
+		},
+		"97": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"98": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenersAny"
+		},
+		"99": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenersAny"
+		},
+		"100": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.waitFor"
+		},
+		"101": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.waitFor"
+		},
+		"102": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"103": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "timeout"
+		},
+		"104": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.waitFor"
+		},
+		"105": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"106": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "filter"
+		},
+		"107": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.waitFor"
+		},
+		"108": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"109": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"110": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenTo"
+		},
+		"111": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenTo"
+		},
+		"112": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "target"
+		},
+		"113": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "events"
+		},
+		"114": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"115": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenTo"
+		},
+		"116": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "target"
+		},
+		"117": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "events"
+		},
+		"118": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"119": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.listenTo"
+		},
+		"120": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "target"
+		},
+		"121": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "events"
+		},
+		"122": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "options"
+		},
+		"123": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.stopListeningTo"
+		},
+		"124": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.stopListeningTo"
+		},
+		"125": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "target"
+		},
+		"126": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"127": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.hasListeners"
+		},
+		"128": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "EventEmitter2.hasListeners"
+		},
+		"129": {
+			"sourceFileName": "node_modules/eventemitter2/eventemitter2.d.ts",
+			"qualifiedName": "event"
+		},
+		"130": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient"
 		},
-		"15": {
+		"131": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.__constructor"
 		},
-		"16": {
+		"132": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient"
 		},
-		"17": {
+		"133": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "client"
 		},
-		"18": {
+		"134": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.gateway"
 		},
-		"19": {
+		"135": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient._ws"
 		},
-		"20": {
+		"136": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.heartbeatInterval"
 		},
-		"21": {
+		"137": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.client"
 		},
-		"22": {
+		"138": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.connect"
 		},
-		"23": {
+		"139": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.connect"
 		},
-		"24": {
+		"140": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.identify"
 		},
-		"25": {
+		"141": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.identify"
 		},
-		"26": {
+		"142": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.reconnect"
 		},
-		"27": {
+		"143": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.reconnect"
 		},
-		"28": {
+		"144": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.startHeartbeat"
 		},
-		"29": {
+		"145": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.startHeartbeat"
 		},
-		"30": {
+		"146": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "interval"
 		},
-		"31": {
+		"147": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.stopHeartbeat"
 		},
-		"32": {
+		"148": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.stopHeartbeat"
 		},
-		"33": {
+		"149": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.sendHeartbeat"
 		},
-		"34": {
+		"150": {
 			"sourceFileName": "src/client/WebsocketClient.ts",
 			"qualifiedName": "WebsocketClient.sendHeartbeat"
 		},
-		"35": {
+		"151": {
 			"sourceFileName": "src/config/index.ts",
 			"qualifiedName": "API"
 		},
-		"36": {
+		"152": {
 			"sourceFileName": "src/config/index.ts",
 			"qualifiedName": "OpCodes"
 		},
-		"37": {
+		"153": {
 			"sourceFileName": "src/config/index.ts",
 			"qualifiedName": "OpCodes.IDENTIFY"
 		},
-		"38": {
+		"154": {
 			"sourceFileName": "src/config/index.ts",
 			"qualifiedName": "OpCodes.HELLO"
 		},
-		"39": {
+		"155": {
 			"sourceFileName": "src/config/index.ts",
 			"qualifiedName": "OpCodes.HEARTBEAT"
 		},
-		"40": {
+		"156": {
 			"sourceFileName": "src/structure/ClientUser.ts",
 			"qualifiedName": "ClientUser"
 		},
-		"41": {
+		"157": {
 			"sourceFileName": "src/structure/ClientUser.ts",
 			"qualifiedName": "ClientUser.__constructor"
 		},
-		"42": {
+		"158": {
 			"sourceFileName": "src/structure/ClientUser.ts",
 			"qualifiedName": "ClientUser"
 		},
-		"43": {
+		"159": {
 			"sourceFileName": "src/structure/ClientUser.ts",
 			"qualifiedName": "data"
 		},
-		"44": {
+		"160": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.id"
 		},
-		"45": {
+		"161": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.accent_color"
 		},
-		"46": {
+		"162": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.avatar"
 		},
-		"47": {
+		"163": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.avatar_decoration"
 		},
-		"48": {
+		"164": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.banned"
 		},
-		"49": {
+		"165": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.banner"
 		},
-		"50": {
+		"166": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.bot"
 		},
-		"51": {
+		"167": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.created_at"
 		},
-		"52": {
+		"168": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.discriminator"
 		},
-		"53": {
+		"169": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.edited_at"
 		},
-		"54": {
+		"170": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.flags"
 		},
-		"55": {
+		"171": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.global_name"
 		},
-		"56": {
+		"172": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.premium_type"
 		},
-		"57": {
+		"173": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.presence"
 		},
-		"58": {
+		"174": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.public_flags"
 		},
-		"59": {
+		"175": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.system"
 		},
-		"60": {
+		"176": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.username"
 		},
-		"61": {
+		"177": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.verified"
 		},
-		"62": {
+		"178": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User"
 		},
-		"63": {
+		"179": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.__constructor"
 		},
-		"64": {
+		"180": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User"
 		},
-		"65": {
+		"181": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "data"
 		},
-		"66": {
+		"182": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.id"
 		},
-		"67": {
+		"183": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.accent_color"
 		},
-		"68": {
+		"184": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.avatar"
 		},
-		"69": {
+		"185": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.avatar_decoration"
 		},
-		"70": {
+		"186": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.banned"
 		},
-		"71": {
+		"187": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.banner"
 		},
-		"72": {
+		"188": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.bot"
 		},
-		"73": {
+		"189": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.created_at"
 		},
-		"74": {
+		"190": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.discriminator"
 		},
-		"75": {
+		"191": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.edited_at"
 		},
-		"76": {
+		"192": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.flags"
 		},
-		"77": {
+		"193": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.global_name"
 		},
-		"78": {
+		"194": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.premium_type"
 		},
-		"79": {
+		"195": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.presence"
 		},
-		"80": {
+		"196": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.public_flags"
 		},
-		"81": {
+		"197": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.system"
 		},
-		"82": {
+		"198": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.username"
 		},
-		"83": {
+		"199": {
 			"sourceFileName": "src/structure/User.ts",
 			"qualifiedName": "User.verified"
 		},
-		"84": {
+		"200": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "ClientConfig"
 		},
-		"85": {
+		"201": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "ClientConfig.equinox"
 		},
-		"86": {
+		"202": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "ClientOptions"
 		},
-		"87": {
+		"203": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "ClientOptions.config"
 		},
-		"88": {
+		"204": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "UserPresence"
 		},
-		"89": {
+		"205": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "UserPresence.online"
 		},
-		"90": {
+		"206": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "UserPresence.status"
 		},
-		"91": {
+		"207": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "UserPresence.status_text"
 		},
-		"92": {
+		"208": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser"
 		},
-		"93": {
+		"209": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.id"
 		},
-		"94": {
+		"210": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.accent_color"
 		},
-		"95": {
+		"211": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.avatar"
 		},
-		"96": {
+		"212": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.avatar_decoration"
 		},
-		"97": {
+		"213": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.banned"
 		},
-		"98": {
+		"214": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.banner"
 		},
-		"99": {
+		"215": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.bot"
 		},
-		"100": {
+		"216": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.created_at"
 		},
-		"101": {
+		"217": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.discriminator"
 		},
-		"102": {
+		"218": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.edited_at"
 		},
-		"103": {
+		"219": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.flags"
 		},
-		"104": {
+		"220": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.global_name"
 		},
-		"105": {
+		"221": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.premium_type"
 		},
-		"106": {
+		"222": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.presence"
 		},
-		"107": {
+		"223": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.public_flags"
 		},
-		"108": {
+		"224": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.system"
 		},
-		"109": {
+		"225": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.username"
 		},
-		"110": {
+		"226": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.verified"
 		}

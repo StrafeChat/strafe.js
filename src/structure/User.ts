@@ -1,5 +1,8 @@
 import { IUser, UserPresence } from "../types";
 
+/**
+ * Represents a user on strafe.
+ */
 export class User implements IUser {
 
     public id: string;
