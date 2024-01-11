@@ -18,11 +18,14 @@ export class WebsocketClient {
      * Establishes a websocket connection to stargate.
      */
     public async connect() {
-        const res = await fetch(this.client.config.equinox + "/gateway");
-        const data = await res.json() as { ws: string };
-        if (!res.ok) throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
-        this.gateway = data.ws;
-        this._ws = new WebSocket(data.ws);
+        if (!this.gateway) {
+            const res = await fetch(this.client.config.equinox + "/gateway");
+            const data = await res.json() as { ws: string };
+            if (!res.ok) throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
+            this.gateway = data.ws;
+        }
+
+        this._ws = new WebSocket(this.gateway);
 
         this._ws!.addEventListener("open", () => {
             this.identify();
@@ -57,8 +60,6 @@ export class WebsocketClient {
         }
 
         this._ws?.send(JSON.stringify(payload));
-
-        this.sendHeartbeat();
     }
 
     private reconnect() {
