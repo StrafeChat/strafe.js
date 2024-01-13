@@ -44,7 +44,8 @@ export class WebsocketClient {
                 case OpCodes.DISPATCH:
                     switch (event) {
                         case "READY":
-                            console.log(data);
+                            this.client.user = data.user;
+                            this.client.emit("ready", this.client);
                             break;
                     }
                     break;
