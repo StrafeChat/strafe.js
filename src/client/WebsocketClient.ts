@@ -27,18 +27,26 @@ export class WebsocketClient {
 
         this._ws = new WebSocket(this.gateway);
 
+        console.log(this.gateway, this._ws);
+
         this._ws!.addEventListener("open", () => {
             this.identify();
         });
 
         this._ws!.addEventListener("message", (message) => {
-            const packet = JSON.parse(message.data.toString());
-            const { op, data, event } = packet;
+            const { op, data, event } = JSON.parse(message.data.toString()) as { op: OpCodes, data: any, event: string };
 
             switch (op) {
                 case OpCodes.HELLO:
                     const { heartbeat_interval } = data;
                     this.startHeartbeat(heartbeat_interval);
+                    break;
+                case OpCodes.DISPATCH:
+                    switch (event) {
+                        case "READY":
+                            console.log(data);
+                            break;
+                    }
                     break;
             }
         });

@@ -22,6 +22,7 @@ export interface IUser {
     bot: boolean;
     created_at: number;
     discriminator: number;
+    email: string | null;
     edited_at: number;
     flags: number;
     global_name: string;

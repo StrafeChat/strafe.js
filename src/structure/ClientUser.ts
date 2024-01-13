@@ -8,5 +8,6 @@ export class ClientUser extends User {
 
     constructor(data: IUser) {
         super(data);
+        this.email = data.email!;
     }
 }

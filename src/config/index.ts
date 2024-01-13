@@ -8,17 +8,21 @@ export const API = "https://equinox.strafe.chat/v1"
  */
 export enum OpCodes {
     /**
+     * Op code used for receiving events from Strafe.
+     */
+    DISPATCH = 0,
+    /**
      * Op code used for sending an identify payload to Strafe.
      */
-    IDENTIFY = 0,
+    IDENTIFY = 2,
 
     /**
      * Op code used for receiving the hello event from Strafe.
      */
-    HELLO = 1,
+    HELLO = 10,
 
     /**
      * Op code used for sending heartbeats to Strafe.
      */
-    HEARTBEAT = 2,
+    HEARTBEAT = 3,
 }

@@ -15,6 +15,7 @@ export class User implements IUser {
     public created_at: number;
     public discriminator: number;
     public edited_at: number;
+    public email: string | null;
     public flags: number;
     public global_name: string;
     public premium_type: number;
@@ -34,6 +35,7 @@ export class User implements IUser {
         this.bot = data.bot;
         this.created_at = data.created_at;
         this.discriminator = data.discriminator;
+        this.email = null;
         this.edited_at = data.edited_at;
         this.flags = data.flags;
         this.global_name = data.global_name;
