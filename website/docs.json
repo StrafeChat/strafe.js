@@ -39,7 +39,7 @@
 							"fileName": "src/config/index.ts",
 							"line": 13,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/config/index.ts#L13"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/config/index.ts#L13"
 						}
 					],
 					"type": {
@@ -66,7 +66,7 @@
 							"fileName": "src/config/index.ts",
 							"line": 27,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/config/index.ts#L27"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/config/index.ts#L27"
 						}
 					],
 					"type": {
@@ -93,7 +93,7 @@
 							"fileName": "src/config/index.ts",
 							"line": 22,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/config/index.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/config/index.ts#L22"
 						}
 					],
 					"type": {
@@ -120,7 +120,7 @@
 							"fileName": "src/config/index.ts",
 							"line": 17,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/config/index.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/config/index.ts#L17"
 						}
 					],
 					"type": {
@@ -145,7 +145,7 @@
 					"fileName": "src/config/index.ts",
 					"line": 9,
 					"character": 12,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/config/index.ts#L9"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/config/index.ts#L9"
 				}
 			]
 		},
@@ -161,6 +161,26 @@
 						"kind": "text",
 						"text": "The main hub for interacting with strafe."
 					}
+				],
+				"blockTags": [
+					{
+						"tag": "@fires",
+						"content": [
+							{
+								"kind": "text",
+								"text": "ready - Emitted when the client is ready."
+							}
+						]
+					},
+					{
+						"tag": "@fires",
+						"content": [
+							{
+								"kind": "text",
+								"text": "error - Emitted when an error occurs."
+							}
+						]
+					}
 				]
 			},
 			"children": [
@@ -173,9 +193,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/Client.ts",
-							"line": 35,
+							"line": 38,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L35"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L38"
 						}
 					],
 					"signatures": [
@@ -196,9 +216,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/Client.ts",
-									"line": 35,
+									"line": 38,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L35"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L38"
 								}
 							],
 							"parameters": [
@@ -256,9 +276,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/Client.ts",
-							"line": 12,
+							"line": 15,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L15"
 						}
 					],
 					"type": {
@@ -279,9 +299,9 @@
 									"sources": [
 										{
 											"fileName": "src/client/Client.ts",
-											"line": 13,
+											"line": 16,
 											"character": 8,
-											"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L13"
+											"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L16"
 										}
 									],
 									"type": {
@@ -302,9 +322,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/Client.ts",
-									"line": 12,
+									"line": 15,
 									"character": 20,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L12"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L15"
 								}
 							]
 						}
@@ -330,9 +350,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/Client.ts",
-							"line": 19,
+							"line": 22,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L22"
 						}
 					],
 					"type": {
@@ -369,9 +389,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/Client.ts",
-							"line": 24,
+							"line": 27,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L24"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L27"
 						}
 					],
 					"type": {
@@ -411,9 +431,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/Client.ts",
-							"line": 29,
+							"line": 32,
 							"character": 20,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L29"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L32"
 						}
 					],
 					"type": {
@@ -1536,9 +1556,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/Client.ts",
-							"line": 45,
+							"line": 48,
 							"character": 17,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L45"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L48"
 						}
 					],
 					"signatures": [
@@ -1559,9 +1579,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/Client.ts",
-									"line": 45,
+									"line": 48,
 									"character": 17,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L45"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L48"
 								}
 							],
 							"parameters": [
@@ -3670,9 +3690,9 @@
 			"sources": [
 				{
 					"fileName": "src/client/Client.ts",
-					"line": 10,
+					"line": 13,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/Client.ts#L10"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/Client.ts#L13"
 				}
 			],
 			"extendedTypes": [
@@ -3713,7 +3733,7 @@
 							"fileName": "src/structure/ClientUser.ts",
 							"line": 9,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/ClientUser.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/ClientUser.ts#L9"
 						}
 					],
 					"signatures": [
@@ -3728,7 +3748,7 @@
 									"fileName": "src/structure/ClientUser.ts",
 									"line": 9,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/ClientUser.ts#L9"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/ClientUser.ts#L9"
 								}
 							],
 							"parameters": [
@@ -3740,7 +3760,7 @@
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"target": 211,
+										"target": 212,
 										"name": "IUser",
 										"package": "@strafechat/strafe.js"
 									}
@@ -3778,7 +3798,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 9,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L9"
 						}
 					],
 					"type": {
@@ -3813,7 +3833,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 10,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L10"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L10"
 						}
 					],
 					"type": {
@@ -3848,7 +3868,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 11,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L11"
 						}
 					],
 					"type": {
@@ -3883,7 +3903,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 12,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L12"
 						}
 					],
 					"type": {
@@ -3909,7 +3929,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 13,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L13"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L13"
 						}
 					],
 					"type": {
@@ -3944,7 +3964,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 14,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L14"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L14"
 						}
 					],
 					"type": {
@@ -3970,7 +3990,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 15,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L15"
 						}
 					],
 					"type": {
@@ -3996,7 +4016,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 16,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L16"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L16"
 						}
 					],
 					"type": {
@@ -4022,7 +4042,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 17,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L17"
 						}
 					],
 					"type": {
@@ -4048,7 +4068,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 18,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L18"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L18"
 						}
 					],
 					"type": {
@@ -4083,7 +4103,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 19,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L19"
 						}
 					],
 					"type": {
@@ -4109,7 +4129,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 20,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L20"
 						}
 					],
 					"type": {
@@ -4135,7 +4155,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 8,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L8"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L8"
 						}
 					],
 					"type": {
@@ -4161,7 +4181,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 21,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L21"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L21"
 						}
 					],
 					"type": {
@@ -4187,7 +4207,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 22,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L22"
 						}
 					],
 					"type": {
@@ -4215,7 +4235,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 23,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L23"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L23"
 						}
 					],
 					"type": {
@@ -4241,7 +4261,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 24,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L24"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L24"
 						}
 					],
 					"type": {
@@ -4267,7 +4287,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 25,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L25"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L25"
 						}
 					],
 					"type": {
@@ -4293,7 +4313,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 26,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L26"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L26"
 						}
 					],
 					"type": {
@@ -4344,7 +4364,7 @@
 					"fileName": "src/structure/ClientUser.ts",
 					"line": 7,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/ClientUser.ts#L7"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/ClientUser.ts#L7"
 				}
 			],
 			"extendedTypes": [
@@ -4382,7 +4402,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 28,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L28"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L28"
 						}
 					],
 					"signatures": [
@@ -4397,7 +4417,7 @@
 									"fileName": "src/structure/User.ts",
 									"line": 28,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L28"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L28"
 								}
 							],
 							"parameters": [
@@ -4409,7 +4429,7 @@
 									"flags": {},
 									"type": {
 										"type": "reference",
-										"target": 211,
+										"target": 212,
 										"name": "IUser",
 										"package": "@strafechat/strafe.js"
 									}
@@ -4437,7 +4457,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 9,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L9"
 						}
 					],
 					"type": {
@@ -4455,7 +4475,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 213,
+						"target": 214,
 						"name": "IUser.accent_color"
 					}
 				},
@@ -4472,42 +4492,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 10,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L10"
-						}
-					],
-					"type": {
-						"type": "union",
-						"types": [
-							{
-								"type": "literal",
-								"value": null
-							},
-							{
-								"type": "intrinsic",
-								"name": "string"
-							}
-						]
-					},
-					"implementationOf": {
-						"type": "reference",
-						"target": 214,
-						"name": "IUser.avatar"
-					}
-				},
-				{
-					"id": 187,
-					"name": "avatar_decoration",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {
-						"isPublic": true
-					},
-					"sources": [
-						{
-							"fileName": "src/structure/User.ts",
-							"line": 11,
-							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L10"
 						}
 					],
 					"type": {
@@ -4526,6 +4511,41 @@
 					"implementationOf": {
 						"type": "reference",
 						"target": 215,
+						"name": "IUser.avatar"
+					}
+				},
+				{
+					"id": 187,
+					"name": "avatar_decoration",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {
+						"isPublic": true
+					},
+					"sources": [
+						{
+							"fileName": "src/structure/User.ts",
+							"line": 11,
+							"character": 11,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L11"
+						}
+					],
+					"type": {
+						"type": "union",
+						"types": [
+							{
+								"type": "literal",
+								"value": null
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
+					},
+					"implementationOf": {
+						"type": "reference",
+						"target": 216,
 						"name": "IUser.avatar_decoration"
 					}
 				},
@@ -4542,7 +4562,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 12,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L12"
 						}
 					],
 					"type": {
@@ -4551,7 +4571,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 216,
+						"target": 217,
 						"name": "IUser.banned"
 					}
 				},
@@ -4568,7 +4588,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 13,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L13"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L13"
 						}
 					],
 					"type": {
@@ -4586,7 +4606,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 217,
+						"target": 218,
 						"name": "IUser.banner"
 					}
 				},
@@ -4603,7 +4623,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 14,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L14"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L14"
 						}
 					],
 					"type": {
@@ -4612,7 +4632,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 218,
+						"target": 219,
 						"name": "IUser.bot"
 					}
 				},
@@ -4629,7 +4649,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 15,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L15"
 						}
 					],
 					"type": {
@@ -4638,7 +4658,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 219,
+						"target": 220,
 						"name": "IUser.created_at"
 					}
 				},
@@ -4655,7 +4675,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 16,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L16"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L16"
 						}
 					],
 					"type": {
@@ -4664,7 +4684,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 220,
+						"target": 221,
 						"name": "IUser.discriminator"
 					}
 				},
@@ -4681,7 +4701,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 17,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L17"
 						}
 					],
 					"type": {
@@ -4690,7 +4710,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 222,
+						"target": 223,
 						"name": "IUser.edited_at"
 					}
 				},
@@ -4707,7 +4727,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 18,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L18"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L18"
 						}
 					],
 					"type": {
@@ -4725,7 +4745,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 221,
+						"target": 222,
 						"name": "IUser.email"
 					}
 				},
@@ -4742,7 +4762,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 19,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L19"
 						}
 					],
 					"type": {
@@ -4751,7 +4771,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 223,
+						"target": 224,
 						"name": "IUser.flags"
 					}
 				},
@@ -4768,7 +4788,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 20,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L20"
 						}
 					],
 					"type": {
@@ -4777,7 +4797,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 224,
+						"target": 225,
 						"name": "IUser.global_name"
 					}
 				},
@@ -4794,7 +4814,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 8,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L8"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L8"
 						}
 					],
 					"type": {
@@ -4803,7 +4823,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 212,
+						"target": 213,
 						"name": "IUser.id"
 					}
 				},
@@ -4820,7 +4840,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 21,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L21"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L21"
 						}
 					],
 					"type": {
@@ -4829,7 +4849,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 225,
+						"target": 226,
 						"name": "IUser.premium_type"
 					}
 				},
@@ -4846,7 +4866,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 22,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L22"
 						}
 					],
 					"type": {
@@ -4857,7 +4877,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 226,
+						"target": 227,
 						"name": "IUser.presence"
 					}
 				},
@@ -4874,7 +4894,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 23,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L23"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L23"
 						}
 					],
 					"type": {
@@ -4883,7 +4903,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 227,
+						"target": 228,
 						"name": "IUser.public_flags"
 					}
 				},
@@ -4900,7 +4920,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 24,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L24"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L24"
 						}
 					],
 					"type": {
@@ -4909,7 +4929,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 228,
+						"target": 229,
 						"name": "IUser.system"
 					}
 				},
@@ -4926,7 +4946,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 25,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L25"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L25"
 						}
 					],
 					"type": {
@@ -4935,7 +4955,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 229,
+						"target": 230,
 						"name": "IUser.username"
 					}
 				},
@@ -4952,7 +4972,7 @@
 							"fileName": "src/structure/User.ts",
 							"line": 26,
 							"character": 11,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L26"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L26"
 						}
 					],
 					"type": {
@@ -4961,7 +4981,7 @@
 					},
 					"implementationOf": {
 						"type": "reference",
-						"target": 230,
+						"target": 231,
 						"name": "IUser.verified"
 					}
 				}
@@ -5003,7 +5023,7 @@
 					"fileName": "src/structure/User.ts",
 					"line": 6,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/structure/User.ts#L6"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/structure/User.ts#L6"
 				}
 			],
 			"extendedBy": [
@@ -5016,7 +5036,7 @@
 			"implementedTypes": [
 				{
 					"type": "reference",
-					"target": 211,
+					"target": 212,
 					"name": "IUser",
 					"package": "@strafechat/strafe.js"
 				}
@@ -5038,9 +5058,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 15,
+							"line": 17,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L17"
 						}
 					],
 					"signatures": [
@@ -5061,9 +5081,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 15,
+									"line": 17,
 									"character": 4,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L15"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L17"
 								}
 							],
 							"parameters": [
@@ -5109,9 +5129,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 8,
+							"line": 10,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L8"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L10"
 						}
 					],
 					"type": {
@@ -5153,9 +5173,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 15,
+							"line": 17,
 							"character": 24,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L17"
 						}
 					],
 					"type": {
@@ -5176,9 +5196,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 7,
+							"line": 9,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L7"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L9"
 						}
 					],
 					"type": {
@@ -5207,9 +5227,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 9,
+							"line": 11,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L9"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L11"
 						}
 					],
 					"type": {
@@ -5244,9 +5264,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 20,
+							"line": 22,
 							"character": 17,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L20"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L22"
 						}
 					],
 					"signatures": [
@@ -5267,9 +5287,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 20,
+									"line": 22,
 									"character": 17,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L20"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L22"
 								}
 							],
 							"type": {
@@ -5301,9 +5321,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 63,
+							"line": 66,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L63"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L66"
 						}
 					],
 					"signatures": [
@@ -5316,9 +5336,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 63,
+									"line": 66,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L63"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L66"
 								}
 							],
 							"type": {
@@ -5339,9 +5359,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 74,
+							"line": 77,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L74"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L77"
 						}
 					],
 					"signatures": [
@@ -5354,9 +5374,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 74,
+									"line": 77,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L74"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L77"
 								}
 							],
 							"type": {
@@ -5377,9 +5397,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 90,
+							"line": 93,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L90"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L93"
 						}
 					],
 					"signatures": [
@@ -5392,9 +5412,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 90,
+									"line": 93,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L90"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L93"
 								}
 							],
 							"type": {
@@ -5415,9 +5435,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 80,
+							"line": 83,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L80"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L83"
 						}
 					],
 					"signatures": [
@@ -5430,9 +5450,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 80,
+									"line": 83,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L80"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L83"
 								}
 							],
 							"parameters": [
@@ -5466,9 +5486,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 86,
+							"line": 89,
 							"character": 12,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L86"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L89"
 						}
 					],
 					"signatures": [
@@ -5481,9 +5501,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 86,
+									"line": 89,
 									"character": 12,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L86"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L89"
 								}
 							],
 							"type": {
@@ -5525,9 +5545,9 @@
 			"sources": [
 				{
 					"fileName": "src/client/WebsocketClient.ts",
-					"line": 5,
+					"line": 7,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/client/WebsocketClient.ts#L5"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/client/WebsocketClient.ts#L7"
 				}
 			]
 		},
@@ -5549,7 +5569,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 2,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L2"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L2"
 						}
 					],
 					"type": {
@@ -5571,7 +5591,7 @@
 					"fileName": "src/types/index.ts",
 					"line": 1,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L1"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L1"
 				}
 			]
 		},
@@ -5595,7 +5615,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 6,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L6"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L6"
 						}
 					],
 					"type": {
@@ -5619,19 +5639,19 @@
 					"fileName": "src/types/index.ts",
 					"line": 5,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L5"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L5"
 				}
 			]
 		},
 		{
-			"id": 211,
+			"id": 212,
 			"name": "IUser",
 			"variant": "declaration",
 			"kind": 256,
 			"flags": {},
 			"children": [
 				{
-					"id": 213,
+					"id": 214,
 					"name": "accent_color",
 					"variant": "declaration",
 					"kind": 1024,
@@ -5639,9 +5659,9 @@
 					"sources": [
 						{
 							"fileName": "src/types/index.ts",
-							"line": 17,
+							"line": 19,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L17"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L19"
 						}
 					],
 					"type": {
@@ -5659,7 +5679,7 @@
 					}
 				},
 				{
-					"id": 214,
+					"id": 215,
 					"name": "avatar",
 					"variant": "declaration",
 					"kind": 1024,
@@ -5667,37 +5687,9 @@
 					"sources": [
 						{
 							"fileName": "src/types/index.ts",
-							"line": 18,
+							"line": 20,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L18"
-						}
-					],
-					"type": {
-						"type": "union",
-						"types": [
-							{
-								"type": "literal",
-								"value": null
-							},
-							{
-								"type": "intrinsic",
-								"name": "string"
-							}
-						]
-					}
-				},
-				{
-					"id": 215,
-					"name": "avatar_decoration",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 19,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L19"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L20"
 						}
 					],
 					"type": {
@@ -5716,26 +5708,7 @@
 				},
 				{
 					"id": 216,
-					"name": "banned",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 20,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L20"
-						}
-					],
-					"type": {
-						"type": "intrinsic",
-						"name": "boolean"
-					}
-				},
-				{
-					"id": 217,
-					"name": "banner",
+					"name": "avatar_decoration",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -5744,7 +5717,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 21,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L21"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L21"
 						}
 					],
 					"type": {
@@ -5762,8 +5735,8 @@
 					}
 				},
 				{
-					"id": 218,
-					"name": "bot",
+					"id": 217,
+					"name": "banned",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -5772,7 +5745,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 22,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L22"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L22"
 						}
 					],
 					"type": {
@@ -5781,8 +5754,8 @@
 					}
 				},
 				{
-					"id": 219,
-					"name": "created_at",
+					"id": 218,
+					"name": "banner",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -5791,17 +5764,26 @@
 							"fileName": "src/types/index.ts",
 							"line": 23,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L23"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L23"
 						}
 					],
 					"type": {
-						"type": "intrinsic",
-						"name": "number"
+						"type": "union",
+						"types": [
+							{
+								"type": "literal",
+								"value": null
+							},
+							{
+								"type": "intrinsic",
+								"name": "string"
+							}
+						]
 					}
 				},
 				{
-					"id": 220,
-					"name": "discriminator",
+					"id": 219,
+					"name": "bot",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -5810,26 +5792,26 @@
 							"fileName": "src/types/index.ts",
 							"line": 24,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L24"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L24"
 						}
 					],
 					"type": {
 						"type": "intrinsic",
-						"name": "number"
+						"name": "boolean"
 					}
 				},
 				{
-					"id": 222,
-					"name": "edited_at",
+					"id": 220,
+					"name": "created_at",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
 					"sources": [
 						{
 							"fileName": "src/types/index.ts",
-							"line": 26,
+							"line": 25,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L26"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L25"
 						}
 					],
 					"type": {
@@ -5839,6 +5821,44 @@
 				},
 				{
 					"id": 221,
+					"name": "discriminator",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 26,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L26"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 223,
+					"name": "edited_at",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 28,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L28"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 222,
 					"name": "email",
 					"variant": "declaration",
 					"kind": 1024,
@@ -5846,9 +5866,9 @@
 					"sources": [
 						{
 							"fileName": "src/types/index.ts",
-							"line": 25,
+							"line": 27,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L25"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L27"
 						}
 					],
 					"type": {
@@ -5866,65 +5886,8 @@
 					}
 				},
 				{
-					"id": 223,
-					"name": "flags",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 27,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L27"
-						}
-					],
-					"type": {
-						"type": "intrinsic",
-						"name": "number"
-					}
-				},
-				{
 					"id": 224,
-					"name": "global_name",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 28,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L28"
-						}
-					],
-					"type": {
-						"type": "intrinsic",
-						"name": "string"
-					}
-				},
-				{
-					"id": 212,
-					"name": "id",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 16,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L16"
-						}
-					],
-					"type": {
-						"type": "intrinsic",
-						"name": "string"
-					}
-				},
-				{
-					"id": 225,
-					"name": "premium_type",
+					"name": "flags",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -5933,7 +5896,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 29,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L29"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L29"
 						}
 					],
 					"type": {
@@ -5942,8 +5905,8 @@
 					}
 				},
 				{
-					"id": 226,
-					"name": "presence",
+					"id": 225,
+					"name": "global_name",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -5952,7 +5915,64 @@
 							"fileName": "src/types/index.ts",
 							"line": 30,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L30"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L30"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 213,
+					"name": "id",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 18,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L18"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 226,
+					"name": "premium_type",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 31,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L31"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "number"
+					}
+				},
+				{
+					"id": 227,
+					"name": "presence",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 32,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L32"
 						}
 					],
 					"type": {
@@ -5963,46 +5983,8 @@
 					}
 				},
 				{
-					"id": 227,
-					"name": "public_flags",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 31,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L31"
-						}
-					],
-					"type": {
-						"type": "intrinsic",
-						"name": "number"
-					}
-				},
-				{
 					"id": 228,
-					"name": "system",
-					"variant": "declaration",
-					"kind": 1024,
-					"flags": {},
-					"sources": [
-						{
-							"fileName": "src/types/index.ts",
-							"line": 32,
-							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L32"
-						}
-					],
-					"type": {
-						"type": "intrinsic",
-						"name": "boolean"
-					}
-				},
-				{
-					"id": 229,
-					"name": "username",
+					"name": "public_flags",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -6011,17 +5993,17 @@
 							"fileName": "src/types/index.ts",
 							"line": 33,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L33"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L33"
 						}
 					],
 					"type": {
 						"type": "intrinsic",
-						"name": "string"
+						"name": "number"
 					}
 				},
 				{
-					"id": 230,
-					"name": "verified",
+					"id": 229,
+					"name": "system",
 					"variant": "declaration",
 					"kind": 1024,
 					"flags": {},
@@ -6030,7 +6012,45 @@
 							"fileName": "src/types/index.ts",
 							"line": 34,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L34"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L34"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "boolean"
+					}
+				},
+				{
+					"id": 230,
+					"name": "username",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 35,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L35"
+						}
+					],
+					"type": {
+						"type": "intrinsic",
+						"name": "string"
+					}
+				},
+				{
+					"id": 231,
+					"name": "verified",
+					"variant": "declaration",
+					"kind": 1024,
+					"flags": {},
+					"sources": [
+						{
+							"fileName": "src/types/index.ts",
+							"line": 36,
+							"character": 4,
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L36"
 						}
 					],
 					"type": {
@@ -6043,7 +6063,6 @@
 				{
 					"title": "Properties",
 					"children": [
-						213,
 						214,
 						215,
 						216,
@@ -6051,26 +6070,27 @@
 						218,
 						219,
 						220,
-						222,
 						221,
 						223,
+						222,
 						224,
-						212,
 						225,
+						213,
 						226,
 						227,
 						228,
 						229,
-						230
+						230,
+						231
 					]
 				}
 			],
 			"sources": [
 				{
 					"fileName": "src/types/index.ts",
-					"line": 15,
+					"line": 17,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L15"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L17"
 				}
 			],
 			"implementedBy": [
@@ -6099,7 +6119,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 10,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L10"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L10"
 						}
 					],
 					"type": {
@@ -6118,7 +6138,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 11,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L11"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L11"
 						}
 					],
 					"type": {
@@ -6137,7 +6157,7 @@
 							"fileName": "src/types/index.ts",
 							"line": 12,
 							"character": 4,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L12"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L12"
 						}
 					],
 					"type": {
@@ -6161,9 +6181,28 @@
 					"fileName": "src/types/index.ts",
 					"line": 9,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/types/index.ts#L9"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L9"
 				}
 			]
+		},
+		{
+			"id": 211,
+			"name": "Events",
+			"variant": "declaration",
+			"kind": 2097152,
+			"flags": {},
+			"sources": [
+				{
+					"fileName": "src/types/index.ts",
+					"line": 15,
+					"character": 12,
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/types/index.ts#L15"
+				}
+			],
+			"type": {
+				"type": "literal",
+				"value": "READY"
+			}
 		},
 		{
 			"id": 151,
@@ -6186,7 +6225,7 @@
 					"fileName": "src/config/index.ts",
 					"line": 4,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c893aa1/src/config/index.ts#L4"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c0790a5/src/config/index.ts#L4"
 				}
 			],
 			"type": {
@@ -6217,8 +6256,14 @@
 			"children": [
 				203,
 				205,
-				211,
+				212,
 				207
+			]
+		},
+		{
+			"title": "Type Aliases",
+			"children": [
+				211
 			]
 		},
 		{
@@ -7083,81 +7128,85 @@
 		},
 		"211": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser"
+			"qualifiedName": "Events"
 		},
 		"212": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.id"
+			"qualifiedName": "IUser"
 		},
 		"213": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.accent_color"
+			"qualifiedName": "IUser.id"
 		},
 		"214": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.avatar"
+			"qualifiedName": "IUser.accent_color"
 		},
 		"215": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.avatar_decoration"
+			"qualifiedName": "IUser.avatar"
 		},
 		"216": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.banned"
+			"qualifiedName": "IUser.avatar_decoration"
 		},
 		"217": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.banner"
+			"qualifiedName": "IUser.banned"
 		},
 		"218": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.bot"
+			"qualifiedName": "IUser.banner"
 		},
 		"219": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.created_at"
+			"qualifiedName": "IUser.bot"
 		},
 		"220": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.discriminator"
+			"qualifiedName": "IUser.created_at"
 		},
 		"221": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.email"
+			"qualifiedName": "IUser.discriminator"
 		},
 		"222": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.edited_at"
+			"qualifiedName": "IUser.email"
 		},
 		"223": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.flags"
+			"qualifiedName": "IUser.edited_at"
 		},
 		"224": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.global_name"
+			"qualifiedName": "IUser.flags"
 		},
 		"225": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.premium_type"
+			"qualifiedName": "IUser.global_name"
 		},
 		"226": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.presence"
+			"qualifiedName": "IUser.premium_type"
 		},
 		"227": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.public_flags"
+			"qualifiedName": "IUser.presence"
 		},
 		"228": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.system"
+			"qualifiedName": "IUser.public_flags"
 		},
 		"229": {
 			"sourceFileName": "src/types/index.ts",
-			"qualifiedName": "IUser.username"
+			"qualifiedName": "IUser.system"
 		},
 		"230": {
+			"sourceFileName": "src/types/index.ts",
+			"qualifiedName": "IUser.username"
+		},
+		"231": {
 			"sourceFileName": "src/types/index.ts",
 			"qualifiedName": "IUser.verified"
 		}

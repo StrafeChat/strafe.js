@@ -153,9 +153,20 @@ export interface Signature {
 
 export interface Comment {
     summary: Summary[];
+    blockTags?: BlockTag[];
 }
 
 export interface Summary {
+    kind: string;
+    text: string;
+}
+
+export interface BlockTag {
+    tag: string;
+    content: BlockTagContent[]
+}
+
+export interface BlockTagContent {
     kind: string;
     text: string;
 }

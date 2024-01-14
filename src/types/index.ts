@@ -12,6 +12,8 @@ export interface UserPresence {
     status_text: string;
 }
 
+export type Events = "READY";
+
 export interface IUser {
     id: string;
     accent_color: number | null;

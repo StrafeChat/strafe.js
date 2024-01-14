@@ -1,6 +1,8 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
+import { ClientUser } from "../structure/ClientUser";
 import { Client } from "./Client";
+import { Events } from "../types";
 
 export class WebsocketClient {
 
@@ -27,14 +29,12 @@ export class WebsocketClient {
 
         this._ws = new WebSocket(this.gateway);
 
-        console.log(this.gateway, this._ws);
-
         this._ws!.addEventListener("open", () => {
             this.identify();
         });
 
         this._ws!.addEventListener("message", (message) => {
-            const { op, data, event } = JSON.parse(message.data.toString()) as { op: OpCodes, data: any, event: string };
+            const { op, data, event } = JSON.parse(message.data.toString()) as { op: OpCodes, data: any, event: Events };
 
             switch (op) {
                 case OpCodes.HELLO:
@@ -44,8 +44,11 @@ export class WebsocketClient {
                 case OpCodes.DISPATCH:
                     switch (event) {
                         case "READY":
-                            this.client.user = data.user;
-                            this.client.emit("ready", this.client);
+                            this.client.user = new ClientUser(data.user);
+                            this.client.emit("ready", data);
+                            break;
+                        default:
+                            this.client.emit("error", { message: "An unknown event has been emitted. Is strafe.js up to date?" });
                             break;
                     }
                     break;

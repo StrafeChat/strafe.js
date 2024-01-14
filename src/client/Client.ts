@@ -6,6 +6,9 @@ import { WebsocketClient } from "./WebsocketClient";
 
 /**
  * The main hub for interacting with strafe.
+ * @extends EventEmitter2
+ * @fires ready - Emitted when the client is ready.
+ * @fires error - Emitted when an error occurs.
  */
 export class Client extends EventEmitter2 {
 
