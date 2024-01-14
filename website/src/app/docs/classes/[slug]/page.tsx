@@ -82,7 +82,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <button className="uppercase flex items-center gap-2 font-bold w-fit" onClick={() => setShowProps(!showProps)}><span className={`${showProps ? "rotate-0" : "-rotate-90"}`}><IoIosArrowDown /></span>Properties</button>
                     <ul className="jumpto-wrapper">
                         {showProps && properties.map((prop, key) => (
-                            <li key={key}><Link href={`#${prop.name}`} className="link">{prop.name}</Link></li>
+                            <li key={key}><Link href={``} className="link">{prop.name}</Link></li>
                         ))}
                     </ul>
                 </div>}
@@ -90,7 +90,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <button className="uppercase flex items-center gap-2 font-bold w-fit" onClick={() => setShowMethods(!showMethods)}><span className={`${showProps ? "rotate-0" : "-rotate-90"}`}><IoIosArrowDown /></span>Methods</button>
                     <ul className="jumpto-wrapper">
                         {showMethods && methods.map((meth, key) => (
-                            <li key={key}><Link href={`#${meth.name}`} className="link">{meth.name}</Link></li>
+                            <li key={key}><Link href={``} className="link">{meth.name}</Link></li>
                         ))}
                     </ul>
                 </div>}
@@ -101,8 +101,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <ul className="flex flex-col gap-4 w-full">
                         {properties.map((prop, key) => (
                             <li id={prop.name} className="p-4 rounded-md bg-card w-full relative" key={key}>
-                                <Link href={prop.sources[0].url} target="_blank" className="absolute right-3 link"><FaGithub /></Link>
-                                <Link href={`#${prop.name}`} className="link">{prop.name}</Link>
+                                <Link href={``} target="_blank" className="absolute right-3 link"><FaGithub /></Link>
+                                <Link href={``} className="link">{prop.name}</Link>
                                 <p>{prop.comment ? prop.comment.summary[0].text : "No Description."}</p>
                                 <p className="font-bold">Type: <MapType data={prop} type="property" /></p>
                             </li>
@@ -116,8 +116,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <ul className="flex flex-col gap-4 w-full">
                         {methods.map((meth, key) => (
                             <li id={meth.name} key={key} className="p-4 rounded-md bg-card w-full relative">
-                                <Link href={meth.sources[0].url} target="_blank" className="absolute right-3 link"><FaGithub /></Link>
-                                <Link href={`#${meth.name}`} className="link">{meth.name}()</Link>
+                                <Link href={``} target="_blank" className="absolute right-3 link"><FaGithub /></Link>
+                                <Link href={``} className="link">{meth.name}()</Link>
                                 <p>{meth.comment ? meth.comment.summary[0].text : "No Description."}</p>
                             </li>
                         ))}
