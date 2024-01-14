@@ -1,8 +1,8 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { Client } from "./Client";
 import { Events } from "../types";
+import { Client } from "./Client";
 
 export class WebsocketClient {
 
@@ -21,9 +21,14 @@ export class WebsocketClient {
      */
     public async connect() {
         if (!this.gateway) {
-            const res = await fetch(this.client.config.equinox + "/gateway");
+            try {
+                var res = await fetch(this.client.config.equinox + "/gateway");
+            } catch (err) {
+                this.client.emit("error", "Looks like the Strafe API is down. Please try reconnecting later.")
+                throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`)
+            }
+
             const data = await res.json() as { ws: string };
-            if (!res.ok) throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
             this.gateway = data.ws;
         }
 
@@ -48,7 +53,7 @@ export class WebsocketClient {
                             this.client.emit("ready", data);
                             break;
                         default:
-                            this.client.emit("error", { message: "An unknown event has been emitted. Is strafe.js up to date?" });
+                            this.client.emit("error", "An unknown event has been emitted. Is strafe.js up to date?");
                             break;
                     }
                     break;
@@ -56,10 +61,11 @@ export class WebsocketClient {
         });
 
         this._ws.addEventListener("close", (event) => {
+            console.log(event)
+            this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect."});
             setTimeout(() => {
                 this.reconnect();
             }, 5000);
-            console.error("CLOSED ->", event);
         })
     }
 
