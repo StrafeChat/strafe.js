@@ -49,8 +49,12 @@ export class WebsocketClient {
                 case OpCodes.DISPATCH:
                     switch (event) {
                         case "READY":
-                            this.client.user = new ClientUser(data.user);
+                            this.client.user = new ClientUser({ ...data.user, client: this.client });
                             this.client.emit("ready", data);
+                            break;
+                        case "PRESENCE_UPDATE":
+                            if (this.client.user?.id === data.user.id) this.client.user!.presence = data.presence;
+                            this.client.emit("presenceUpdate", data);
                             break;
                         default:
                             this.client.emit("error", "An unknown event has been emitted. Is strafe.js up to date?");
@@ -62,11 +66,15 @@ export class WebsocketClient {
 
         this._ws.addEventListener("close", (event) => {
             console.log(event)
-            this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect."});
+            this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect." });
             setTimeout(() => {
                 this.reconnect();
             }, 5000);
         })
+    }
+
+    public async send({ op, data }: { op: OpCodes, data: any }) {
+        this._ws?.send(JSON.stringify({ op, data }));
     }
 
     private identify() {

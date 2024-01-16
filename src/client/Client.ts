@@ -1,5 +1,5 @@
 import { EventEmitter2 } from "eventemitter2";
-import { API } from "../config";
+import { API, CDN } from "../config";
 import { ClientUser } from "../structure/ClientUser";
 import { ClientOptions } from "../types";
 import { WebsocketClient } from "./WebsocketClient";
@@ -14,6 +14,7 @@ export class Client extends EventEmitter2 {
 
     public config = {
         equinox: API,
+        nebula: CDN,
     };
 
     /**
@@ -37,7 +38,12 @@ export class Client extends EventEmitter2 {
      */
     constructor(options?: ClientOptions) {
         super();
-        if (options && options.config) this.config.equinox = options.config.equinox ?? this.config.equinox;
+        
+        if (options && options.config) {
+            this.config.equinox = options.config.equinox ?? this.config.equinox;
+            this.config.nebula = options.config.nebula ?? this.config.nebula;
+        };
+
         this.ws = new WebsocketClient(this);
     }
 

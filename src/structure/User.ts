@@ -1,3 +1,4 @@
+import { Client } from "../client/Client";
 import { IUser, UserPresence } from "../types";
 
 /**
@@ -12,6 +13,7 @@ export class User implements IUser {
     public banned: boolean;
     public banner: string | null;
     public bot: boolean;
+    public client: Client;
     public created_at: number;
     public discriminator: number;
     public edited_at: number;
@@ -33,6 +35,7 @@ export class User implements IUser {
         this.banned = data.banned;
         this.banner = data.banner;
         this.bot = data.bot;
+        this.client = data.client;
         this.created_at = data.created_at;
         this.discriminator = data.discriminator;
         this.email = null;

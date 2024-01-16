@@ -1,9 +1,12 @@
+import { Client } from "../client/Client";
+
 export interface ClientConfig {
     equinox: string;
+    nebula: string;
 }
 
 export interface ClientOptions {
-    config?: ClientConfig
+    config?: Partial<ClientConfig>
 }
 
 export interface UserPresence {
@@ -12,9 +15,10 @@ export interface UserPresence {
     status_text: string;
 }
 
-export type Events = "READY";
+export type Events = "READY" | "PRESENCE_UPDATE";
 
 export interface IUser {
+    client: Client;
     id: string;
     accent_color: number | null;
     avatar: string | null;
