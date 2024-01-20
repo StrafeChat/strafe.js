@@ -7,9 +7,12 @@ import { User } from "./User";
  */
 export class ClientUser extends User {
 
+    public email: string;
+
     constructor(data: IUser) {
         super(data);
         this.email = data.email!;
+        this.phone_number = data.phone_number;
     }
 
     public async setPresence(presence: Partial<UserPresence>) {
