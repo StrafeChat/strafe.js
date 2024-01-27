@@ -1,5 +1,5 @@
 import { OpCodes } from "../config";
-import { IUser, UserPresence } from "../types";
+import { ClientUserEditOptions, IUser, UserPresence } from "../types";
 import { User } from "./User";
 
 /**
@@ -17,5 +17,27 @@ export class ClientUser extends User {
 
     public async setPresence(presence: Partial<UserPresence>) {
         await this.client.ws.send({ op: OpCodes.PRESENCE, data: presence });
+    }
+
+    public async edit(data: Partial<ClientUserEditOptions>) {
+        const res = await fetch(`${this.client.config.equinox}/users/@me`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": this.client.token!
+            },
+            body: JSON.stringify(data)
+        });
+
+        const resData = await res.json() as Partial<{
+            username: string;
+            email: string;
+            message: string;
+        }>;
+
+        if (!res.ok) throw new Error("Failed to edit user: " + resData.message);
+
+        this.username = resData.username || this.username;
+        this.email = resData.email || this.email;
     }
 }

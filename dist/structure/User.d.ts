@@ -1,29 +1,9 @@
 import { Client } from "../client/Client";
-
-export interface ClientConfig {
-    equinox: string;
-    nebula: string;
-}
-
-export interface ClientOptions {
-    config?: Partial<ClientConfig>
-}
-
-export interface UserPresence {
-    online: boolean;
-    status: string;
-    status_text: string;
-}
-
-export interface ClientUserEditOptions {
-    username: string;
-    email: string;
-}
-
-export type Events = "READY" | "PRESENCE_UPDATE";
-
-export interface IUser {
-    client: Client;
+import { IUser, UserPresence } from "../types";
+/**
+ * Represents a user on strafe.
+ */
+export declare class User implements IUser {
     id: string;
     accent_color: number | null;
     avatar: string | null;
@@ -31,10 +11,11 @@ export interface IUser {
     banned: boolean;
     banner: string | null;
     bot: boolean;
+    client: Client;
     created_at: number;
     discriminator: number;
-    email: string | null;
     edited_at: number;
+    email: string | null;
     flags: number;
     global_name: string;
     phone_number: string | null;
@@ -44,4 +25,5 @@ export interface IUser {
     system: boolean;
     username: string;
     verified: boolean;
+    constructor(data: IUser);
 }

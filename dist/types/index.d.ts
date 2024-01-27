@@ -1,27 +1,21 @@
 import { Client } from "../client/Client";
-
 export interface ClientConfig {
     equinox: string;
     nebula: string;
 }
-
 export interface ClientOptions {
-    config?: Partial<ClientConfig>
+    config?: Partial<ClientConfig>;
 }
-
 export interface UserPresence {
     online: boolean;
     status: string;
     status_text: string;
 }
-
 export interface ClientUserEditOptions {
     username: string;
     email: string;
 }
-
 export type Events = "READY" | "PRESENCE_UPDATE";
-
 export interface IUser {
     client: Client;
     id: string;
