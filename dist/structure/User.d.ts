@@ -18,6 +18,7 @@ export declare class User implements IUser {
     email: string | null;
     flags: number;
     global_name: string;
+    locale: string | null;
     phone_number: string | null;
     premium_type: number;
     presence: UserPresence;

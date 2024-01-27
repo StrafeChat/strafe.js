@@ -63,6 +63,7 @@ var ClientUser = /** @class */ (function (_super) {
         var _this = _super.call(this, data) || this;
         _this.email = data.email;
         _this.phone_number = data.phone_number;
+        _this.locale = data.locale;
         return _this;
     }
     ClientUser.prototype.setPresence = function (presence) {
@@ -98,6 +99,7 @@ var ClientUser = /** @class */ (function (_super) {
                         if (!res.ok)
                             throw new Error("Failed to edit user: " + resData.message);
                         this.username = resData.username || this.username;
+                        this.discriminator = resData.discriminator || this.discriminator;
                         this.email = resData.email || this.email;
                         return [2 /*return*/];
                 }

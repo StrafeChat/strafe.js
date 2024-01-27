@@ -31,6 +31,7 @@ export interface IUser {
     edited_at: number;
     flags: number;
     global_name: string;
+    locale: string | null;
     phone_number: string | null;
     premium_type: number;
     presence: UserPresence;

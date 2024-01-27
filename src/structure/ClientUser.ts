@@ -8,11 +8,13 @@ import { User } from "./User";
 export class ClientUser extends User {
 
     public email: string;
+    public locale: string;
 
     constructor(data: IUser) {
         super(data);
         this.email = data.email!;
         this.phone_number = data.phone_number;
+        this.locale = data.locale!;
     }
 
     public async setPresence(presence: Partial<UserPresence>) {
@@ -31,6 +33,7 @@ export class ClientUser extends User {
 
         const resData = await res.json() as Partial<{
             username: string;
+            discriminator: number;
             email: string;
             message: string;
         }>;
@@ -38,6 +41,7 @@ export class ClientUser extends User {
         if (!res.ok) throw new Error("Failed to edit user: " + resData.message);
 
         this.username = resData.username || this.username;
+        this.discriminator = resData.discriminator || this.discriminator;
         this.email = resData.email || this.email;
     }
 }

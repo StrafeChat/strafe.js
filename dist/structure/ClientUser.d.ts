@@ -5,6 +5,7 @@ import { User } from "./User";
  */
 export declare class ClientUser extends User {
     email: string;
+    locale: string;
     constructor(data: IUser);
     setPresence(presence: Partial<UserPresence>): Promise<void>;
     edit(data: Partial<ClientUserEditOptions>): Promise<void>;

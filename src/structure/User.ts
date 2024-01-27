@@ -20,6 +20,7 @@ export class User implements IUser {
     public email: string | null;
     public flags: number;
     public global_name: string;
+    public locale: string | null;
     public phone_number: string | null;
     public premium_type: number;
     public presence: UserPresence;
@@ -43,6 +44,7 @@ export class User implements IUser {
         this.edited_at = data.edited_at;
         this.flags = data.flags;
         this.global_name = data.global_name;
+        this.locale = data.locale;
         this.phone_number = null;
         this.premium_type = data.premium_type;
         this.presence = data.presence;

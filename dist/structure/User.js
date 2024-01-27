@@ -20,6 +20,7 @@ var User = /** @class */ (function () {
         this.edited_at = data.edited_at;
         this.flags = data.flags;
         this.global_name = data.global_name;
+        this.locale = data.locale;
         this.phone_number = null;
         this.premium_type = data.premium_type;
         this.presence = data.presence;
