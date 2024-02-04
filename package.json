@@ -1,6 +1,6 @@
 {
   "name": "@strafechat/strafe.js",
-  "version": "1.0.1",
+  "version": "1.0.6",
   "description": "NodeJS library for interacting with the Strafe API and websocket.",
   "repository": "https://github.com/StrafeChat/strafe.js",
   "homepage": "https://strafe.js.org",
@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc -p . && typedoc --json website/docs.json"
   },
-  "keywords": [],
+  "keywords": ["strafe", "strafechat", "strafe.js"],
   "author": "StrafeChat <docs.strafe.chat>",
   "license": "MIT",
   "dependencies": {

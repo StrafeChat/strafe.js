@@ -28,6 +28,7 @@ export class ClientUser extends User {
                 "Content-Type": "application/json",
                 "Authorization": this.client.token!
             },
+            credentials: "include",
             body: JSON.stringify(data)
         });
 
