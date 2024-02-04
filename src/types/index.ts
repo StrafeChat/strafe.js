@@ -18,6 +18,7 @@ export interface UserPresence {
 export interface ClientUserEditOptions {
     username: string;
     email: string;
+    locale: string;
 }
 
 export type Events = "READY" | "PRESENCE_UPDATE";

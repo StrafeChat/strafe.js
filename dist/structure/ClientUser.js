@@ -101,6 +101,7 @@ var ClientUser = /** @class */ (function (_super) {
                         this.username = resData.username || this.username;
                         this.discriminator = resData.discriminator || this.discriminator;
                         this.email = resData.email || this.email;
+                        this.locale = resData.locale || this.locale;
                         return [2 /*return*/];
                 }
             });
