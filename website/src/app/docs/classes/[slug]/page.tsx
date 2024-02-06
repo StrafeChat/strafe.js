@@ -54,8 +54,6 @@ export default function Page({ params }: { params: { slug: string } }) {
         init();
     }, [currentClass, init]);
 
-    console.log(events);
-
     const MapType = ({ data, type }: { data: Property, type: "property" | "method" }) => {
 
         let resultArr: string[] = [];
@@ -77,7 +75,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                 }
                 break;
         }
-        return resultArr.map((result, key) => <Link href={""} key={key} >{result}</Link>);
+        return resultArr.map((result, key) => <><Link className="link" href={""} key={key} >{result}</Link>{resultArr.length - 1 != key && " | "}</>);
     }
 
     if (!currentClass) return (
@@ -89,10 +87,6 @@ export default function Page({ params }: { params: { slug: string } }) {
     return (
         <div className="flex flex-col h-[calc(100vh-56px)] p-4 overflow-y-auto flex-grow">
             <h1 className="font-bold">{params.slug}</h1>
-            {/* {(() => {
-                console.log(currentClass.children[0])
-                return <></>
-            })()} */}
 
             <div className={`grid grid-cols-1 md:grid-cols-${events.length > 0 ? '3' : '2'} jumpto-container`}>
                 {properties.length > 0 && <div className="flex flex-col mb-4">
@@ -128,7 +122,11 @@ export default function Page({ params }: { params: { slug: string } }) {
                             <li id={prop.name} className="p-4 rounded-md bg-card w-full relative" key={key}>
                                 <Link href={``} target="_blank" className="absolute right-3 link"><FaGithub /></Link>
                                 <Link href={``} className="link">{prop.name}</Link>
-                                <p>{prop.comment ? prop.comment.summary[0].text : "No Description."}</p>
+                                <p>
+                                    {prop.comment && prop.comment.summary && prop.comment.summary[0] && prop.comment.summary[0].text
+                                        ? prop.comment.summary[0].text
+                                        : "No Description."}
+                                </p>
                                 <p className="font-bold">Type: <MapType data={prop} type="property" /></p>
                             </li>
                         ))}
