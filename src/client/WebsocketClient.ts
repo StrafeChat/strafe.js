@@ -4,6 +4,9 @@ import { ClientUser } from "../structure/ClientUser";
 import { Events } from "../types";
 import { Client } from "./Client";
 
+/**
+ * Represents a websocket client.
+ */
 export class WebsocketClient {
 
     private gateway: string | null = null;
@@ -24,7 +27,7 @@ export class WebsocketClient {
             try {
                 var res = await fetch(this.client.config.equinox + "/gateway");
             } catch (err) {
-                this.client.emit("error", "Looks like the Strafe API is down. Please try reconnecting later.")
+                this.client.emit("error", { message: "Looks like the Strafe API is down. Please try reconnecting later." })
                 throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`)
             }
 
@@ -57,7 +60,7 @@ export class WebsocketClient {
                             this.client.emit("presenceUpdate", data);
                             break;
                         default:
-                            this.client.emit("error", "An unknown event has been emitted. Is strafe.js up to date?");
+                            this.client.emit("error", { message: "An unknown event has been emitted. Is strafe.js up to date?" });
                             break;
                     }
                     break;
@@ -67,12 +70,19 @@ export class WebsocketClient {
         this._ws.addEventListener("close", (event) => {
             console.log(event)
             this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect." });
-            setTimeout(() => {
-                this.reconnect();
-            }, 5000);
+            if (event.code > 1000 && event.code != 4004) {
+                setTimeout(() => {
+                    this.reconnect();
+                }, 5000);
+            }
         })
     }
 
+    /**
+     * Sends a message to stargate.
+     * @param op The opcode of the message.
+     * @param data The data of the message.
+     */
     public async send({ op, data }: { op: OpCodes, data: any }) {
         this._ws?.send(JSON.stringify({ op, data }));
     }
