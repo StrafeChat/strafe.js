@@ -38,3 +38,53 @@ export enum OpCodes {
     HELLO = 10,
 
 }
+
+/**
+ * List of error codes from equinox.
+ */
+export enum ErrorCodes {
+    /**
+     * An unknown error occured.
+     */
+    UNKNOWN = 4000,
+
+    /**
+     * An invalid opcode was sent.
+     */
+    UNKNOWN_OPCODE = 4001,
+
+    /**
+     * An invalid payload was sent.
+     */
+    DECODE_ERROR = 4002,
+
+    /**
+     * The user is not authenticated.
+     */
+    NOT_AUTHENTICATED = 4003,
+
+    /**
+     * The token is invalid.
+     */
+    INVALID_TOKEN = 4004,
+
+    /**
+     * The user is already authenticated.
+     */
+    ALREADY_AUTHENTICATED = 4005,
+    
+    /**
+     * The session has timed out.
+     */
+    SESSION_TIMED_OUT = 4006,
+    
+    /**
+     * The user is being rate limited.
+     */
+    RATE_LIMIT = 4007,
+    
+    /**
+     * The user has not been verified.
+     */
+    NOT_VERIFIED = 4008,
+}
