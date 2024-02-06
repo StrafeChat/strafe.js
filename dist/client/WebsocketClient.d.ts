@@ -1,5 +1,8 @@
 import { OpCodes } from "../config";
 import { Client } from "./Client";
+/**
+ * Represents a websocket client.
+ */
 export declare class WebsocketClient {
     private client;
     private gateway;
@@ -14,6 +17,11 @@ export declare class WebsocketClient {
      * Establishes a websocket connection to stargate.
      */
     connect(): Promise<void>;
+    /**
+     * Sends a message to stargate.
+     * @param op The opcode of the message.
+     * @param data The data of the message.
+     */
     send({ op, data }: {
         op: OpCodes;
         data: any;

@@ -59,6 +59,10 @@ var User_1 = require("./User");
  */
 var ClientUser = /** @class */ (function (_super) {
     __extends(ClientUser, _super);
+    /**
+     * Creates a new instance of a ClientUser.
+     * @param data The data for the user.
+     */
     function ClientUser(data) {
         var _this = _super.call(this, data) || this;
         _this.email = data.email;
@@ -66,6 +70,10 @@ var ClientUser = /** @class */ (function (_super) {
         _this.locale = data.locale;
         return _this;
     }
+    /**
+     * Sets the presence of the client user.
+     * @param presence The presence to set.
+     */
     ClientUser.prototype.setPresence = function (presence) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -78,6 +86,10 @@ var ClientUser = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * Edits the client user.
+     * @param data The data to edit the user with.
+     */
     ClientUser.prototype.edit = function (data) {
         return __awaiter(this, void 0, void 0, function () {
             var res, resData;
@@ -89,6 +101,7 @@ var ClientUser = /** @class */ (function (_super) {
                                 "Content-Type": "application/json",
                                 "Authorization": this.client.token
                             },
+                            credentials: "include",
                             body: JSON.stringify(data)
                         })];
                     case 1:

@@ -54,6 +54,9 @@ exports.WebsocketClient = void 0;
 var isomorphic_ws_1 = __importDefault(require("isomorphic-ws"));
 var config_1 = require("../config");
 var ClientUser_1 = require("../structure/ClientUser");
+/**
+ * Represents a websocket client.
+ */
 var WebsocketClient = /** @class */ (function () {
     /**
      * Constructs a new WebsocketClient.
@@ -85,7 +88,7 @@ var WebsocketClient = /** @class */ (function () {
                         return [3 /*break*/, 4];
                     case 3:
                         err_1 = _a.sent();
-                        this.client.emit("error", "Looks like the Strafe API is down. Please try reconnecting later.");
+                        this.client.emit("error", { message: "Looks like the Strafe API is down. Please try reconnecting later." });
                         throw new Error("Looks like ".concat(this.client.config.equinox + "/gateway", " might be down!"));
                     case 4: return [4 /*yield*/, res.json()];
                     case 5:
@@ -117,7 +120,7 @@ var WebsocketClient = /** @class */ (function () {
                                             _this.client.emit("presenceUpdate", data);
                                             break;
                                         default:
-                                            _this.client.emit("error", "An unknown event has been emitted. Is strafe.js up to date?");
+                                            _this.client.emit("error", { message: "An unknown event has been emitted. Is strafe.js up to date?" });
                                             break;
                                     }
                                     break;
@@ -126,15 +129,22 @@ var WebsocketClient = /** @class */ (function () {
                         this._ws.addEventListener("close", function (event) {
                             console.log(event);
                             _this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect." });
-                            setTimeout(function () {
-                                _this.reconnect();
-                            }, 5000);
+                            if (event.code > 1000 && event.code != 4004) {
+                                setTimeout(function () {
+                                    _this.reconnect();
+                                }, 5000);
+                            }
                         });
                         return [2 /*return*/];
                 }
             });
         });
     };
+    /**
+     * Sends a message to stargate.
+     * @param op The opcode of the message.
+     * @param data The data of the message.
+     */
     WebsocketClient.prototype.send = function (_a) {
         var _b;
         var op = _a.op, data = _a.data;

@@ -5,6 +5,11 @@ exports.User = void 0;
  * Represents a user on strafe.
  */
 var User = /** @class */ (function () {
+    /**
+     * Creates a new instance of a User.
+     * @param data The data for the user.
+     * @param client The client.
+     */
     function User(data) {
         this.id = data.id;
         this.accent_color = data.accent_color;
