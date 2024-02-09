@@ -8,7 +8,11 @@
   "scripts": {
     "build": "tsc -p . && typedoc --json website/docs.json"
   },
-  "keywords": ["strafe", "strafechat", "strafe.js"],
+  "keywords": [
+    "strafe",
+    "strafechat",
+    "strafe.js"
+  ],
   "author": "StrafeChat <docs.strafe.chat>",
   "license": "MIT",
   "dependencies": {
@@ -18,6 +22,7 @@
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
+    "@types/react": "^18.2.55",
     "@types/ws": "^8.5.10",
     "typedoc": "^0.25.6"
   },

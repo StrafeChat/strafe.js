@@ -47,5 +47,12 @@ class CacheManager {
     forEach(fn) {
         this._cache.forEach(fn);
     }
+    map(fn) {
+        const elements = [];
+        this._cache.forEach((value, key, collection) => {
+            elements.push(fn(value, key, collection));
+        });
+        return elements;
+    }
 }
 exports.CacheManager = CacheManager;

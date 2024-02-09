@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { Client } from "../client/Client";
 import { Collection } from "../util/Collection";
 /**
@@ -21,4 +22,5 @@ export declare class CacheManager<T> {
     keys(): IterableIterator<string>;
     entries(): IterableIterator<[string, T]>;
     forEach(fn: (value: T, key: string, collection: Collection<T>) => void): void;
+    map(fn: (value: T, key: string, collection: Collection<T>) => JSX.Element): JSX.Element[];
 }

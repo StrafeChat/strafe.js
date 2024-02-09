@@ -56,4 +56,12 @@ export class CacheManager<T> {
     public forEach(fn: (value: T, key: string, collection: Collection<T>) => void) {
         this._cache.forEach(fn);
     }
+
+    public map(fn: (value: T, key: string, collection: Collection<T>) => JSX.Element) {
+        const elements: JSX.Element[] = [];
+        this._cache.forEach((value, key, collection) => {
+            elements.push(fn(value, key, collection));
+        });
+        return elements;
+    }
 }
