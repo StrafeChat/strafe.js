@@ -1,36 +1,59 @@
 import { Client } from "../client/Client";
+import { Collection } from "../util/Collection";
 
 /**
  * Cache Manager
- * @extends {Map<string, T>}
  */
-export class CacheManager<T> extends Map<string, T> {
+export class CacheManager<T> {
+
+    private _cache: Collection<T> = new Collection();
 
     /**
      * Constructs a new Cache Manager
      */
-    constructor(public client: Client) {
-        super();
+    constructor(public client: Client) { }
+
+    public get(id: string): T | null {
+        return this._cache.get(id) || null;
     }
 
-    /**
-     * Get a cached object by it's key
-     * @param key Key of the cached object
-     * @returns {T} The cached object or undefined
-     */
-    public get(key: string): T | undefined {
-        // TODO: Implement LRU System
-        return super.get(key);
+    public set(id: string, data: T) {
+        this._cache.set(id, data);
     }
 
-    /**
-     * Cache an object by a key for retrieval
-     * @param key The key of the cached object
-     * @param value The object to cache
-     * @returns Instance of the CacheManager
-     */
-    public set(key: string, value: T): this {
-        // TODO: Implement LRU System
-        return super.set(key, value);
+    public delete(id: string) {
+        this._cache.delete(id);
+    }
+
+    public clear() {
+        this._cache.clear();
+    }
+
+    public has(id: string) {
+        return this._cache.has(id);
+    }
+
+    public toArray() {
+        return Array.from(this._cache);
+    }
+
+    public size() {
+        return this._cache.size;
+    }
+
+    public values() {
+        return this._cache.values();
+    }
+
+    public keys() {
+        return this._cache.keys();
+    }
+
+    public entries() {
+        return this._cache.entries();
+    }
+
+    public forEach(fn: (value: T, key: string, collection: Collection<T>) => void) {
+        this._cache.forEach(fn);
     }
 }

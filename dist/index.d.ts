@@ -7,3 +7,4 @@ export * from "./structure/ClientUser";
 export * from "./structure/Space";
 export * from "./structure/User";
 export * from "./types";
+export * from "./util/Collection";

@@ -23,3 +23,4 @@ __exportStar(require("./structure/ClientUser"), exports);
 __exportStar(require("./structure/Space"), exports);
 __exportStar(require("./structure/User"), exports);
 __exportStar(require("./types"), exports);
+__exportStar(require("./util/Collection"), exports);

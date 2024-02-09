@@ -1,25 +1,24 @@
 import { Client } from "../client/Client";
+import { Collection } from "../util/Collection";
 /**
  * Cache Manager
- * @extends {Map<string, T>}
  */
-export declare class CacheManager<T> extends Map<string, T> {
+export declare class CacheManager<T> {
     client: Client;
+    private _cache;
     /**
      * Constructs a new Cache Manager
      */
     constructor(client: Client);
-    /**
-     * Get a cached object by it's key
-     * @param key Key of the cached object
-     * @returns {T} The cached object or undefined
-     */
-    get(key: string): T | undefined;
-    /**
-     * Cache an object by a key for retrieval
-     * @param key The key of the cached object
-     * @param value The object to cache
-     * @returns Instance of the CacheManager
-     */
-    set(key: string, value: T): this;
+    get(id: string): T | null;
+    set(id: string, data: T): void;
+    delete(id: string): void;
+    clear(): void;
+    has(id: string): boolean;
+    toArray(): [string, T][];
+    size(): number;
+    values(): IterableIterator<T>;
+    keys(): IterableIterator<string>;
+    entries(): IterableIterator<[string, T]>;
+    forEach(fn: (value: T, key: string, collection: Collection<T>) => void): void;
 }

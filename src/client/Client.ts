@@ -167,7 +167,7 @@ export class Client extends EventEmitter2 {
      * @param icon The icon of the space.
      */
     public async createSpace(name: string, icon?: string) {
-        const res = await fetch(`${this.config.equinox}/api/v1/spaces}`, {
+        const res = await fetch(`${this.config.equinox}/spaces`, {
             method: "POST",
             headers: {
                 "Authorization": `${this.token}`,
