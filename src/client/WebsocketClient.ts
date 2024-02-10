@@ -12,6 +12,7 @@ export class WebsocketClient {
     private gateway: string | null = null;
     private _ws: WebSocket | null = null;
     private heartbeatInterval: NodeJS.Timeout | null = null;
+    
 
     /**
      * Constructs a new WebsocketClient.
@@ -43,7 +44,6 @@ export class WebsocketClient {
 
         this._ws!.addEventListener("message", (message) => {
             const { op, data, event } = JSON.parse(message.data.toString()) as { op: OpCodes, data: any, event: Events };
-
             switch (op) {
                 case OpCodes.HELLO:
                     const { heartbeat_interval } = data;
@@ -53,6 +53,9 @@ export class WebsocketClient {
                     switch (event) {
                         case "READY":
                             this.client.user = new ClientUser({ ...data.user, client: this.client });
+                            data.spaces.forEach((space: any) => {
+                                this.client.spaces.set(space.id, space)
+                            })
                             this.client.emit("ready", data);
                             break;
                         case "PRESENCE_UPDATE":

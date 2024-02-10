@@ -52,6 +52,9 @@ class WebsocketClient {
                     switch (event) {
                         case "READY":
                             this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
+                            data.spaces.forEach((space) => {
+                                this.client.spaces.set(space.id, space);
+                            });
                             this.client.emit("ready", data);
                             break;
                         case "PRESENCE_UPDATE":

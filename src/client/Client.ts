@@ -179,11 +179,12 @@ export class Client extends EventEmitter2 {
             })
         });
 
-        const data = await res.json() as ApiError | ISpace;
+        const data = await res.json() as any;
+        let spaceData = data.space;
+        spaceData.rooms = data.rooms;
 
         if (!res.ok) throw new Error((data as ApiError).message);
-
-        const space = new Space(data as ISpace);
+        const space = new Space(spaceData as ISpace);
         this.spaces.set(space.id, space);
         
         return space;

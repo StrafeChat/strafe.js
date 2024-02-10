@@ -160,9 +160,11 @@ class Client extends eventemitter2_1.EventEmitter2 {
             })
         });
         const data = await res.json();
+        let spaceData = data.space;
+        spaceData.rooms = data.rooms;
         if (!res.ok)
             throw new Error(data.message);
-        const space = new Space_1.Space(data);
+        const space = new Space_1.Space(spaceData);
         this.spaces.set(space.id, space);
         return space;
     }
