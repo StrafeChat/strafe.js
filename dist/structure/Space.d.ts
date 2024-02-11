@@ -1,3 +1,5 @@
+import { RoomManager } from "../managers/RoomManager";
+import { MemberManager } from "../managers/MemberManager";
 import { ISpace } from "../types";
 /**
  * Represents a space on Strafe.
@@ -38,7 +40,11 @@ export declare class Space implements ISpace {
     /**
      * The rooms of the space.
      */
-    readonly rooms: any[];
+    readonly rooms: RoomManager;
+    /**
+ * The rooms of the space.
+ */
+    readonly members: MemberManager;
     /**
      * The roles of the space.
      */

@@ -30,7 +30,7 @@ class CacheManager {
         return this._cache.has(id);
     }
     toArray() {
-        return Array.from(this._cache);
+        return Array.from(this._cache.values());
     }
     size() {
         return this._cache.size;
@@ -45,12 +45,24 @@ class CacheManager {
         return this._cache.entries();
     }
     forEach(fn) {
-        this._cache.forEach(fn);
+        this._cache.forEach((value, key) => {
+            fn(value, key, this._cache);
+        });
     }
-    map(fn) {
+    map(fn, filterFn, sortFn) {
         const elements = [];
-        this._cache.forEach((value, key, collection) => {
-            elements.push(fn(value, key, collection));
+        // Apply filtering if provided
+        let filteredCache = this._cache;
+        if (filterFn) {
+            filteredCache = filteredCache.filter((value, key, collection) => filterFn(value, key, collection));
+        }
+        // Apply sorting if provided
+        if (sortFn) {
+            filteredCache = filteredCache.sort((a, b) => sortFn(a, b));
+        }
+        // Generate elements
+        filteredCache.forEach((value, key) => {
+            elements.push(fn(value, key, this._cache));
         });
         return elements;
     }

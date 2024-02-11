@@ -34,7 +34,7 @@ export class CacheManager<T> {
     }
 
     public toArray() {
-        return Array.from(this._cache);
+        return Array.from(this._cache.values());
     }
 
     public size() {
@@ -53,15 +53,31 @@ export class CacheManager<T> {
         return this._cache.entries();
     }
 
-    public forEach(fn: (value: T, key: string, collection: Collection<T>) => void) {
-        this._cache.forEach(fn);
+    public forEach(fn: (value: T, key: string, map: Map<string, T>) => void) {
+        this._cache.forEach((value, key) => {
+            fn(value, key, this._cache);
+        });
     }
 
-    public map(fn: (value: T, key: string, collection: Collection<T>) => JSX.Element) {
-        const elements: JSX.Element[] = [];
-        this._cache.forEach((value, key, collection) => {
-            elements.push(fn(value, key, collection));
+    public map(fn: (value: T, key: string, collection: Collection<T>) => any, filterFn?: (value: T, key: string, collection: Collection<T>) => boolean, sortFn?: (a: T, b: T) => number) {
+        const elements: any[] = [];
+        
+        // Apply filtering if provided
+        let filteredCache = this._cache;
+        if (filterFn) {
+            filteredCache = filteredCache.filter((value, key, collection) => filterFn(value, key, collection));
+        }
+        
+        // Apply sorting if provided
+        if (sortFn) {
+            filteredCache = filteredCache.sort((a, b) => sortFn(a, b));
+        }
+    
+        // Generate elements
+        filteredCache.forEach((value, key) => {
+            elements.push(fn(value, key, this._cache));
         });
+    
         return elements;
     }
 }

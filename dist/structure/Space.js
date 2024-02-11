@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Space = void 0;
+const Client_1 = require("../client/Client");
+const RoomManager_1 = require("../managers/RoomManager");
+const MemberManager_1 = require("../managers/MemberManager");
+const Room_1 = require("./Room");
+const Member_1 = require("./Member");
 /**
  * Represents a space on Strafe.
  */
@@ -41,6 +46,10 @@ class Space {
      * The rooms of the space.
      */
     rooms;
+    /**
+ * The rooms of the space.
+ */
+    members;
     /**
      * The roles of the space.
      */
@@ -90,7 +99,6 @@ class Space {
         this.afk_room_id = data.afk_room_id;
         this.afk_timeout = data.afk_timeout;
         this.verifcation_level = data.verifcation_level;
-        this.rooms = data.rooms;
         this.roles = data.roles;
         this.rules_room_id = data.rules_room_id;
         this.description = data.description;
@@ -100,6 +108,20 @@ class Space {
         this.emojis = data.emojis;
         this.created_at = data.created_at;
         this.edited_at = data.edited_at;
+        this.rooms = new RoomManager_1.RoomManager(new Client_1.Client);
+        if (data.rooms) {
+            data.rooms.forEach((roomData) => {
+                const room = new Room_1.Room(roomData);
+                this.rooms.set(room.id, room);
+            });
+        }
+        this.members = new MemberManager_1.MemberManager(new Client_1.Client);
+        if (data.members) {
+            data.members.forEach((membersData) => {
+                const member = new Member_1.Member(membersData);
+                this.members.set(member.user_id, member);
+            });
+        }
     }
 }
 exports.Space = Space;

@@ -7,6 +7,9 @@ exports.WebsocketClient = void 0;
 const isomorphic_ws_1 = __importDefault(require("isomorphic-ws"));
 const config_1 = require("../config");
 const ClientUser_1 = require("../structure/ClientUser");
+const Space_1 = require("../structure/Space");
+const Room_1 = require("../structure/Room");
+const Member_1 = require("../structure/Member");
 /**
  * Represents a websocket client.
  */
@@ -52,7 +55,18 @@ class WebsocketClient {
                     switch (event) {
                         case "READY":
                             this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
-                            data.spaces.forEach((space) => {
+                            data.spaces.forEach((spaceData) => {
+                                const space = new Space_1.Space(spaceData);
+                                if (spaceData.rooms) {
+                                    spaceData.rooms.forEach((roomData) => {
+                                        const room = new Room_1.Room(roomData);
+                                        space.rooms.set(room.id, room);
+                                    });
+                                    spaceData.members.forEach((membersData) => {
+                                        const member = new Member_1.Member(membersData);
+                                        space.members.set(member.user_id, member);
+                                    });
+                                }
                                 this.client.spaces.set(space.id, space);
                             });
                             this.client.emit("ready", data);
@@ -60,6 +74,18 @@ class WebsocketClient {
                         case "PRESENCE_UPDATE":
                             if (this.client.user?.id === data.user.id)
                                 this.client.user.presence = data.presence;
+                            this.client.spaces
+                                .toArray()
+                                .map((space) => {
+                                let member = space.members.get(data.user.id);
+                                console.log(member);
+                                if (!data.user.space_ids.includes(space.id))
+                                    return;
+                                let oldUser = data.user;
+                                let presence = data.presence;
+                                let user = { ...oldUser, presence };
+                                space.members.set(data.user.id, { ...member, user });
+                            });
                             this.client.emit("presenceUpdate", data);
                             break;
                         default:

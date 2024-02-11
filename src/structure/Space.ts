@@ -1,4 +1,9 @@
-import { ISpace } from "../types";
+import { Client } from "../client/Client";
+import { RoomManager } from "../managers/RoomManager";
+import { MemberManager } from "../managers/MemberManager";
+import { IRoom, ISpace, ISpaceMember } from "../types";
+import { Room } from "./Room";
+import { Member } from "./Member";
 
 /**
  * Represents a space on Strafe.
@@ -48,7 +53,12 @@ export class Space implements ISpace {
     /**
      * The rooms of the space.
      */
-    public readonly rooms: any[];
+    public readonly rooms: RoomManager;
+
+        /**
+     * The rooms of the space.
+     */
+        public readonly members: MemberManager;
 
     /**
      * The roles of the space.
@@ -99,6 +109,7 @@ export class Space implements ISpace {
      * Creates a new instance of a space.
      * @param data The data for the space.
      */
+    
     constructor(data: ISpace) {
         this.id = data.id;
         this.name = data.name;
@@ -108,7 +119,6 @@ export class Space implements ISpace {
         this.afk_room_id = data.afk_room_id;
         this.afk_timeout = data.afk_timeout;
         this.verifcation_level = data.verifcation_level;
-        this.rooms = data.rooms;
         this.roles = data.roles;
         this.rules_room_id = data.rules_room_id;
         this.description = data.description;
@@ -118,5 +128,19 @@ export class Space implements ISpace {
         this.emojis = data.emojis;
         this.created_at = data.created_at;
         this.edited_at = data.edited_at;
+        this.rooms = new RoomManager(new Client);
+        if (data.rooms) {
+            data.rooms.forEach((roomData: IRoom) => {
+                const room = new Room(roomData);
+                this.rooms.set(room.id, room);
+            });
+        }
+        this.members = new MemberManager(new Client);
+        if (data.members) {
+            data.members.forEach((membersData: ISpaceMember) => {
+                const member = new Member(membersData);
+                this.members.set(member.user_id, member);
+            });
+        }
     }
 }

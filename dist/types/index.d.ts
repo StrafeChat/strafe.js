@@ -110,7 +110,8 @@ export interface ISpace {
     afk_room_id: string;
     afk_timeout: number;
     verifcation_level: number;
-    rooms: any[];
+    rooms: any;
+    members: any;
     roles: never[];
     rules_room_id: string;
     description: string;
@@ -120,6 +121,45 @@ export interface ISpace {
     emojis: never[];
     created_at: number;
     edited_at: number;
+}
+export interface PermissionOverwrite {
+    id: string;
+    type: number;
+    allow_flags: number;
+    deny_flags: number;
+}
+export interface IRoom {
+    id: string;
+    type: number;
+    space_id: string | null;
+    position: number;
+    owner_id: string | null;
+    permission_overwrites: PermissionOverwrite[];
+    name: string | null;
+    topic: string | null;
+    last_message_id: string | null;
+    bitrate: number | null;
+    user_limit: number | null;
+    rate_limit: number | null;
+    recipients: string[];
+    icon: string | null;
+    parent_id: string | null;
+    last_pin_timestamp: string | null;
+    rtc_region: number | null;
+    created_at: number;
+    edited_at: number;
+}
+export interface ISpaceMember {
+    user_id: string;
+    space_id: string;
+    nick: string | null;
+    roles: string[];
+    joined_at: number;
+    deaf: boolean;
+    mute: boolean;
+    avatar: string | null;
+    edited_at: number;
+    user: IUser;
 }
 /***
  * @typedef {Object} ApiError
