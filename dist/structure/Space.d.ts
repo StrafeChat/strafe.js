@@ -1,3 +1,4 @@
+import { Client } from "../client/Client";
 import { RoomManager } from "../managers/RoomManager";
 import { MemberManager } from "../managers/MemberManager";
 import { ISpace } from "../types";
@@ -5,6 +6,7 @@ import { ISpace } from "../types";
  * Represents a space on Strafe.
  */
 export declare class Space implements ISpace {
+    readonly client: Client;
     /**
      * The ID of the space.
      */

@@ -10,6 +10,8 @@ import { Member } from "./Member";
  */
 export class Space implements ISpace {
 
+    public readonly client: Client;
+
     /**
      * The ID of the space.
      */
@@ -111,6 +113,7 @@ export class Space implements ISpace {
      */
     
     constructor(data: ISpace) {
+        this.client = data.client;
         this.id = data.id;
         this.name = data.name;
         this.name_acronym = data.name_acronym;
@@ -131,6 +134,7 @@ export class Space implements ISpace {
         this.rooms = new RoomManager(new Client);
         if (data.rooms) {
             data.rooms.forEach((roomData: IRoom) => {
+                roomData.client = this.client;
                 const room = new Room(roomData);
                 this.rooms.set(room.id, room);
             });

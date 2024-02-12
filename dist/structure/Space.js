@@ -10,6 +10,7 @@ const Member_1 = require("./Member");
  * Represents a space on Strafe.
  */
 class Space {
+    client;
     /**
      * The ID of the space.
      */
@@ -91,6 +92,7 @@ class Space {
      * @param data The data for the space.
      */
     constructor(data) {
+        this.client = data.client;
         this.id = data.id;
         this.name = data.name;
         this.name_acronym = data.name_acronym;
@@ -111,6 +113,7 @@ class Space {
         this.rooms = new RoomManager_1.RoomManager(new Client_1.Client);
         if (data.rooms) {
             data.rooms.forEach((roomData) => {
+                roomData.client = this.client;
                 const room = new Room_1.Room(roomData);
                 this.rooms.set(room.id, room);
             });

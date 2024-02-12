@@ -78,7 +78,6 @@ export class WebsocketClient {
                             .toArray()
                             .map((space: ISpace) => {
                               let member = space.members.get(data.user.id);
-                              console.log(member)
                               if (!data.user.space_ids.includes(space.id)) return;
                               let oldUser = data.user;
                               let presence = data.presence;
@@ -87,6 +86,15 @@ export class WebsocketClient {
                         })
                             this.client.emit("presenceUpdate", data);
                             break;
+                        case "MESSAGE_CREATE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                room?.messages.set(data.id, data)
+                                console.log(data.id)
+                                this.client.emit("messageCreate", data)
+                            }
+                        break;
                         default:
                             this.client.emit("error", { message: "An unknown event has been emitted. Is strafe.js up to date?" });
                             break;
@@ -96,7 +104,6 @@ export class WebsocketClient {
         });
 
         this._ws.addEventListener("close", (event) => {
-            console.log(event)
             this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect." });
             if (event.code > 1000 && event.code != 4004) {
                 setTimeout(() => {

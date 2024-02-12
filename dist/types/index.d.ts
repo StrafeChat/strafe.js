@@ -1,4 +1,5 @@
 import { Client } from "../client/Client";
+import { MessageManager } from "../managers/MessageManager";
 /***
  * @typedef {Object} ClientConfig
  * @property {string} equinox
@@ -37,10 +38,13 @@ export interface ClientUserEditOptions {
     email: string;
     locale: string;
 }
+export interface RoomMessageOptions {
+    content: string;
+}
 /***
- * @typedef {"READY" | "PRESENCE_UPDATE"} Events
+ * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE";
 export interface ReadyEvent {
     user: IUser;
 }
@@ -50,6 +54,7 @@ export interface EventMap {
     ready: ReadyEvent;
     error: ErrorEvent;
     presenceUpdate: any;
+    messageCreate: any;
 }
 /***
  * @typedef {Object} ClientEvents
@@ -102,6 +107,7 @@ export interface IUser {
  * @property {number} edited_at
  */
 export interface ISpace {
+    client: Client;
     id: string;
     name: string;
     name_acronym: string;
@@ -129,6 +135,8 @@ export interface PermissionOverwrite {
     deny_flags: number;
 }
 export interface IRoom {
+    created_at: number;
+    client: Client;
     id: string;
     type: number;
     space_id: string | null;
@@ -142,11 +150,11 @@ export interface IRoom {
     user_limit: number | null;
     rate_limit: number | null;
     recipients: string[];
+    messages: MessageManager;
     icon: string | null;
     parent_id: string | null;
     last_pin_timestamp: string | null;
     rtc_region: number | null;
-    created_at: number;
     edited_at: number;
 }
 export interface ISpaceMember {
@@ -160,6 +168,33 @@ export interface ISpaceMember {
     avatar: string | null;
     edited_at: number;
     user: IUser;
+}
+export interface IMessage {
+    client: Client;
+    id: string;
+    room_id: string;
+    author_id: string;
+    author: IUser;
+    space_id: string | null;
+    content: string | null;
+    created_at: number;
+    edited_at: number | null;
+    tts: boolean;
+    mention_everyone: boolean;
+    mentions: string[] | null;
+    mention_roles: string[] | null;
+    mention_rooms: string[] | null;
+    attachments: string[] | null;
+    embeds: any[] | null;
+    reactions: any[] | null;
+    pinned: boolean;
+    webhook_id: string | null;
+    system: boolean;
+    message_reference_id: string | null;
+    flags: number | null;
+    thread_id: string | null;
+    stickers: string[] | null;
+    nonce: number | null;
 }
 /***
  * @typedef {Object} ApiError
