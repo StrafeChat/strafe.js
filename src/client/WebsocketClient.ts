@@ -61,6 +61,7 @@ export class WebsocketClient {
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData: any) => {
                                         const room = new Room(roomData);
+                                        room.messages.set()
                                         space.rooms.set(room.id, room);
                                     });
                                     spaceData.members.forEach((membersData: any) => {
