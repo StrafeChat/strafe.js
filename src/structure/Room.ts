@@ -156,7 +156,7 @@ export class Room implements IRoom {
 
   public async send(data: Partial<RoomMessageOptions>) {
     const res = await fetch(
-      `${this.client.config.equinox}/v1/rooms/${this.id}/messages`,
+      `${this.client.config.equinox}/rooms/${this.id}/messages`,
       {
         method: "POST",
         headers: {
@@ -177,5 +177,25 @@ export class Room implements IRoom {
     const message = new Message(resData as IMessage);
 
     return message;
+  }
+
+  public async sendTyping() {
+    const res = await fetch(
+      `${this.client.config.equinox}/rooms/${this.id}/typing`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: this.client.token!,
+        },
+      }
+    );
+
+    const resData = (await res.json()) as ApiError | IMessage;
+
+    if (!res.ok || res.status !== 409)
+      throw new Error(
+        "Failed to send typing request: " + (resData as ApiError).message
+      );
   }
 }

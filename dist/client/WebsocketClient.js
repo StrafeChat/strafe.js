@@ -34,7 +34,7 @@ class WebsocketClient {
                 var res = await fetch(this.client.config.equinox + "/gateway");
             }
             catch (err) {
-                this.client.emit("error", { message: "Looks like the Strafe API is down. Please try reconnecting later." });
+                this.client.emit("error", { code: 503, message: "Looks like the Strafe API is down. Please try reconnecting later." });
                 throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
             }
             const data = await res.json();
@@ -60,6 +60,7 @@ class WebsocketClient {
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData) => {
                                         const room = new Room_1.Room(roomData);
+                                        room.client = this.client;
                                         space.rooms.set(room.id, room);
                                     });
                                     spaceData.members.forEach((membersData) => {
@@ -97,14 +98,14 @@ class WebsocketClient {
                             }
                             break;
                         default:
-                            this.client.emit("error", { message: "An unknown event has been emitted. Is strafe.js up to date?" });
+                            this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
                             break;
                     }
                     break;
             }
         });
         this._ws.addEventListener("close", (event) => {
-            this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect." });
+            this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
             if (event.code > 1000 && event.code != 4004) {
                 setTimeout(() => {
                     this.reconnect();

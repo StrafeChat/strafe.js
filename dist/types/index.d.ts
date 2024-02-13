@@ -202,4 +202,5 @@ export interface IMessage {
  */
 export interface ApiError {
     message: string;
+    code: number;
 }
