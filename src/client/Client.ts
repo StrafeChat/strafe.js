@@ -170,12 +170,11 @@ export class Client extends EventEmitter2 {
         const res = await fetch(`${this.config.equinox}/spaces`, {
             method: "POST",
             headers: {
-                "Authorization": `${this.token}`,
+                "authorization": `${this.token}`,
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 name,
-                icon
             })
         });
 
