@@ -5,7 +5,7 @@ import { ISpace } from "../types";
 /**
  * Represents a space on Strafe.
  */
-export declare class Space implements ISpace {
+export declare class Space {
     readonly client: Client;
     /**
      * The ID of the space.
@@ -18,7 +18,7 @@ export declare class Space implements ISpace {
     /**
      * The acronym of the space.
      */
-    readonly name_acronym: string;
+    readonly nameAcronym: string;
     /**
      * The icon of the space.
      */
@@ -26,26 +26,26 @@ export declare class Space implements ISpace {
     /**
      * The owner of the space.
      */
-    readonly owner_id: string;
+    readonly ownerId: string;
     /**
      * The AFK room of the space.
      */
-    readonly afk_room_id: string;
+    readonly afkRoomId: string;
     /**
      * The AFK timeout of the space.
      */
-    readonly afk_timeout: number;
+    readonly afkTimeout: number;
     /**
      * The verification level of the space.
      */
-    readonly verifcation_level: number;
+    readonly verifcationLevel: number;
     /**
      * The rooms of the space.
      */
     readonly rooms: RoomManager;
     /**
- * The rooms of the space.
- */
+     * The rooms of the space.
+     */
     readonly members: MemberManager;
     /**
      * The roles of the space.
@@ -54,7 +54,7 @@ export declare class Space implements ISpace {
     /**
      * The rules room of the space.
      */
-    readonly rules_room_id: string;
+    readonly rulesRoomId: string;
     /**
      * The description of the space.
      */
@@ -66,7 +66,7 @@ export declare class Space implements ISpace {
     /**
      * The preferred locale of the space.
      */
-    readonly preferred_locale: string;
+    readonly preferredLocale: string;
     /**
      * The stickers of the space.
      */
@@ -78,11 +78,11 @@ export declare class Space implements ISpace {
     /**
      * The creation date of the space.
      */
-    readonly created_at: number;
+    readonly createdAt: number;
     /**
      * The edit date of the space.
      */
-    readonly edited_at: number;
+    readonly editedAt: number;
     /**
      * Creates a new instance of a space.
      * @param data The data for the space.

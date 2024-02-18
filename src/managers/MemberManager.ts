@@ -27,7 +27,7 @@ export class MemberManager extends CacheManager<Member> {
         if (!res.ok) throw new Error(`${res.status} ${(data as ApiError).message}`);
 
         const member = new Member(data as ISpaceMember);
-        this.set(member.user_id, member);
+        this.set(member.userId, member);
         return member;
     }
 }

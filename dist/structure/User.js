@@ -12,7 +12,7 @@ class User {
     /**
      * The user's accent color.
      */
-    accent_color;
+    accentColor;
     /**
      * The user's avatar.
      */
@@ -20,7 +20,7 @@ class User {
     /**
      * The user's avatar decoration.
      */
-    avatar_decoration;
+    avatarDecoration;
     /**
      * Whether the user is banned.
      */
@@ -40,7 +40,7 @@ class User {
     /**
      * The user's creation date.
      */
-    created_at;
+    createdAt;
     /**
      * The user's discriminator.
      */
@@ -48,7 +48,7 @@ class User {
     /**
      * The user's edit date.
      */
-    edited_at;
+    editedAt;
     /**
      * The user's email.
      */
@@ -60,7 +60,7 @@ class User {
     /**
      * The user's global name.
      */
-    global_name;
+    globalName;
     /**
      * The user's locale.
      */
@@ -68,11 +68,11 @@ class User {
     /**
      * The user's phone number.
      */
-    phone_number;
+    phoneNumber;
     /**
      * The user's premium type.
      */
-    premium_type;
+    premiumType;
     /**
      * The user's presence.
      */
@@ -80,7 +80,7 @@ class User {
     /**
      * The user's public flags.
      */
-    public_flags;
+    publicFlags;
     /**
      * Whether the user is a system user.
      */
@@ -100,24 +100,24 @@ class User {
      */
     constructor(data) {
         this.id = data.id;
-        this.accent_color = data.accent_color;
+        this.accentColor = data.accent_color;
         this.avatar = data.avatar;
-        this.avatar_decoration = data.avatar_decoration;
+        this.avatarDecoration = data.avatar_decoration;
         this.banned = data.banned;
         this.banner = data.banner;
         this.bot = data.bot;
         this.client = data.client;
-        this.created_at = data.created_at;
+        this.createdAt = data.created_at;
         this.discriminator = data.discriminator;
         this.email = null;
-        this.edited_at = data.edited_at;
+        this.editedAt = data.edited_at;
         this.flags = data.flags;
-        this.global_name = data.global_name;
+        this.globalName = data.global_name;
         this.locale = data.locale;
-        this.phone_number = null;
-        this.premium_type = data.premium_type;
+        this.phoneNumber = null;
+        this.premiumType = data.premium_type;
         this.presence = data.presence;
-        this.public_flags = data.public_flags;
+        this.publicFlags = data.public_flags;
         this.system = data.system;
         this.username = data.username;
         this.verified = data.verified;

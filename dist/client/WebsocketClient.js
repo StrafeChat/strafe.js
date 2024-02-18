@@ -65,7 +65,7 @@ class WebsocketClient {
                                     });
                                     spaceData.members.forEach((membersData) => {
                                         const member = new Member_1.Member(membersData);
-                                        space.members.set(member.user_id, member);
+                                        space.members.set(member.userId, member);
                                     });
                                 }
                                 this.client.spaces.set(space.id, space);
@@ -92,8 +92,9 @@ class WebsocketClient {
                             if (data.space_id) {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
-                                room?.messages.set(data.id, data);
-                                console.log(data.id);
+                                data.createdAt = data.created_at;
+                                const message = data;
+                                room?.messages.set(message.id, message);
                                 this.client.emit("messageCreate", data);
                             }
                             break;

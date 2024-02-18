@@ -6,7 +6,7 @@ import { Message } from "./Message";
 /**
  * Represents a space on Strafe.
  */
-export class Room implements IRoom {
+export class Room {
   /**
    * The ID of the room.
    */
@@ -25,7 +25,7 @@ export class Room implements IRoom {
   /**
    * The space ID of the room.
    */
-  public readonly space_id: string | null;
+  public readonly spaceId: string | null;
 
   /**
    * The icon of the room.
@@ -35,7 +35,7 @@ export class Room implements IRoom {
   /**
    * The owner of the space.
    */
-  public readonly owner_id: string | null;
+  public readonly ownerId: string | null;
 
   /**
    * The topic of the room.
@@ -55,37 +55,37 @@ export class Room implements IRoom {
   /**
    * The id of the last message sent in the room.
    */
-  public readonly last_message_id: string | null;
+  public readonly lastMessageId: string | null;
 
   /**
-   * The id of the last message sent in the room.
+   * The bitrate of the voice room.
    */
   public readonly bitrate: number | null;
 
   /**
-   * The id of the last message sent in the room.
+   * The user limit for the voice room.
    */
-  public readonly user_limit: number | null;
+  public readonly userLimit: number | null;
 
   /**
-   * The id of the last message sent in the room.
+   * The rate limit for messaging in the room.
    */
-  public readonly rate_limit: number | null;
+  public readonly rateLimit: number | null;
 
   /**
-   * The id of the last message sent in the room.
+   * A list of user id's for the pm.
    */
   public readonly recipients: string[];
 
   /**
    * The permission overwrites of the room.
    */
-  public readonly permission_overwrites: any[];
+  public readonly permissionOverwrites: any[];
 
   /**
    * The permission overwrites of the room.
    */
-  public readonly parent_id: string | null;
+  public readonly parentId: string | null;
 
   /**
    * The client.
@@ -93,24 +93,24 @@ export class Room implements IRoom {
   public client: Client;
 
   /**
-   * The permission overwrites of the room.
+   * The timestamp of the last timestamp.
    */
-  public readonly last_pin_timestamp: string | null;
+  public readonly lastPinTimestamp: string | null;
 
   /**
-   * The permission overwrites of the room.
+   * The region for the voice room.
    */
-  public readonly rtc_region: number | null;
+  public readonly rtcRegion: number | null;
 
   /**
    * The creation date of the space.
    */
-  public readonly created_at: number;
+  public readonly createdAt: number;
 
   /**
    * The edit date of the space.
    */
-  public readonly edited_at: number;
+  public readonly editedAt: number;
 
   /**
    * Creates a new instance of a space.
@@ -122,25 +122,25 @@ export class Room implements IRoom {
     this.id = data.id;
     this.name = data.name;
     this.type = data.type;
-    this.space_id = data.space_id;
+    this.spaceId = data.space_id;
     this.topic = data.topic;
     this.icon = data.icon;
-    this.owner_id = data.owner_id;
+    this.ownerId = data.owner_id;
     this.position = data.position;
-    this.last_message_id = data.last_message_id;
+    this.lastMessageId = data.last_message_id;
     this.bitrate = data.bitrate;
-    this.user_limit = data.user_limit;
-    this.rate_limit = data.rate_limit;
+    this.userLimit = data.user_limit;
+    this.rateLimit = data.rate_limit;
     this.recipients = data.recipients;
-    this.permission_overwrites = data.permission_overwrites;
-    this.parent_id = data.parent_id;
-    this.last_pin_timestamp = data.last_pin_timestamp;
-    this.rtc_region = data.rtc_region;
-    this.created_at = data.created_at;
-    this.edited_at = data.edited_at;
+    this.permissionOverwrites = data.permission_overwrites;
+    this.parentId = data.parent_id;
+    this.lastPinTimestamp = data.last_pin_timestamp;
+    this.rtcRegion = data.rtc_region;
+    this.createdAt = data.created_at;
+    this.editedAt = data.edited_at;
     this.messages = new MessageManager(new Client);
     if (data.messages) {
-        data.messages.forEach((messageData: IMessage) => {
+        data.messages.forEach((messageData: any) => {
             messageData.client = this.client;
             const message = new Message(messageData);
             this.messages.set(message.id, message);
@@ -164,6 +164,7 @@ export class Room implements IRoom {
           "Authorization": this.client.token!,
         },
         body: JSON.stringify(data),
+        credentials: "include",
       }
     );
 
@@ -188,6 +189,7 @@ export class Room implements IRoom {
           "Content-Type": "application/json",
           "Authorization": this.client.token!,
         },
+        credentials: "include",
       }
     );
 

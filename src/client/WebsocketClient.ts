@@ -1,11 +1,12 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { Events, ISpace } from "../types";
+import { Events, IMessage, ISpace } from "../types";
 import { Client } from "./Client";
 import { Space } from "../structure/Space";
 import { Room } from "../structure/Room";
 import { Member } from "../structure/Member";
+import { Message } from "../structure/Message";
 
 /**
  * Represents a websocket client.
@@ -66,33 +67,34 @@ export class WebsocketClient {
                                     });
                                     spaceData.members.forEach((membersData: any) => {
                                         const member = new Member(membersData);
-                                        space.members.set(member.user_id, member);
+                                        space.members.set(member.userId, member);
                                     });
                                 }
                                 this.client.spaces.set(space.id, space);
                             });
                             this.client.emit("ready", data);
                             break;
-                        case "PRESENCE_UPDATE":
-                            if (this.client.user?.id === data.user.id) this.client.user!.presence = data.presence;
-                            this.client.spaces
-                            .toArray()
-                            .map((space: ISpace) => {
-                              let member = space.members.get(data.user.id);
-                              if (!data.user.space_ids.includes(space.id)) return;
-                              let oldUser = data.user;
-                              let presence = data.presence;
-                              let user = {...oldUser, presence};
-                              space.members.set(data.user.id, {...member, user})
-                        })
+                            case "PRESENCE_UPDATE":
+                              if (this.client.user?.id === data.user.id) this.client.user!.presence = data.presence;
+                              this.client.spaces
+                              .toArray()
+                              .map((space: any) => {
+                                let member = space.members.get(data.user.id);
+                                if (!data.user.space_ids.includes(space.id)) return;
+                                let oldUser = data.user;
+                                let presence = data.presence;
+                                let user = {...oldUser, presence};
+                                space.members.set(data.user.id, {...member, user})
+                              })
                             this.client.emit("presenceUpdate", data);
                             break;
                         case "MESSAGE_CREATE":
                             if (data.space_id) {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
-                                room?.messages.set(data.id, data)
-                                console.log(data.id)
+                                data.createdAt = data.created_at;
+                                const message = data as Message; 
+                                room?.messages.set(message.id, message)
                                 this.client.emit("messageCreate", data)
                             }
                         break;

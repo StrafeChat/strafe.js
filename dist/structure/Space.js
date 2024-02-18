@@ -22,7 +22,7 @@ class Space {
     /**
      * The acronym of the space.
      */
-    name_acronym;
+    nameAcronym;
     /**
      * The icon of the space.
      */
@@ -30,26 +30,26 @@ class Space {
     /**
      * The owner of the space.
      */
-    owner_id;
+    ownerId;
     /**
      * The AFK room of the space.
      */
-    afk_room_id;
+    afkRoomId;
     /**
      * The AFK timeout of the space.
      */
-    afk_timeout;
+    afkTimeout;
     /**
      * The verification level of the space.
      */
-    verifcation_level;
+    verifcationLevel;
     /**
      * The rooms of the space.
      */
     rooms;
     /**
- * The rooms of the space.
- */
+     * The rooms of the space.
+     */
     members;
     /**
      * The roles of the space.
@@ -58,7 +58,7 @@ class Space {
     /**
      * The rules room of the space.
      */
-    rules_room_id;
+    rulesRoomId;
     /**
      * The description of the space.
      */
@@ -70,7 +70,7 @@ class Space {
     /**
      * The preferred locale of the space.
      */
-    preferred_locale;
+    preferredLocale;
     /**
      * The stickers of the space.
      */
@@ -82,11 +82,11 @@ class Space {
     /**
      * The creation date of the space.
      */
-    created_at;
+    createdAt;
     /**
      * The edit date of the space.
      */
-    edited_at;
+    editedAt;
     /**
      * Creates a new instance of a space.
      * @param data The data for the space.
@@ -95,22 +95,22 @@ class Space {
         this.client = data.client;
         this.id = data.id;
         this.name = data.name;
-        this.name_acronym = data.name_acronym;
+        this.nameAcronym = data.name_acronym;
         this.icon = data.icon;
-        this.owner_id = data.owner_id;
-        this.afk_room_id = data.afk_room_id;
-        this.afk_timeout = data.afk_timeout;
-        this.verifcation_level = data.verifcation_level;
+        this.ownerId = data.owner_id;
+        this.afkRoomId = data.afk_room_id;
+        this.afkTimeout = data.afk_timeout;
+        this.verifcationLevel = data.verifcation_level;
         this.roles = data.roles;
-        this.rules_room_id = data.rules_room_id;
+        this.rulesRoomId = data.rules_room_id;
         this.description = data.description;
         this.banner = data.banner;
-        this.preferred_locale = data.preferred_locale;
+        this.preferredLocale = data.preferred_locale;
         this.stickers = data.stickers;
         this.emojis = data.emojis;
-        this.created_at = data.created_at;
-        this.edited_at = data.edited_at;
-        this.rooms = new RoomManager_1.RoomManager(new Client_1.Client);
+        this.createdAt = data.created_at;
+        this.editedAt = data.edited_at;
+        this.rooms = new RoomManager_1.RoomManager(new Client_1.Client());
         if (data.rooms) {
             data.rooms.forEach((roomData) => {
                 roomData.client = this.client;
@@ -118,11 +118,11 @@ class Space {
                 this.rooms.set(room.id, room);
             });
         }
-        this.members = new MemberManager_1.MemberManager(new Client_1.Client);
+        this.members = new MemberManager_1.MemberManager(new Client_1.Client());
         if (data.members) {
             data.members.forEach((membersData) => {
                 const member = new Member_1.Member(membersData);
-                this.members.set(member.user_id, member);
+                this.members.set(member.userId, member);
             });
         }
     }

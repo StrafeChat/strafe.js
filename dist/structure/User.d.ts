@@ -3,7 +3,7 @@ import { IUser, UserPresence } from "../types";
 /**
  * Represents a user on strafe.
  */
-export declare class User implements IUser {
+export declare class User {
     /**
      * The user's id.
      */
@@ -11,7 +11,7 @@ export declare class User implements IUser {
     /**
      * The user's accent color.
      */
-    accent_color: number | null;
+    accentColor: number | null;
     /**
      * The user's avatar.
      */
@@ -19,7 +19,7 @@ export declare class User implements IUser {
     /**
      * The user's avatar decoration.
      */
-    avatar_decoration: string | null;
+    avatarDecoration: string | null;
     /**
      * Whether the user is banned.
      */
@@ -39,7 +39,7 @@ export declare class User implements IUser {
     /**
      * The user's creation date.
      */
-    created_at: number;
+    createdAt: number;
     /**
      * The user's discriminator.
      */
@@ -47,7 +47,7 @@ export declare class User implements IUser {
     /**
      * The user's edit date.
      */
-    edited_at: number;
+    editedAt: number;
     /**
      * The user's email.
      */
@@ -59,7 +59,7 @@ export declare class User implements IUser {
     /**
      * The user's global name.
      */
-    global_name: string;
+    globalName: string;
     /**
      * The user's locale.
      */
@@ -67,11 +67,11 @@ export declare class User implements IUser {
     /**
      * The user's phone number.
      */
-    phone_number: string | null;
+    phoneNumber: string | null;
     /**
      * The user's premium type.
      */
-    premium_type: number;
+    premiumType: number;
     /**
      * The user's presence.
      */
@@ -79,7 +79,7 @@ export declare class User implements IUser {
     /**
      * The user's public flags.
      */
-    public_flags: number;
+    publicFlags: number;
     /**
      * Whether the user is a system user.
      */

@@ -22,7 +22,7 @@ class ClientUser extends User_1.User {
     constructor(data) {
         super(data);
         this.email = data.email;
-        this.phone_number = data.phone_number;
+        this.phoneNumber = data.phone_number;
         this.locale = data.locale;
     }
     /**
@@ -41,11 +41,12 @@ class ClientUser extends User_1.User {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": this.client.token
+                Authorization: this.client.token,
             },
-            body: JSON.stringify(data)
+            credentials: "include",
+            body: JSON.stringify(data),
         });
-        const resData = await res.json();
+        const resData = (await res.json());
         if (!res.ok)
             throw new Error("Failed to edit user: " + resData.message);
         this.username = resData.username || this.username;

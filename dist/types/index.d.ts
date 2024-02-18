@@ -47,6 +47,7 @@ export interface RoomMessageOptions {
 export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE";
 export interface ReadyEvent {
     user: IUser;
+    spaces: ISpace[];
 }
 export interface ErrorEvent extends ApiError {
 }
