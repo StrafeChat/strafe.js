@@ -195,7 +195,7 @@ export class Room {
 
     const resData = (await res.json()) as ApiError | IMessage;
 
-    if (!res.ok || res.status !== 409)
+    if (!res.ok)
       throw new Error(
         "Failed to send typing request: " + (resData as ApiError).message
       );

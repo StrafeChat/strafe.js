@@ -99,7 +99,6 @@ class WebsocketClient {
                             }
                             break;
                         case "TYPING_START":
-                            console.log(data);
                             this.client.emit("typingStart", data);
                             break;
                         default:
