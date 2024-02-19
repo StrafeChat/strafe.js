@@ -98,6 +98,10 @@ class WebsocketClient {
                                 this.client.emit("messageCreate", data);
                             }
                             break;
+                        case "TYPING_START":
+                            console.log(data);
+                            this.client.emit("typingStart", data);
+                            break;
                         default:
                             this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
                             break;

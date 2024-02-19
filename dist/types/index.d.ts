@@ -44,7 +44,7 @@ export interface RoomMessageOptions {
 /***
  * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START";
 export interface ReadyEvent {
     user: IUser;
     spaces: ISpace[];
@@ -56,6 +56,7 @@ export interface EventMap {
     error: ErrorEvent;
     presenceUpdate: any;
     messageCreate: any;
+    typingStart: any;
 }
 /***
  * @typedef {Object} ClientEvents
