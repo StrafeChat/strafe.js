@@ -109,8 +109,11 @@ class WebsocketClient {
             }
         });
         this._ws.addEventListener("close", (event) => {
+            console.log(event.code);
+            if (event.code == 4004)
+                return this.client.emit("error", { code: 4004, message: "Invaild token provided." });
             this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
-            if (event.code > 1000 && event.code != 4004) {
+            if (event.code > 1000 && event.code !== 4004) {
                 setTimeout(() => {
                     this.reconnect();
                 }, 5000);
