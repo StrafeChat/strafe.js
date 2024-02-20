@@ -32,7 +32,7 @@ export class Message {
     this.client = data.client;
     this.id = data.id;
     this.roomId = data.room_id;
-    this.authorId = data.room_id;
+    this.authorId = data.author_id;
     this.author = data.author;
     this.spaceId = data.space_id;
     this.content = data.content;

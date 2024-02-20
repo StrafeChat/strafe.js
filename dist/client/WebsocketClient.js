@@ -93,6 +93,7 @@ class WebsocketClient {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
                                 data.createdAt = data.created_at;
+                                data.authorId = data.author_id;
                                 const message = data;
                                 room?.messages.set(message.id, message);
                                 this.client.emit("messageCreate", data);
@@ -109,7 +110,6 @@ class WebsocketClient {
             }
         });
         this._ws.addEventListener("close", (event) => {
-            console.log(event.code);
             if (event.code == 4004)
                 return this.client.emit("error", { code: 4004, message: "Invaild token provided." });
             this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
