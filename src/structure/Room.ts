@@ -192,12 +192,12 @@ export class Room {
         credentials: "include",
       }
     );
+  
+    if (!res.ok) {
+      const resData = await res.json();
+      throw new Error("Failed to send typing request: " + (resData as ApiError).message);
+    }
 
-    const resData = (await res.json()) as ApiError | IMessage;
-
-    if (!res.ok)
-      throw new Error(
-        "Failed to send typing request: " + (resData as ApiError).message
-      );
-  }
+    return res.status;
+  }  
 }
