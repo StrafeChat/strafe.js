@@ -10,6 +10,7 @@ const ClientUser_1 = require("../structure/ClientUser");
 const Space_1 = require("../structure/Space");
 const Room_1 = require("../structure/Room");
 const Member_1 = require("../structure/Member");
+const Message_1 = require("../structure/Message");
 /**
  * Represents a websocket client.
  */
@@ -61,6 +62,11 @@ class WebsocketClient {
                                     spaceData.rooms.forEach((roomData) => {
                                         const room = new Room_1.Room(roomData);
                                         room.client = this.client;
+                                        room.messages.forEach((messageData) => {
+                                            const message = messageData;
+                                            message.client = this.client;
+                                            room.messages.set(message.id, message);
+                                        });
                                         space.rooms.set(room.id, room);
                                     });
                                     spaceData.members.forEach((membersData) => {
@@ -93,10 +99,22 @@ class WebsocketClient {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
                                 data.createdAt = data.created_at;
-                                data.authorId = data.author_id;
-                                const message = data;
+                                data.room = room;
+                                data.space = space;
+                                data.client = this.client;
+                                const message = new Message_1.Message(data);
                                 room?.messages.set(message.id, message);
-                                this.client.emit("messageCreate", data);
+                                this.client.emit("messageCreate", message);
+                            }
+                            break;
+                        case "MESSAGE_DELETE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                data.client = this.client;
+                                const message = new Message_1.Message(data);
+                                room?.messages.delete(message.id);
+                                this.client.emit("messageCreate", message);
                             }
                             break;
                         case "TYPING_START":

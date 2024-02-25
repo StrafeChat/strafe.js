@@ -1,5 +1,5 @@
 import { Client } from "../client/Client";
-import { IMessage, IUser } from "../types";
+import { ApiError, IMessage, IUser } from "../types";
 
 export class Message {
   public client: Client;
@@ -54,5 +54,28 @@ export class Message {
     this.threadId = data.thread_id;
     this.stickers = data.stickers;
     this.nonce = data.nonce;
+  }
+
+  public async delete() {
+    console.log(this.client!)
+   const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API}/rooms/${this.roomId}/messages/${this.id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": this.client.token!,
+         },
+         credentials: "include"
+        }
+      );
+
+    if (!res.ok) {
+      const resData = (await res.json()) as ApiError;
+       throw new Error(
+         "Failed to send message: " + (resData as ApiError).message
+        );
+      } 
+    return;
   }
 }

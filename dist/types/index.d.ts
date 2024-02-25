@@ -42,9 +42,9 @@ export interface RoomMessageOptions {
     content: string;
 }
 /***
- * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE"} Events
+ * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "TYPING_START";
 export interface ReadyEvent {
     user: IUser;
     spaces: ISpace[];
@@ -56,6 +56,7 @@ export interface EventMap {
     error: ErrorEvent;
     presenceUpdate: any;
     messageCreate: any;
+    messageDelete: any;
     typingStart: any;
 }
 /***
@@ -85,6 +86,7 @@ export interface IUser {
     public_flags: number;
     system: boolean;
     username: string;
+    display_name: string;
     verified: boolean;
 }
 /***

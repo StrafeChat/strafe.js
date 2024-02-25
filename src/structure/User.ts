@@ -110,6 +110,10 @@ export class User {
    */
   public username: string;
 
+    /**
+   * The user's global name or username.
+   */
+  public displayName: string;
   /**
    * Whether the user is verified.
    */
@@ -142,6 +146,7 @@ export class User {
     this.publicFlags = data.public_flags;
     this.system = data.system;
     this.username = data.username;
+    this.displayName = data.display_name ?? data.global_name ?? data.username;
     this.verified = data.verified;
   }
 }

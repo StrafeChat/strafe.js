@@ -90,6 +90,10 @@ class User {
      */
     username;
     /**
+   * The user's global name or username.
+   */
+    displayName;
+    /**
      * Whether the user is verified.
      */
     verified;
@@ -120,6 +124,7 @@ class User {
         this.publicFlags = data.public_flags;
         this.system = data.system;
         this.username = data.username;
+        this.displayName = data.display_name ?? data.global_name ?? data.username;
         this.verified = data.verified;
     }
 }

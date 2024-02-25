@@ -63,6 +63,11 @@ export class WebsocketClient {
                                     spaceData.rooms.forEach((roomData: any) => {
                                         const room = new Room(roomData);
                                         room.client = this.client;
+                                        room.messages.forEach((messageData: any) => {
+                                            const message = messageData;
+                                            message.client = this.client;
+                                            room.messages.set(message.id, message)      
+                                        });
                                         space.rooms.set(room.id, room);
                                     });
                                     spaceData.members.forEach((membersData: any) => {
@@ -93,18 +98,30 @@ export class WebsocketClient {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
                                 data.createdAt = data.created_at;
-                                data.authorId = data.author_id;
-                                const message = data as Message; 
+                                data.room = room;
+                                data.space = space;
+                                (data as IMessage).client = this.client;
+                                const message = new Message(data as IMessage);
                                 room?.messages.set(message.id, message)
-                                this.client.emit("messageCreate", data)
+                                this.client.emit("messageCreate", message as Message)
+                            }
+                        break;
+                        case "MESSAGE_DELETE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                (data as IMessage).client = this.client;
+                                const message = new Message(data as IMessage);
+                                room?.messages.delete(message.id);
+                                this.client.emit("messageCreate", message as Message)
                             }
                         break;
                         case "TYPING_START":
-                           this.client.emit("typingStart", data)
+                            this.client.emit("typingStart", data)
                         break;
                         default:
                             this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
-                            break;
+                        break;
                     }
                     break;
             }

@@ -141,7 +141,7 @@ export class Room {
     this.messages = new MessageManager(new Client);
     if (data.messages) {
         data.messages.forEach((messageData: any) => {
-            messageData.client = this.client;
+            (messageData as IMessage).client = this.client;
             const message = new Message(messageData);
             this.messages.set(message.id, message);
         });
@@ -174,7 +174,8 @@ export class Room {
       throw new Error(
         "Failed to send message: " + (resData as ApiError).message
       );
-
+   
+    (resData as IMessage).client = this.client;
     const message = new Message(resData as IMessage);
 
     return message;

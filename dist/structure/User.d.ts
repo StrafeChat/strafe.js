@@ -89,6 +89,10 @@ export declare class User {
      */
     username: string;
     /**
+   * The user's global name or username.
+   */
+    displayName: string;
+    /**
      * Whether the user is verified.
      */
     verified: boolean;
