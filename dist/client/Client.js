@@ -132,7 +132,7 @@ class Client extends eventemitter2_1.EventEmitter2 {
             this.config.nebula = options.config.nebula ?? this.config.nebula;
         }
         ;
-        this.ws = new WebsocketClient_1.WebsocketClient(this);
+        this.ws = (0, WebsocketClient_1.chooseClient)(this);
     }
     /**
      * Logs the client in, establishing a WebSocket connection to strafe.
@@ -147,13 +147,14 @@ class Client extends eventemitter2_1.EventEmitter2 {
      * @param name The name of the space.
      * @param icon The icon of the space.
      */
-    async createSpace(name, icon) {
+    async createSpace(name) {
         const res = await fetch(`${this.config.equinox}/spaces`, {
             method: "POST",
             headers: {
                 "authorization": `${this.token}`,
                 "Content-Type": "application/json"
             },
+            credentials: "include",
             body: JSON.stringify({
                 name,
             })

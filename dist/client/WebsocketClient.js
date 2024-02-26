@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebsocketClient = void 0;
+exports.WebsocketNodeClient = exports.WebsocketWorkerClient = exports.chooseClient = void 0;
 const isomorphic_ws_1 = __importDefault(require("isomorphic-ws"));
 const config_1 = require("../config");
 const ClientUser_1 = require("../structure/ClientUser");
@@ -11,10 +11,138 @@ const Space_1 = require("../structure/Space");
 const Room_1 = require("../structure/Room");
 const Member_1 = require("../structure/Member");
 const Message_1 = require("../structure/Message");
+function chooseClient(client) {
+    console.log("choosing");
+    if (typeof window !== "undefined") {
+        console.log("worker");
+        return new WebsocketWorkerClient(client);
+    }
+    else {
+        console.log("node");
+        return new WebsocketNodeClient(client);
+    }
+}
+exports.chooseClient = chooseClient;
+class WebsocketWorkerClient {
+    client;
+    worker = null;
+    constructor(client) {
+        this.client = client;
+    }
+    // Credit: https://stackoverflow.com/questions/21913673/execute-web-worker-from-different-origin
+    getWorkerUrl(url) {
+        // why is it not accepting the interface??? huh
+        // type 'typeof WebsocketNodeClient' is missing the following properties from type 'WebsocketClient': connect, send
+        // it literally implements the interface, what the hell (╯°□°）╯︵ ┻━┻) (completion by copilot)
+        // Returns a blob:// URL which points
+        // to a javascript file which will call
+        // importScripts with the given URL
+        const content = `importScripts( "${url}" );`;
+        return URL.createObjectURL(new Blob([content], { type: "text/javascript" }));
+    }
+    async connect() {
+        this.worker = new SharedWorker(// TODO: make it dynamic
+        //this.getWorkerUrl(this.client.config.equinox.replace("/v1", "") + "/worker.js") // due to cors issues, as equinox is on a different origin, this needs to be done
+        "/js/worker.js");
+        this.worker.port.start();
+        this.worker.port.postMessage({
+            type: "connect",
+            token: this.client.token,
+            url: this.client.config.equinox,
+        });
+        this.worker.port.onmessage = (messageEvent) => {
+            if (messageEvent.data.event === "message") {
+                const { op, data, event } = JSON.parse(messageEvent.data.values);
+                console.log(op, data, event);
+                switch (op) {
+                    case config_1.OpCodes.DISPATCH:
+                        switch (event) {
+                            case "READY":
+                                this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
+                                data.spaces.forEach((spaceData) => {
+                                    const space = new Space_1.Space(spaceData);
+                                    if (spaceData.rooms) {
+                                        spaceData.rooms.forEach((roomData) => {
+                                            const room = new Room_1.Room(roomData);
+                                            room.client = this.client;
+                                            room.messages.forEach((messageData) => {
+                                                const message = messageData;
+                                                message.client = this.client;
+                                                room.messages.set(message.id, message);
+                                            });
+                                            space.rooms.set(room.id, room);
+                                        });
+                                        spaceData.members.forEach((membersData) => {
+                                            const member = new Member_1.Member(membersData);
+                                            space.members.set(member.userId, member);
+                                        });
+                                    }
+                                    this.client.spaces.set(space.id, space);
+                                });
+                                this.client.emit("ready", data);
+                                break;
+                            case "PRESENCE_UPDATE":
+                                if (this.client.user?.id === data.user.id)
+                                    this.client.user.presence = data.presence;
+                                this.client.spaces
+                                    .toArray()
+                                    .map((space) => {
+                                    let member = space.members.get(data.user.id);
+                                    if (!data.user.space_ids.includes(space.id))
+                                        return;
+                                    let oldUser = data.user;
+                                    let presence = data.presence;
+                                    let user = { ...oldUser, presence };
+                                    space.members.set(data.user.id, { ...member, user });
+                                });
+                                this.client.emit("presenceUpdate", data);
+                                break;
+                            case "MESSAGE_CREATE":
+                                if (data.space_id) {
+                                    const space = this.client.spaces.get(data.space_id);
+                                    const room = space?.rooms.get(data.room_id);
+                                    data.createdAt = data.created_at;
+                                    data.room = room;
+                                    data.space = space;
+                                    data.client = this.client;
+                                    const message = new Message_1.Message(data);
+                                    room?.messages.set(message.id, message);
+                                    this.client.emit("messageCreate", message);
+                                }
+                                break;
+                            case "MESSAGE_DELETE":
+                                if (data.space_id) {
+                                    const space = this.client.spaces.get(data.space_id);
+                                    const room = space?.rooms.get(data.room_id);
+                                    data.client = this.client;
+                                    const message = new Message_1.Message(data);
+                                    room?.messages.delete(message.id);
+                                    this.client.emit("messageCreate", message);
+                                }
+                                break;
+                            case "TYPING_START":
+                                this.client.emit("typingStart", data);
+                                break;
+                            default:
+                                this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
+                                break;
+                        }
+                        break;
+                }
+                return;
+            }
+            this.client.emit(messageEvent.data.event, messageEvent.data.values);
+        };
+    }
+    async send({ op, data }) {
+        this.worker?.port.postMessage({ type: "send", message: { op, data } });
+    }
+}
+exports.WebsocketWorkerClient = WebsocketWorkerClient;
 /**
- * Represents a websocket client.
+ * Represents a websocket client in non-browser environments.
  */
-class WebsocketClient {
+class WebsocketNodeClient {
     client;
     gateway = null;
     _ws = null;
@@ -128,10 +256,8 @@ class WebsocketClient {
             }
         });
         this._ws.addEventListener("close", (event) => {
-            if (event.code == 4004)
-                return this.client.emit("error", { code: 4004, message: "Invaild token provided." });
             this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
-            if (event.code > 1000 && event.code !== 4004) {
+            if (event.code > 1000 && event.code != 4004) {
                 setTimeout(() => {
                     this.reconnect();
                 }, 5000);
@@ -173,4 +299,4 @@ class WebsocketClient {
         this._ws?.send(JSON.stringify({ op: config_1.OpCodes.HEARTBEAT }));
     }
 }
-exports.WebsocketClient = WebsocketClient;
+exports.WebsocketNodeClient = WebsocketNodeClient;

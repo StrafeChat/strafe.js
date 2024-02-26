@@ -1,8 +1,12 @@
 import { Client } from "../client/Client";
 import { ApiError, IMessage, IUser } from "../types";
+import { Room } from "./Room";
+import { Space } from "./Space";
 
 export class Message {
   public client: Client;
+  public room: Room;
+  public space: Space;
   public readonly id: string;
   public readonly roomId: string;
   public readonly authorId: string;
@@ -30,6 +34,8 @@ export class Message {
 
   constructor(data: IMessage) {
     this.client = data.client;
+    this.room = data.room;
+    this.space = data.space;
     this.id = data.id;
     this.roomId = data.room_id;
     this.authorId = data.author_id;

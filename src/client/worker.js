@@ -66,6 +66,7 @@ var WebsocketWorkerClient = /** @class */ (function () {
         this.apiUrl = null;
         this.heartbeatInterval = null;
         this.initiated = false;
+        this.readyData = null;
     }
     WebsocketWorkerClient.prototype.emit = function (event, values) {
         this.ports.forEach(function (port) {
@@ -103,20 +104,27 @@ var WebsocketWorkerClient = /** @class */ (function () {
                         this.gateway = data.ws;
                         _a.label = 6;
                     case 6:
+                        console.log("starting");
                         this.ws = new WebSocket(this.gateway);
                         this.ws.addEventListener("open", function () {
+                            console.log("connected");
                             _this.identify();
                         });
                         this.ws.addEventListener("message", function (message) {
+                            console.log("message", message);
                             var _a = JSON.parse(message.data.toString()), op = _a.op, data = _a.data;
                             if (op === OpCodes.HELLO) {
                                 var heartbeat_interval = data.heartbeat_interval;
                                 _this.startHeartbeat(heartbeat_interval);
                                 return;
                             }
+                            else if (op === OpCodes.DISPATCH) {
+                                _this.readyData = message.data.toString(); // TODO: improve as this is old data
+                            }
                             _this.emit("message", message.data.toString());
                         });
                         this.ws.addEventListener("close", function (event) {
+                            console.log(event);
                             _this.emit("error", {
                                 code: 1006,
                                 message: "The websocket connection has been closed. Attempting to reconnect.",
@@ -134,6 +142,7 @@ var WebsocketWorkerClient = /** @class */ (function () {
     };
     WebsocketWorkerClient.prototype.send = function (message) {
         var _a;
+        console.log("send", message);
         (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify(message));
     };
     WebsocketWorkerClient.prototype.reconnect = function () {
@@ -154,34 +163,37 @@ var WebsocketWorkerClient = /** @class */ (function () {
     };
     WebsocketWorkerClient.prototype.sendHeartbeat = function () {
         var _a;
+        console.log("heartbeat");
         (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ op: OpCodes.HEARTBEAT }));
     };
     WebsocketWorkerClient.prototype.identify = function () {
         var _a;
         var paylod = {
             op: OpCodes.IDENTIFY,
-            d: {
+            data: {
                 token: this.token,
             },
         };
+        console.log("identify", paylod);
         (_a = this.ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify(paylod));
+    };
+    WebsocketWorkerClient.prototype.emitReadyEvent = function () {
+        this.emit("message", this.readyData);
     };
     return WebsocketWorkerClient;
 }());
 var client = null;
 onconnect = function (e) {
     var port = e.ports[0];
-    console.log("connect");
     if (!client)
         client = new WebsocketWorkerClient();
     client.ports.push(port);
     port.addEventListener("message", function (e) {
         var data = e.data;
-        console.log(e.data);
         switch (data.type) {
             case "connect":
                 if (client.initiated)
-                    return;
+                    return client.emitReadyEvent();
                 client.connect(data.url, data.token);
                 break;
             case "send":
@@ -194,3 +206,4 @@ onconnect = function (e) {
     });
     port.start();
 };
+// Compile using `tsc worker.ts`

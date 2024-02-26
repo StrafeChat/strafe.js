@@ -1,5 +1,7 @@
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
+import { Room } from "../structure/Room";
+import { Space } from "../structure/Space";
 
 /*** 
  * @typedef {Object} ClientConfig
@@ -188,6 +190,8 @@ export interface ISpaceMember {
 }
 
 export interface IMessage {
+    space: Space;
+    room: Room;
     client: Client;
     id: string;
     room_id: string;

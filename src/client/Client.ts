@@ -2,7 +2,7 @@ import { EventEmitter2, Listener, ListenerFn, OnOptions, OnceOptions, event } fr
 import { API, CDN } from "../config";
 import { ClientUser } from "../structure/ClientUser";
 import { ApiError, ClientOptions, EventMap, ISpace } from "../types";
-import { WebsocketClient } from "./WebsocketClient";
+import { chooseClient, WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
 import { Space } from "../structure/Space";
 
@@ -149,7 +149,7 @@ export class Client extends EventEmitter2 {
             this.config.nebula = options.config.nebula ?? this.config.nebula;
         };
 
-        this.ws = new WebsocketClient(this);
+        this.ws = chooseClient(this);
     }
 
     /**
@@ -166,13 +166,14 @@ export class Client extends EventEmitter2 {
      * @param name The name of the space.
      * @param icon The icon of the space.
      */
-    public async createSpace(name: string, icon?: string) {
+    public async createSpace(name: string) {
         const res = await fetch(`${this.config.equinox}/spaces`, {
             method: "POST",
             headers: {
                 "authorization": `${this.token}`,
                 "Content-Type": "application/json"
             },
+            credentials: "include",
             body: JSON.stringify({
                 name,
             })

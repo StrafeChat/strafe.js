@@ -41,6 +41,8 @@ class WebsocketWorkerClient {
 
   public initiated: boolean = false;
 
+  public readyData: any = null;
+
   constructor() {}
 
   private emit<E extends keyof WebsocketMessage>(
@@ -72,13 +74,17 @@ class WebsocketWorkerClient {
       this.gateway = data.ws;
     }
 
+    console.log("starting");
+
     this.ws = new WebSocket(this.gateway);
 
     this.ws!.addEventListener("open", () => {
+      console.log("connected");
       this.identify();
     });
 
     this.ws!.addEventListener("message", (message) => {
+      console.log("message", message);
       const { op, data } = JSON.parse(message.data.toString()) as {
         op: OpCodes;
         data: any;
@@ -87,12 +93,15 @@ class WebsocketWorkerClient {
         const { heartbeat_interval } = data;
         this.startHeartbeat(heartbeat_interval);
         return;
+      } else if (op === OpCodes.DISPATCH) { 
+        this.readyData = message.data.toString(); // TODO: improve as this is old data
       }
 
       this.emit("message", message.data.toString());
     });
 
     this.ws.addEventListener("close", (event) => {
+      console.log(event);
       this.emit("error", {
         code: 1006,
         message:
@@ -107,6 +116,7 @@ class WebsocketWorkerClient {
   }
 
   public send(message: { op: OpCodes; data: any }) {
+    console.log("send", message);
     this.ws?.send(JSON.stringify(message));
   }
 
@@ -125,17 +135,24 @@ class WebsocketWorkerClient {
     }, interval);
   }
   private sendHeartbeat() {
+    console.log("heartbeat")
     this.ws?.send(JSON.stringify({ op: OpCodes.HEARTBEAT }));
   }
 
   private identify(): void {
     const paylod = {
       op: OpCodes.IDENTIFY,
-      d: {
+      data: {
         token: this.token,
       },
     };
+
+    console.log("identify", paylod);
     this.ws?.send(JSON.stringify(paylod));
+  }
+
+  public emitReadyEvent() {
+    this.emit("message", this.readyData);
   }
 }
 
@@ -150,7 +167,7 @@ onconnect = function (e) {
     const { data } = e;
     switch (data.type) {
       case "connect":
-        if (client!.initiated) return;
+        if (client!.initiated) return client!.emitReadyEvent();
         client!.connect(data.url, data.token);
         break;
       case "send":

@@ -118,5 +118,5 @@ export declare class Client extends EventEmitter2 {
      * @param name The name of the space.
      * @param icon The icon of the space.
      */
-    createSpace(name: string, icon?: string): Promise<Space>;
+    createSpace(name: string): Promise<Space>;
 }

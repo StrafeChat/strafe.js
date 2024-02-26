@@ -1,9 +1,28 @@
 import { OpCodes } from "../config";
 import { Client } from "./Client";
+export interface WebsocketClient {
+    connect(): Promise<void>;
+    send({ op, data }: {
+        op: OpCodes;
+        data: any;
+    }): Promise<void>;
+}
+export declare function chooseClient(client: Client): WebsocketClient;
+export declare class WebsocketWorkerClient implements WebsocketClient {
+    private client;
+    private worker;
+    constructor(client: Client);
+    private getWorkerUrl;
+    connect(): Promise<void>;
+    send({ op, data }: {
+        op: OpCodes;
+        data: any;
+    }): Promise<void>;
+}
 /**
- * Represents a websocket client.
+ * Represents a websocket client in non-browser environments.
  */
-export declare class WebsocketClient {
+export declare class WebsocketNodeClient implements WebsocketClient {
     private client;
     private gateway;
     private _ws;
