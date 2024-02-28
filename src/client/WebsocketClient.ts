@@ -15,7 +15,7 @@ export interface WebsocketClient {
 }
 
 export function chooseClient(client: Client): WebsocketClient {
-    console.log("choosing");
+    // console.log("choosing");
     return new WebsocketNodeClient(client); // remove this if workers should be enabled
     if (typeof window !== "undefined") {
         console.log("worker")
@@ -117,6 +117,19 @@ export class WebsocketWorkerClient implements WebsocketClient {
                             const message = new Message(data as IMessage);
                             room?.messages.set(message.id, message)
                             this.client.emit("messageCreate", message as Message)
+                        }
+                    break;
+                    case "MESSAGE_UPDATE":
+                        if (data.space_id) {
+                            const space = this.client.spaces.get(data.space_id);
+                            const room = space?.rooms.get(data.room_id);
+                            data.createdAt = data.created_at;
+                            data.room = room;
+                            data.space = space;
+                            (data as IMessage).client = this.client;
+                            const message = new Message(data as IMessage);
+                            room?.messages.set(message.id, message)
+                            this.client.emit("messageUpdate", message as Message)
                         }
                     break;
                     case "MESSAGE_DELETE":
@@ -246,6 +259,19 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 const message = new Message(data as IMessage);
                                 room?.messages.set(message.id, message)
                                 this.client.emit("messageCreate", message as Message)
+                            }
+                        break;
+                        case "MESSAGE_UPDATE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                data.createdAt = data.created_at;
+                                data.room = room;
+                                data.space = space;
+                                (data as IMessage).client = this.client;
+                                const message = new Message(data as IMessage);
+                                room?.messages.set(message.id, message)
+                                this.client.emit("messageUpdate", message as Message)
                             }
                         break;
                         case "MESSAGE_DELETE":

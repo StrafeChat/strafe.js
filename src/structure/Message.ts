@@ -1,5 +1,5 @@
 import { Client } from "../client/Client";
-import { ApiError, IMessage, IUser } from "../types";
+import { ApiError, IMessage, IUser, RoomMessageOptions } from "../types";
 import { Room } from "./Room";
 import { Space } from "./Space";
 
@@ -63,7 +63,6 @@ export class Message {
   }
 
   public async delete() {
-    console.log(this.client!)
    const res = await fetch(
         `${process.env.NEXT_PUBLIC_API}/rooms/${this.roomId}/messages/${this.id}`,
         {
@@ -83,5 +82,31 @@ export class Message {
         );
       } 
     return;
+  }
+
+  public async edit(data: Partial<RoomMessageOptions>) {
+    const res = await fetch(
+      `${this.client.config.equinox}/rooms/${this.roomId}/messages/${this.id}`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": this.client.token!,
+        },
+        body: JSON.stringify(data),
+        credentials: "include",
+      }
+    );
+
+    const resData = (await res.json()) as ApiError | IMessage;
+
+    if (!res.ok)
+      throw new Error(
+        "Failed to send message: " + (resData as ApiError).message
+      );
+
+    const message = new Message(resData as IMessage);
+
+    return message;
   }
 }

@@ -12,7 +12,8 @@ const Room_1 = require("../structure/Room");
 const Member_1 = require("../structure/Member");
 const Message_1 = require("../structure/Message");
 function chooseClient(client) {
-    console.log("choosing");
+    // console.log("choosing");
+    return new WebsocketNodeClient(client); // remove this if workers should be enabled
     if (typeof window !== "undefined") {
         console.log("worker");
         return new WebsocketWorkerClient(client);
@@ -108,6 +109,19 @@ class WebsocketWorkerClient {
                                     const message = new Message_1.Message(data);
                                     room?.messages.set(message.id, message);
                                     this.client.emit("messageCreate", message);
+                                }
+                                break;
+                            case "MESSAGE_UPDATE":
+                                if (data.space_id) {
+                                    const space = this.client.spaces.get(data.space_id);
+                                    const room = space?.rooms.get(data.room_id);
+                                    data.createdAt = data.created_at;
+                                    data.room = room;
+                                    data.space = space;
+                                    data.client = this.client;
+                                    const message = new Message_1.Message(data);
+                                    room?.messages.set(message.id, message);
+                                    this.client.emit("messageUpdate", message);
                                 }
                                 break;
                             case "MESSAGE_DELETE":
@@ -233,6 +247,19 @@ class WebsocketNodeClient {
                                 const message = new Message_1.Message(data);
                                 room?.messages.set(message.id, message);
                                 this.client.emit("messageCreate", message);
+                            }
+                            break;
+                        case "MESSAGE_UPDATE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                data.createdAt = data.created_at;
+                                data.room = room;
+                                data.space = space;
+                                data.client = this.client;
+                                const message = new Message_1.Message(data);
+                                room?.messages.set(message.id, message);
+                                this.client.emit("messageUpdate", message);
                             }
                             break;
                         case "MESSAGE_DELETE":

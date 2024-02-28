@@ -50,9 +50,9 @@ export interface RoomMessageOptions {
 }
 
 /*** 
- * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE"} Events
+ * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE" | "MESSAGE_UPDATE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "TYPING_START";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START";
 
 export interface ReadyEvent {
     user: IUser;
@@ -67,6 +67,7 @@ export interface EventMap {
     presenceUpdate: any;
     messageCreate: any;
     messageDelete: any;
+    messageUpdate: any;
     typingStart: any;
 }
 
