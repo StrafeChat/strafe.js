@@ -130,7 +130,7 @@ export class Space {
     this.emojis = data.emojis;
     this.createdAt = data.created_at;
     this.editedAt = data.edited_at;
-    this.rooms = new RoomManager(new Client());
+    this.rooms = new RoomManager(this.client);
     if (data.rooms) {
       data.rooms.forEach((roomData: IRoom) => {
         roomData.client = this.client;
@@ -138,7 +138,7 @@ export class Space {
         this.rooms.set(room.id, room);
       });
     }
-    this.members = new MemberManager(new Client());
+    this.members = new MemberManager(this.client);
     if (data.members) {
       data.members.forEach((membersData: ISpaceMember) => {
         const member = new Member(membersData);

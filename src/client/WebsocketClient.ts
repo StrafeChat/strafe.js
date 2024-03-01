@@ -213,6 +213,7 @@ export class WebsocketNodeClient implements WebsocketClient {
                         case "READY":
                             this.client.user = new ClientUser({ ...data.user, client: this.client });
                             data.spaces.forEach((spaceData: any) => {
+                                spaceData.client = this.client;
                                 const space = new Space(spaceData);
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData: any) => {

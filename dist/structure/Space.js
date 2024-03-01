@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Space = void 0;
-const Client_1 = require("../client/Client");
 const RoomManager_1 = require("../managers/RoomManager");
 const MemberManager_1 = require("../managers/MemberManager");
 const Room_1 = require("./Room");
@@ -110,7 +109,7 @@ class Space {
         this.emojis = data.emojis;
         this.createdAt = data.created_at;
         this.editedAt = data.edited_at;
-        this.rooms = new RoomManager_1.RoomManager(new Client_1.Client());
+        this.rooms = new RoomManager_1.RoomManager(this.client);
         if (data.rooms) {
             data.rooms.forEach((roomData) => {
                 roomData.client = this.client;
@@ -118,7 +117,7 @@ class Space {
                 this.rooms.set(room.id, room);
             });
         }
-        this.members = new MemberManager_1.MemberManager(new Client_1.Client());
+        this.members = new MemberManager_1.MemberManager(this.client);
         if (data.members) {
             data.members.forEach((membersData) => {
                 const member = new Member_1.Member(membersData);

@@ -1,4 +1,4 @@
-import { ApiError, IMessage, IRoom, RoomMessageOptions } from "../types";
+import { ApiError, IMessage, IRoom, RoomMessageOptions, RoomCreateOptions } from "../types";
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
 import { Message } from "./Message";

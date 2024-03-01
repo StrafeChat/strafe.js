@@ -199,6 +199,7 @@ class WebsocketNodeClient {
                         case "READY":
                             this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
                             data.spaces.forEach((spaceData) => {
+                                spaceData.client = this.client;
                                 const space = new Space_1.Space(spaceData);
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData) => {

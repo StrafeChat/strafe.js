@@ -49,6 +49,12 @@ export interface RoomMessageOptions {
     content: string;
 }
 
+export interface RoomCreateOptions {
+    name: string;
+    type: number;
+    space_id?: string;
+}
+
 /*** 
  * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE" | "MESSAGE_UPDATE"} Events
  */

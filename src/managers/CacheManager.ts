@@ -61,19 +61,16 @@ export class CacheManager<T> {
 
     public map(fn: (value: T, key: string, collection: Collection<T>) => any, filterFn?: (value: T, key: string, collection: Collection<T>) => boolean, sortFn?: (a: T, b: T) => number) {
         const elements: any[] = [];
-        
-        // Apply filtering if provided
+
         let filteredCache = this._cache;
         if (filterFn) {
             filteredCache = filteredCache.filter((value, key, collection) => filterFn(value, key, collection));
         }
         
-        // Apply sorting if provided
         if (sortFn) {
             filteredCache = filteredCache.sort((a, b) => sortFn(a, b));
         }
-    
-        // Generate elements
+        
         filteredCache.forEach((value, key) => {
             elements.push(fn(value, key, this._cache));
         });
