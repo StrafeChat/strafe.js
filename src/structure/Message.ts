@@ -1,5 +1,5 @@
 import { Client } from "../client/Client";
-import { ApiError, IMessage, IUser, RoomMessageOptions } from "../types";
+import { ApiError, IMessage, IUser, MessageEmbed, RoomMessageOptions } from "../types";
 import { Room } from "./Room";
 import { Space } from "./Space";
 
@@ -21,7 +21,7 @@ export class Message {
   public readonly mentionRoles: string[] | null;
   public readonly mentionRooms: string[] | null;
   public readonly attachments: string[] | null;
-  public readonly embeds: any[] | null;
+  public readonly embeds: MessageEmbed[] | null;
   public readonly reactions: any[] | null;
   public readonly pinned: boolean;
   public readonly webhookId: string | null;

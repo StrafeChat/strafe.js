@@ -69,29 +69,30 @@ export class WebsocketWorkerClient implements WebsocketClient {
             case OpCodes.DISPATCH:
                 switch (event) {
                     case "READY":
-                        this.client.user = new ClientUser({ ...data.user, client: this.client });
-                        data.spaces.forEach((spaceData: any) => {
-                            const space = new Space(spaceData);
-                            if (spaceData.rooms) {
-                                spaceData.rooms.forEach((roomData: any) => {
-                                    const room = new Room(roomData);
-                                    room.client = this.client;
-                                    room.messages.forEach((messageData: any) => {
-                                        const message = messageData;
-                                        message.client = this.client;
-                                        room.messages.set(message.id, message)      
+                            this.client.user = new ClientUser({ ...data.user, client: this.client });
+                            data.spaces.forEach((spaceData: any) => {
+                                spaceData.client = this.client;
+                                const space = new Space(spaceData);
+                                if (spaceData.rooms) {
+                                    spaceData.rooms.forEach((roomData: any) => {
+                                        const room = new Room(roomData);
+                                        room.client = this.client;
+                                        room.messages.forEach((messageData: any) => {
+                                            const message = messageData;
+                                            message.client = this.client;
+                                            room.messages.set(message.id, message)      
+                                        });
+                                        space.rooms.set(room.id, room);
                                     });
-                                    space.rooms.set(room.id, room);
-                                });
-                                spaceData.members.forEach((membersData: any) => {
-                                    const member = new Member(membersData);
-                                    space.members.set(member.userId, member);
-                                });
-                            }
-                            this.client.spaces.set(space.id, space);
-                        });
-                        this.client.emit("ready", data);
-                        break;
+                                    spaceData.members.forEach((membersData: any) => {
+                                        const member = new Member(membersData);
+                                        space.members.set(member.userId, member);
+                                    });
+                                }
+                                this.client.spaces.set(space.id, space);
+                            });
+                            this.client.emit("ready", data);
+                            break;
                         case "PRESENCE_UPDATE":
                           if (this.client.user?.id === data.user.id) this.client.user!.presence = data.presence;
                           this.client.spaces
@@ -110,7 +111,6 @@ export class WebsocketWorkerClient implements WebsocketClient {
                         if (data.space_id) {
                             const space = this.client.spaces.get(data.space_id);
                             const room = space?.rooms.get(data.room_id);
-                            data.createdAt = data.created_at;
                             data.room = room;
                             data.space = space;
                             (data as IMessage).client = this.client;
@@ -123,7 +123,6 @@ export class WebsocketWorkerClient implements WebsocketClient {
                         if (data.space_id) {
                             const space = this.client.spaces.get(data.space_id);
                             const room = space?.rooms.get(data.room_id);
-                            data.createdAt = data.created_at;
                             data.room = room;
                             data.space = space;
                             (data as IMessage).client = this.client;
@@ -217,11 +216,11 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 const space = new Space(spaceData);
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData: any) => {
+                                        roomData.client = this.client;
                                         const room = new Room(roomData);
-                                        room.client = this.client;
                                         room.messages.forEach((messageData: any) => {
+                                            messageData.client = this.client;
                                             const message = messageData;
-                                            message.client = this.client;
                                             room.messages.set(message.id, message)      
                                         });
                                         space.rooms.set(room.id, room);
@@ -253,7 +252,6 @@ export class WebsocketNodeClient implements WebsocketClient {
                             if (data.space_id) {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
-                                data.createdAt = data.created_at;
                                 data.room = room;
                                 data.space = space;
                                 (data as IMessage).client = this.client;

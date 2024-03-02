@@ -138,7 +138,7 @@ export class Room {
     this.rtcRegion = data.rtc_region;
     this.createdAt = data.created_at;
     this.editedAt = data.edited_at;
-    this.messages = new MessageManager(new Client);
+    this.messages = new MessageManager(this.client);
     if (data.messages) {
         data.messages.forEach((messageData: any) => {
             messageData.client = this.client;

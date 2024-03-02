@@ -61,6 +61,7 @@ class WebsocketWorkerClient {
                             case "READY":
                                 this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
                                 data.spaces.forEach((spaceData) => {
+                                    spaceData.client = this.client;
                                     const space = new Space_1.Space(spaceData);
                                     if (spaceData.rooms) {
                                         spaceData.rooms.forEach((roomData) => {
@@ -102,7 +103,6 @@ class WebsocketWorkerClient {
                                 if (data.space_id) {
                                     const space = this.client.spaces.get(data.space_id);
                                     const room = space?.rooms.get(data.room_id);
-                                    data.createdAt = data.created_at;
                                     data.room = room;
                                     data.space = space;
                                     data.client = this.client;
@@ -115,7 +115,6 @@ class WebsocketWorkerClient {
                                 if (data.space_id) {
                                     const space = this.client.spaces.get(data.space_id);
                                     const room = space?.rooms.get(data.room_id);
-                                    data.createdAt = data.created_at;
                                     data.room = room;
                                     data.space = space;
                                     data.client = this.client;
@@ -203,11 +202,11 @@ class WebsocketNodeClient {
                                 const space = new Space_1.Space(spaceData);
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData) => {
+                                        roomData.client = this.client;
                                         const room = new Room_1.Room(roomData);
-                                        room.client = this.client;
                                         room.messages.forEach((messageData) => {
+                                            messageData.client = this.client;
                                             const message = messageData;
-                                            message.client = this.client;
                                             room.messages.set(message.id, message);
                                         });
                                         space.rooms.set(room.id, room);
@@ -241,7 +240,6 @@ class WebsocketNodeClient {
                             if (data.space_id) {
                                 const space = this.client.spaces.get(data.space_id);
                                 const room = space?.rooms.get(data.room_id);
-                                data.createdAt = data.created_at;
                                 data.room = room;
                                 data.space = space;
                                 data.client = this.client;

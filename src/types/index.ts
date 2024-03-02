@@ -45,8 +45,47 @@ export interface ClientUserEditOptions {
     locale: string;
 }
 
+export interface MessageEmbedFooter {
+    text: string;
+    icon_url: string | null;
+}
+
+export interface MessageEmbedAuthor {
+    name: string | null;
+    url: string | null;
+    icon_url: string | null;
+}
+
+export interface MessageEmbedMedia {
+    url: string;
+    height: number | null;
+    width: number | null;
+}
+
+export interface MessageEmbedField {
+    name: string;
+    value: string;
+    inline: boolean;
+}
+
+export interface MessageEmbed {
+    title: string | null;
+    description: string | null;
+    url: string | null;
+    timestamp: number | null;
+    color: number | null;
+    footer: MessageEmbedFooter | null;
+    image: MessageEmbedMedia | null;
+    thumbnail: MessageEmbedMedia | null;
+    video: MessageEmbedMedia | null;
+    author: MessageEmbedAuthor | null;
+    fields: MessageEmbedField[] | null;
+}
+
+
 export interface RoomMessageOptions {
     content: string;
+    embeds?: MessageEmbed[];
 }
 
 export interface RoomCreateOptions {
@@ -214,7 +253,7 @@ export interface IMessage {
     mention_roles: string[] | null;
     mention_rooms: string[] | null;
     attachments: string[] | null;
-    embeds: any[] | null;
+    embeds: MessageEmbed[] | null;
     reactions: any[] | null;
     pinned: boolean;
     webhook_id: string | null;
