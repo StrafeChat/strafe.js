@@ -56,6 +56,7 @@ export class ClientUser extends User {
       email: string;
       message: string;
       locale: string;
+      avatar: string;
     }>;
 
     if (!res.ok) throw new Error("Failed to edit user: " + resData.message);
@@ -64,5 +65,6 @@ export class ClientUser extends User {
     this.discriminator = resData.discriminator || this.discriminator;
     this.email = resData.email || this.email;
     this.locale = resData.locale || this.locale;
+    this.avatar = resData.avatar || this.avatar;
   }
 }

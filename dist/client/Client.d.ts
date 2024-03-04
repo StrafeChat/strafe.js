@@ -3,7 +3,6 @@ import { ClientUser } from "../structure/ClientUser";
 import { ClientOptions, EventMap } from "../types";
 import { WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
-import { Space } from "../structure/Space";
 /**
  * The main hub for interacting with strafe.
  * @extends EventEmitter2
@@ -113,10 +112,4 @@ export declare class Client extends EventEmitter2 {
      * @param token The bot token
      */
     login(token: string): Promise<void>;
-    /**
-     * Creates a new space.
-     * @param name The name of the space.
-     * @param icon The icon of the space.
-     */
-    createSpace(name: string): Promise<Space>;
 }

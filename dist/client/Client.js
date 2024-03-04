@@ -5,7 +5,6 @@ const eventemitter2_1 = require("eventemitter2");
 const config_1 = require("../config");
 const WebsocketClient_1 = require("./WebsocketClient");
 const SpaceManager_1 = require("../managers/SpaceManager");
-const Space_1 = require("../structure/Space");
 /**
  * The main hub for interacting with strafe.
  * @extends EventEmitter2
@@ -141,32 +140,6 @@ class Client extends eventemitter2_1.EventEmitter2 {
     async login(token) {
         this.token = token;
         this.ws.connect();
-    }
-    /**
-     * Creates a new space.
-     * @param name The name of the space.
-     * @param icon The icon of the space.
-     */
-    async createSpace(name) {
-        const res = await fetch(`${this.config.equinox}/spaces`, {
-            method: "POST",
-            headers: {
-                "authorization": `${this.token}`,
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                name,
-            })
-        });
-        const data = await res.json();
-        let spaceData = data.space;
-        spaceData.rooms = data.rooms;
-        if (!res.ok)
-            throw new Error(data.message);
-        const space = new Space_1.Space(spaceData);
-        this.spaces.set(space.id, space);
-        return space;
     }
 }
 exports.Client = Client;

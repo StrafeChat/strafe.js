@@ -8,4 +8,10 @@ export declare class SpaceManager extends CacheManager<Space> {
      * @throws Error is thrown if something goes wrong.
      */
     fetch(id: string): Promise<Space | null>;
+    /**
+     * Creates a new space.
+     * @param name The name of the space.
+     * @param icon The icon of the space.
+     */
+    create(name: string): Promise<Space>;
 }

@@ -160,33 +160,4 @@ export class Client extends EventEmitter2 {
         this.token = token;
         this.ws.connect();
     }
-
-    /**
-     * Creates a new space.
-     * @param name The name of the space.
-     * @param icon The icon of the space.
-     */
-    public async createSpace(name: string) {
-        const res = await fetch(`${this.config.equinox}/spaces`, {
-            method: "POST",
-            headers: {
-                "authorization": `${this.token}`,
-                "Content-Type": "application/json"
-            },
-            credentials: "include",
-            body: JSON.stringify({
-                name,
-            })
-        });
-
-        const data = await res.json() as any;
-        let spaceData = data.space;
-        spaceData.rooms = data.rooms;
-
-        if (!res.ok) throw new Error((data as ApiError).message);
-        const space = new Space(spaceData as ISpace);
-        this.spaces.set(space.id, space);
-        
-        return space;
-    }
 }

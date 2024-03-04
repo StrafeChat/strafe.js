@@ -38,11 +38,13 @@ export interface UserPresence {
  * @property {string} username
  * @property {string} email
  * @property {string} locale
+ * @property {string} avatar
  */
 export interface ClientUserEditOptions {
     username: string;
     email: string;
     locale: string;
+    avatar: string;
 }
 
 export interface MessageEmbedFooter {

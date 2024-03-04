@@ -53,6 +53,7 @@ class ClientUser extends User_1.User {
         this.discriminator = resData.discriminator || this.discriminator;
         this.email = resData.email || this.email;
         this.locale = resData.locale || this.locale;
+        this.avatar = resData.avatar || this.avatar;
     }
 }
 exports.ClientUser = ClientUser;
