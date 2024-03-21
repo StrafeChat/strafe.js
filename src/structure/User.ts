@@ -24,6 +24,10 @@ export class User {
    * The user's avatar decoration.
    */
   public avatarDecoration: string | null;
+  /**
+   * The user's avatar decoration.
+   */
+  public aboutMe: string | null;
 
   /**
    * Whether the user is banned.
@@ -129,6 +133,7 @@ export class User {
     this.accentColor = data.accent_color;
     this.avatar = data.avatar;
     this.avatarDecoration = data.avatar_decoration;
+    this.aboutMe = data.about_me;
     this.banned = data.banned;
     this.banner = data.banner;
     this.bot = data.bot;

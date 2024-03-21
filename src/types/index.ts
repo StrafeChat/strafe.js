@@ -129,6 +129,7 @@ export interface IUser {
     accent_color: number | null;
     avatar: string | null;
     avatar_decoration: string | null;
+    about_me: string | null;
     banned: boolean;
     banner: string | null;
     bot: boolean;
@@ -237,6 +238,12 @@ export interface ISpaceMember {
     user: IUser;
 }
 
+export interface MessageSudo {
+    name: string | null;
+    avatar_url: string | null;
+    color: string | null;
+}
+
 export interface IMessage {
     space: Space;
     room: Room;
@@ -256,6 +263,7 @@ export interface IMessage {
     mention_rooms: string[] | null;
     attachments: string[] | null;
     embeds: MessageEmbed[] | null;
+    sudo: MessageSudo | null;
     reactions: any[] | null;
     pinned: boolean;
     webhook_id: string | null;

@@ -21,6 +21,10 @@ export declare class User {
      */
     avatarDecoration: string | null;
     /**
+     * The user's avatar decoration.
+     */
+    aboutMe: string | null;
+    /**
      * Whether the user is banned.
      */
     banned: boolean;
