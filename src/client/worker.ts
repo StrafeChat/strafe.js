@@ -20,6 +20,11 @@ enum OpCodes {
   PRESENCE = 3,
 
   /**
+   * Op code used to request an identify response from stargate (same as identify but after authentication)
+   */
+  REFRESH = 4,
+
+  /**
    * Op code used for receiving the hello event from Strafe.
    */
   HELLO = 10,
@@ -115,6 +120,10 @@ class WebsocketWorkerClient {
     });
   }
 
+  public refreshReadyData() {
+    this.send({ op: OpCodes.REFRESH, data: null });
+  }
+
   public send(message: { op: OpCodes; data: any }) {
     console.log("send", message);
     this.ws?.send(JSON.stringify(message));
@@ -167,7 +176,7 @@ onconnect = function (e) {
     const { data } = e;
     switch (data.type) {
       case "connect":
-        if (client!.initiated) return client!.emitReadyEvent();
+        if (client!.initiated) return client!.refreshReadyData()
         client!.connect(data.url, data.token);
         break;
       case "send":

@@ -6,7 +6,13 @@
   "homepage": "https://strafe.js.org",
   "main": "dist/index",
   "scripts": {
-    "build": "tsc -p . && typedoc --json website/docs.json"
+    "build": "tsc -p . && typedoc --json website/docs.json",
+    "build-worker": "cd ./src/client; tsc worker.ts; cp worker.js ../../dist/worker.js",
+    "package": "npm run build; npm run build-worker",
+    "postinstall": "echo \"exports.workerPath = '${PWD}/dist/worker.js'\" >> ./dist/index.js",
+    "prepare": "npm run package",
+
+    "devbuild": "npm run package; npm run postinstall"
   },
   "keywords": [
     "strafe",

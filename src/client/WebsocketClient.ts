@@ -15,8 +15,7 @@ export interface WebsocketClient {
 }
 
 export function chooseClient(client: Client): WebsocketClient {
-    // console.log("choosing");
-    return new WebsocketNodeClient(client); // remove this if workers should be enabled
+    console.log("choosing");
     if (typeof window !== "undefined") {
         console.log("worker")
         return new WebsocketWorkerClient(client);
@@ -49,7 +48,8 @@ export class WebsocketWorkerClient implements WebsocketClient {
   public async connect(): Promise<void> {
     this.worker = new SharedWorker( // TODO: make it dynamic
       //this.getWorkerUrl(this.client.config.equinox.replace("/v1", "") + "/worker.js") // due to cors issues, as equinox is on a different origin, this needs to be done
-      "/js/worker.js"
+      //"/js/worker.js"
+      "/api/worker.js"
     );
     this.worker.port.start();
     this.worker.port.postMessage({
