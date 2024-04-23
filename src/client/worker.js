@@ -53,6 +53,10 @@ var OpCodes;
      */
     OpCodes[OpCodes["PRESENCE"] = 3] = "PRESENCE";
     /**
+     * Op code used to request an identify response from stargate (same as identify but after authentication)
+     */
+    OpCodes[OpCodes["REFRESH"] = 4] = "REFRESH";
+    /**
      * Op code used for receiving the hello event from Strafe.
      */
     OpCodes[OpCodes["HELLO"] = 10] = "HELLO";
@@ -140,6 +144,9 @@ var WebsocketWorkerClient = /** @class */ (function () {
             });
         });
     };
+    WebsocketWorkerClient.prototype.refreshReadyData = function () {
+        this.send({ op: OpCodes.REFRESH, data: null });
+    };
     WebsocketWorkerClient.prototype.send = function (message) {
         var _a;
         console.log("send", message);
@@ -193,7 +200,7 @@ onconnect = function (e) {
         switch (data.type) {
             case "connect":
                 if (client.initiated)
-                    return client.emitReadyEvent();
+                    return client.refreshReadyData();
                 client.connect(data.url, data.token);
                 break;
             case "send":
