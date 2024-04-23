@@ -139,7 +139,7 @@ export class User {
     this.bot = data.bot;
     this.client = data.client;
     this.createdAt = data.created_at;
-    this.discriminator = data.discriminator;
+    this.discriminator = data.discriminator ?? 0;
     this.email = null;
     this.editedAt = data.edited_at;
     this.flags = data.flags;
@@ -150,8 +150,8 @@ export class User {
     this.presence = data.presence;
     this.publicFlags = data.public_flags;
     this.system = data.system;
-    this.username = data.username;
-    this.displayName = data.display_name ?? data.global_name ?? data.username;
+    this.username = data.username ?? "Unkown User";
+    this.displayName = data.display_name ?? data.global_name ?? this.username;
     this.verified = data.verified;
   }
 }

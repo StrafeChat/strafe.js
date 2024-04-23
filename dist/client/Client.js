@@ -5,6 +5,8 @@ const eventemitter2_1 = require("eventemitter2");
 const config_1 = require("../config");
 const WebsocketClient_1 = require("./WebsocketClient");
 const SpaceManager_1 = require("../managers/SpaceManager");
+const InviteManager_1 = require("../managers/InviteManager");
+const UserManager_1 = require("../managers/UserManager");
 /**
  * The main hub for interacting with strafe.
  * @extends EventEmitter2
@@ -31,6 +33,14 @@ class Client extends eventemitter2_1.EventEmitter2 {
      * The spaces cached on the client.
      */
     spaces = new SpaceManager_1.SpaceManager(this);
+    /**
+     * The invites cached on the client.
+     */
+    invites = new InviteManager_1.InviteManager(this);
+    /**
+     * The users cached on the client.
+     */
+    users = new UserManager_1.UserManager(this);
     /**
      * Attaches a listener for the specified event.
      * @method

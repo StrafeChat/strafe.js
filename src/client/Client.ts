@@ -4,7 +4,9 @@ import { ClientUser } from "../structure/ClientUser";
 import { ApiError, ClientOptions, EventMap, ISpace } from "../types";
 import { chooseClient, WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
+import { InviteManager } from "../managers/InviteManager";
 import { Space } from "../structure/Space";
+import { UserManager } from "../managers/UserManager";
 
 /**
  * The main hub for interacting with strafe.
@@ -36,6 +38,16 @@ export class Client extends EventEmitter2 {
      * The spaces cached on the client.
      */
     public spaces = new SpaceManager(this);
+
+    /**
+     * The invites cached on the client.
+     */
+    public invites = new InviteManager(this);
+
+    /**
+     * The users cached on the client.
+     */
+    public users = new UserManager(this);
 
     /**
      * Attaches a listener for the specified event.

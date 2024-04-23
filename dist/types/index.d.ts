@@ -252,6 +252,18 @@ export interface IMessage {
     stickers: string[] | null;
     nonce: number | null;
 }
+export interface IInvite {
+    code: string;
+    vanity: boolean;
+    inviter_id: string;
+    uses: number;
+    space_id: string;
+    room_id: string;
+    created_at: number;
+    expires_at: number | null;
+    member_count: number;
+    space: ISpace;
+}
 /***
  * @typedef {Object} ApiError
  * @property {string} message
