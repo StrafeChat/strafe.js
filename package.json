@@ -1,18 +1,12 @@
 {
   "name": "@strafechat/strafe.js",
-  "version": "1.3.31",
+  "version": "1.3.4",
   "description": "NodeJS library for interacting with the Strafe API and websocket.",
   "repository": "https://github.com/StrafeChat/strafe.js",
   "homepage": "https://strafe.js.org",
   "main": "dist/index",
   "scripts": {
-    "build": "tsc -p . && typedoc --json website/docs.json",
-    "build-worker": "cd ./src/client; tsc worker.ts; cp worker.js ../../dist/worker.js",
-    "package": "npm run build; npm run build-worker",
-    "postinstall": "echo \"exports.workerPath = '${PWD}/dist/worker.js'\" >> ./dist/index.js",
-    "prepare": "npm run package",
-
-    "devbuild": "npm run package; npm run postinstall"
+    "build": "tsc -p . && typedoc --json website/docs.json"
   },
   "keywords": [
     "strafe",

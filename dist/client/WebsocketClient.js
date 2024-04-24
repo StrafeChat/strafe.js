@@ -15,7 +15,8 @@ function chooseClient(client) {
     console.log("choosing");
     if (typeof window !== "undefined") {
         console.log("worker");
-        return new WebsocketWorkerClient(client);
+        // return new WebsocketWorkerClient(client);
+        return new WebsocketNodeClient(client);
     }
     else {
         console.log("node");

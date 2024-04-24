@@ -263,6 +263,7 @@ export interface IInvite {
     expires_at: number | null;
     member_count: number;
     space: ISpace;
+    inviter: IUser;
 }
 /***
  * @typedef {Object} ApiError
