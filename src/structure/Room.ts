@@ -2,6 +2,7 @@ import { ApiError, IMessage, IRoom, RoomMessageOptions, RoomCreateOptions } from
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
 import { Message } from "./Message";
+import { VoiceConnection } from "../voice/";
 
 /**
  * Represents a space on Strafe.
@@ -199,5 +200,31 @@ export class Room {
     }
 
     return res.status;
-  }  
+  }
+
+  public join(): Promise<VoiceConnection> {
+    return new Promise(async (res, rej) => {
+      const r = await fetch(
+        `${this.client.config.equinox}/portal/join`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": this.client.token!,
+          },
+          credentials: "include"
+        }
+      );
+      
+      const data = await r.json();
+      if (!r.ok) {
+        throw new Error("Failed join channel: " + (data as ApiError).message);
+      }
+
+      const { token } = data;
+
+      const connection = new VoiceConnection(token, this.client.config.livekit)
+      res(connection);
+    });
+  }
 }

@@ -7,10 +7,12 @@ import { Space } from "../structure/Space";
  * @typedef {Object} ClientConfig
  * @property {string} equinox
  * @property {string} nebula
+ * @property {string} livekit
  */
 export interface ClientConfig {
     equinox: string;
     nebula: string;
+    livekit: string;
 }
 
 /*** 

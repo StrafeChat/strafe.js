@@ -1,5 +1,5 @@
 import { EventEmitter2, Listener, ListenerFn, OnOptions, OnceOptions, event } from "eventemitter2";
-import { API, CDN } from "../config";
+import { API, CDN, LIVEKIT } from "../config";
 import { ClientUser } from "../structure/ClientUser";
 import { ApiError, ClientOptions, EventMap, ISpace } from "../types";
 import { chooseClient, WebsocketClient } from "./WebsocketClient";
@@ -20,6 +20,7 @@ export class Client extends EventEmitter2 {
     public config = {
         equinox: API,
         nebula: CDN,
+        livekit: LIVEKIT
     };
 
     /**
@@ -147,6 +148,7 @@ export class Client extends EventEmitter2 {
         if (options && options.config) {
             this.config.equinox = options.config.equinox ?? this.config.equinox;
             this.config.nebula = options.config.nebula ?? this.config.nebula;
+            this.config.livekit = options.config.livekit ?? this.config.livekit;
         };
 
         this.ws = chooseClient(this);
