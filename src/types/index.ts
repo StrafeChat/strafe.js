@@ -280,6 +280,7 @@ export interface IInvite {
     vanity: boolean;
     inviter_id: string;
     uses: number;
+    max_uses: number;
     space_id: string;
     room_id: string;
     created_at: number;
@@ -287,6 +288,11 @@ export interface IInvite {
     member_count: number;
     space: ISpace;
     inviter: IUser;
+}
+
+export interface CreateInviteOptions {
+    max_uses: number | null;
+    expires_at: number | null;
 }
 
 /*** 

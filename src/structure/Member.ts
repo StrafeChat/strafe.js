@@ -1,7 +1,7 @@
 import { ISpaceMember, IUser } from "../types";
 
 /**
- * Represents a space on Strafe.
+ * Represents a member of a space on Strafe.
  */
 export class Member {
   /**

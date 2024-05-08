@@ -1,7 +1,7 @@
 import { IInvite, ISpace } from "../types";
 
 /**
- * Represents a space on Strafe.
+ * Represents an invite to a space on Strafe.
  */
 export class Invite {
   /**
@@ -40,6 +40,11 @@ export class Invite {
    */
    public readonly uses: number;
 
+    /**
+   * The number of max uses of the invite.
+   */
+    public readonly maxUses: number;
+
   /**
    * The time the invite expires.
    */
@@ -69,6 +74,7 @@ export class Invite {
     this.memberCount = data.member_count;
     this.vanity = data.vanity;
     this.uses = data.uses;
+    this.maxUses = data.max_uses;
     this.space = data.space;
   }
 }

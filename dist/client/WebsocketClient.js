@@ -131,7 +131,7 @@ class WebsocketWorkerClient {
                                     data.client = this.client;
                                     const message = new Message_1.Message(data);
                                     room?.messages.delete(message.id);
-                                    this.client.emit("messageCreate", message);
+                                    this.client.emit("messageDelete", message);
                                 }
                                 break;
                             case "TYPING_START":
@@ -269,7 +269,7 @@ class WebsocketNodeClient {
                                 data.client = this.client;
                                 const message = new Message_1.Message(data);
                                 room?.messages.delete(message.id);
-                                this.client.emit("messageCreate", message);
+                                this.client.emit("messageDelete", message);
                             }
                             break;
                         case "TYPING_START":

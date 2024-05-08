@@ -139,7 +139,7 @@ export class WebsocketWorkerClient implements WebsocketClient {
                             (data as IMessage).client = this.client;
                             const message = new Message(data as IMessage);
                             room?.messages.delete(message.id);
-                            this.client.emit("messageCreate", message as Message)
+                            this.client.emit("messageDelete", message as Message)
                         }
                     break;
                     case "TYPING_START":
@@ -257,7 +257,7 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 data.space = space;
                                 (data as IMessage).client = this.client;
                                 const message = new Message(data as IMessage);
-                                room?.messages.set(message.id, message)
+                                room?.messages.set(message.id, message as Message)
                                 this.client.emit("messageCreate", message as Message)
                             }
                         break;
@@ -270,7 +270,7 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 data.space = space;
                                 (data as IMessage).client = this.client;
                                 const message = new Message(data as IMessage);
-                                room?.messages.set(message.id, message)
+                                room?.messages.set(message.id, message as Message)
                                 this.client.emit("messageUpdate", message as Message)
                             }
                         break;
@@ -281,7 +281,7 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 (data as IMessage).client = this.client;
                                 const message = new Message(data as IMessage);
                                 room?.messages.delete(message.id);
-                                this.client.emit("messageCreate", message as Message)
+                                this.client.emit("messageDelete", message as Message)
                             }
                         break;
                         case "TYPING_START":
