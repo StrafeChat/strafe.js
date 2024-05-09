@@ -62,17 +62,17 @@ export interface MessageEmbedField {
     inline: boolean;
 }
 export interface MessageEmbed {
-    title: string | null;
+    title?: string | null;
     description: string | null;
-    url: string | null;
-    timestamp: number | null;
-    color: number | null;
-    footer: MessageEmbedFooter | null;
-    image: MessageEmbedMedia | null;
-    thumbnail: MessageEmbedMedia | null;
-    video: MessageEmbedMedia | null;
-    author: MessageEmbedAuthor | null;
-    fields: MessageEmbedField[] | null;
+    url?: string | null;
+    timestamp?: number | null;
+    color?: string | null;
+    footer?: MessageEmbedFooter | null;
+    image?: MessageEmbedMedia | null;
+    thumbnail?: MessageEmbedMedia | null;
+    video?: MessageEmbedMedia | null;
+    author?: MessageEmbedAuthor | null;
+    fields?: MessageEmbedField[] | null;
 }
 export interface RoomMessageOptions {
     content: string;

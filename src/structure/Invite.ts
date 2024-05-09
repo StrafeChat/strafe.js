@@ -1,4 +1,4 @@
-import { IInvite, ISpace } from "../types";
+import { ApiError, IInvite, ISpace } from "../types";
 
 /**
  * Represents an invite to a space on Strafe.
@@ -59,6 +59,7 @@ export class Invite {
    * The space object of the invite.
    */
   public readonly space: ISpace;
+  client: any;
 
   /**
    * Creates a new instance of a space.
@@ -77,4 +78,30 @@ export class Invite {
     this.maxUses = data.max_uses;
     this.space = data.space;
   }
+   
+  public async accept () {
+    const res = await fetch(
+      `${this.client.config.equinox}/invites/${this.code}/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": this.client.token!,
+        },
+        credentials: "include",
+      }
+    );
+  
+    const resData = (await res.json()) as ApiError | IInvite;
+
+    if (!res.ok)
+      throw new Error(
+        "Failed to acecpt: " + (resData as ApiError).message
+      );
+
+    const message = new Invite(resData as IInvite);
+
+    return message;
+  } 
+
 }
