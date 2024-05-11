@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OpCodes = exports.CDN = exports.API = void 0;
+exports.ErrorCodes = exports.OpCodes = exports.CDN = exports.API = void 0;
 /**
  * The default url that will be used for equinox.
  */
@@ -35,3 +35,45 @@ var OpCodes;
      */
     OpCodes[OpCodes["HELLO"] = 10] = "HELLO";
 })(OpCodes || (exports.OpCodes = OpCodes = {}));
+/**
+ * List of error codes from equinox.
+ */
+var ErrorCodes;
+(function (ErrorCodes) {
+    /**
+     * An unknown error occured.
+     */
+    ErrorCodes[ErrorCodes["UNKNOWN"] = 4000] = "UNKNOWN";
+    /**
+     * An invalid opcode was sent.
+     */
+    ErrorCodes[ErrorCodes["UNKNOWN_OPCODE"] = 4001] = "UNKNOWN_OPCODE";
+    /**
+     * An invalid payload was sent.
+     */
+    ErrorCodes[ErrorCodes["DECODE_ERROR"] = 4002] = "DECODE_ERROR";
+    /**
+     * The user is not authenticated.
+     */
+    ErrorCodes[ErrorCodes["NOT_AUTHENTICATED"] = 4003] = "NOT_AUTHENTICATED";
+    /**
+     * The token is invalid.
+     */
+    ErrorCodes[ErrorCodes["INVALID_TOKEN"] = 4004] = "INVALID_TOKEN";
+    /**
+     * The user is already authenticated.
+     */
+    ErrorCodes[ErrorCodes["ALREADY_AUTHENTICATED"] = 4005] = "ALREADY_AUTHENTICATED";
+    /**
+     * The session has timed out.
+     */
+    ErrorCodes[ErrorCodes["SESSION_TIMED_OUT"] = 4006] = "SESSION_TIMED_OUT";
+    /**
+     * The user is being rate limited.
+     */
+    ErrorCodes[ErrorCodes["RATE_LIMIT"] = 4007] = "RATE_LIMIT";
+    /**
+     * The user has not been verified.
+     */
+    ErrorCodes[ErrorCodes["NOT_VERIFIED"] = 4008] = "NOT_VERIFIED";
+})(ErrorCodes || (exports.ErrorCodes = ErrorCodes = {}));

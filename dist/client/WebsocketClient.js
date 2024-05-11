@@ -1,180 +1,329 @@
 "use strict";
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (g && (g = 0, op[0] && (_ = 0)), _) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebsocketClient = void 0;
-var isomorphic_ws_1 = __importDefault(require("isomorphic-ws"));
-var config_1 = require("../config");
-var ClientUser_1 = require("../structure/ClientUser");
-var WebsocketClient = /** @class */ (function () {
+exports.WebsocketNodeClient = exports.WebsocketWorkerClient = exports.chooseClient = void 0;
+const isomorphic_ws_1 = __importDefault(require("isomorphic-ws"));
+const config_1 = require("../config");
+const ClientUser_1 = require("../structure/ClientUser");
+const Space_1 = require("../structure/Space");
+const Room_1 = require("../structure/Room");
+const Member_1 = require("../structure/Member");
+const Message_1 = require("../structure/Message");
+function chooseClient(client) {
+    console.log("choosing");
+    if (typeof window !== "undefined") {
+        console.log("worker");
+        // return new WebsocketWorkerClient(client);
+        return new WebsocketNodeClient(client);
+    }
+    else {
+        console.log("node");
+        return new WebsocketNodeClient(client);
+    }
+}
+exports.chooseClient = chooseClient;
+class WebsocketWorkerClient {
+    client;
+    worker = null;
+    constructor(client) {
+        this.client = client;
+    }
+    // Credit: https://stackoverflow.com/questions/21913673/execute-web-worker-from-different-origin
+    getWorkerUrl(url) {
+        // why is it not accepting the interface??? huh
+        // type 'typeof WebsocketNodeClient' is missing the following properties from type 'WebsocketClient': connect, send
+        // it literally implements the interface, what the hell (╯°□°）╯︵ ┻━┻) (completion by copilot)
+        // Returns a blob:// URL which points
+        // to a javascript file which will call
+        // importScripts with the given URL
+        const content = `importScripts( "${url}" );`;
+        return URL.createObjectURL(new Blob([content], { type: "text/javascript" }));
+    }
+    async connect() {
+        this.worker = new SharedWorker(// TODO: make it dynamic
+        //this.getWorkerUrl(this.client.config.equinox.replace("/v1", "") + "/worker.js") // due to cors issues, as equinox is on a different origin, this needs to be done
+        //"/js/worker.js"
+        "/api/worker.js");
+        this.worker.port.start();
+        this.worker.port.postMessage({
+            type: "connect",
+            token: this.client.token,
+            url: this.client.config.equinox,
+        });
+        this.worker.port.onmessage = (messageEvent) => {
+            if (messageEvent.data.event === "message") {
+                const { op, data, event } = JSON.parse(messageEvent.data.values);
+                console.log(op, data, event);
+                switch (op) {
+                    case config_1.OpCodes.DISPATCH:
+                        switch (event) {
+                            case "READY":
+                                this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
+                                data.spaces.forEach((spaceData) => {
+                                    spaceData.client = this.client;
+                                    const space = new Space_1.Space(spaceData);
+                                    if (spaceData.rooms) {
+                                        spaceData.rooms.forEach((roomData) => {
+                                            const room = new Room_1.Room(roomData);
+                                            room.client = this.client;
+                                            room.messages.forEach((messageData) => {
+                                                const message = messageData;
+                                                message.client = this.client;
+                                                room.messages.set(message.id, message);
+                                            });
+                                            space.rooms.set(room.id, room);
+                                        });
+                                        spaceData.members.forEach((membersData) => {
+                                            const member = new Member_1.Member(membersData);
+                                            space.members.set(member.userId, member);
+                                        });
+                                    }
+                                    this.client.spaces.set(space.id, space);
+                                });
+                                this.client.emit("ready", data);
+                                break;
+                            case "PRESENCE_UPDATE":
+                                if (this.client.user?.id === data.user.id)
+                                    this.client.user.presence = data.presence;
+                                this.client.spaces
+                                    .toArray()
+                                    .map((space) => {
+                                    let member = space.members.get(data.user.id);
+                                    if (!data.user.space_ids.includes(space.id))
+                                        return;
+                                    let oldUser = data.user;
+                                    let presence = data.presence;
+                                    let user = { ...oldUser, presence };
+                                    space.members.set(data.user.id, { ...member, user });
+                                });
+                                this.client.emit("presenceUpdate", data);
+                                break;
+                            case "MESSAGE_CREATE":
+                                if (data.space_id) {
+                                    const space = this.client.spaces.get(data.space_id);
+                                    const room = space?.rooms.get(data.room_id);
+                                    data.room = room;
+                                    data.space = space;
+                                    data.client = this.client;
+                                    const message = new Message_1.Message(data);
+                                    room?.messages.set(message.id, message);
+                                    this.client.emit("messageCreate", message);
+                                }
+                                break;
+                            case "MESSAGE_UPDATE":
+                                if (data.space_id) {
+                                    const space = this.client.spaces.get(data.space_id);
+                                    const room = space?.rooms.get(data.room_id);
+                                    data.room = room;
+                                    data.space = space;
+                                    data.client = this.client;
+                                    const message = new Message_1.Message(data);
+                                    room?.messages.set(message.id, message);
+                                    this.client.emit("messageUpdate", message);
+                                }
+                                break;
+                            case "MESSAGE_DELETE":
+                                if (data.space_id) {
+                                    const space = this.client.spaces.get(data.space_id);
+                                    const room = space?.rooms.get(data.room_id);
+                                    data.client = this.client;
+                                    const message = new Message_1.Message(data);
+                                    room?.messages.delete(message.id);
+                                    this.client.emit("messageDelete", message);
+                                }
+                                break;
+                            case "TYPING_START":
+                                this.client.emit("typingStart", data);
+                                break;
+                            default:
+                                this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
+                                break;
+                        }
+                        break;
+                }
+                return;
+            }
+            this.client.emit(messageEvent.data.event, messageEvent.data.values);
+        };
+    }
+    async send({ op, data }) {
+        this.worker?.port.postMessage({ type: "send", message: { op, data } });
+    }
+}
+exports.WebsocketWorkerClient = WebsocketWorkerClient;
+/**
+ * Represents a websocket client in non-browser environments.
+ */
+class WebsocketNodeClient {
+    client;
+    gateway = null;
+    _ws = null;
+    heartbeatInterval = null;
     /**
      * Constructs a new WebsocketClient.
      * @param client The client associated with the websocket connection.
      */
-    function WebsocketClient(client) {
+    constructor(client) {
         this.client = client;
-        this.gateway = null;
-        this._ws = null;
-        this.heartbeatInterval = null;
     }
     /**
      * Establishes a websocket connection to stargate.
      */
-    WebsocketClient.prototype.connect = function () {
-        return __awaiter(this, void 0, void 0, function () {
-            var res, err_1, data;
-            var _this = this;
-            return __generator(this, function (_a) {
-                switch (_a.label) {
-                    case 0:
-                        if (!!this.gateway) return [3 /*break*/, 6];
-                        _a.label = 1;
-                    case 1:
-                        _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, fetch(this.client.config.equinox + "/gateway")];
-                    case 2:
-                        res = _a.sent();
-                        return [3 /*break*/, 4];
-                    case 3:
-                        err_1 = _a.sent();
-                        this.client.emit("error", "Looks like the Strafe API is down. Please try reconnecting later.");
-                        throw new Error("Looks like ".concat(this.client.config.equinox + "/gateway", " might be down!"));
-                    case 4: return [4 /*yield*/, res.json()];
-                    case 5:
-                        data = _a.sent();
-                        this.gateway = data.ws;
-                        _a.label = 6;
-                    case 6:
-                        this._ws = new isomorphic_ws_1.default(this.gateway);
-                        this._ws.addEventListener("open", function () {
-                            _this.identify();
-                        });
-                        this._ws.addEventListener("message", function (message) {
-                            var _a;
-                            var _b = JSON.parse(message.data.toString()), op = _b.op, data = _b.data, event = _b.event;
-                            switch (op) {
-                                case config_1.OpCodes.HELLO:
-                                    var heartbeat_interval = data.heartbeat_interval;
-                                    _this.startHeartbeat(heartbeat_interval);
-                                    break;
-                                case config_1.OpCodes.DISPATCH:
-                                    switch (event) {
-                                        case "READY":
-                                            _this.client.user = new ClientUser_1.ClientUser(__assign(__assign({}, data.user), { client: _this.client }));
-                                            _this.client.emit("ready", data);
-                                            break;
-                                        case "PRESENCE_UPDATE":
-                                            if (((_a = _this.client.user) === null || _a === void 0 ? void 0 : _a.id) === data.user.id)
-                                                _this.client.user.presence = data.presence;
-                                            _this.client.emit("presenceUpdate", data);
-                                            break;
-                                        default:
-                                            _this.client.emit("error", "An unknown event has been emitted. Is strafe.js up to date?");
-                                            break;
-                                    }
-                                    break;
+    async connect() {
+        if (!this.gateway) {
+            try {
+                var res = await fetch(this.client.config.equinox + "/gateway");
+            }
+            catch (err) {
+                this.client.emit("error", { code: 503, message: "Looks like the Strafe API is down. Please try reconnecting later." });
+                throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
+            }
+            const data = await res.json();
+            this.gateway = data.ws;
+        }
+        this._ws = new isomorphic_ws_1.default(this.gateway);
+        this._ws.addEventListener("open", () => {
+            this.identify();
+        });
+        this._ws.addEventListener("message", (message) => {
+            const { op, data, event } = JSON.parse(message.data.toString());
+            switch (op) {
+                case config_1.OpCodes.HELLO:
+                    const { heartbeat_interval } = data;
+                    this.startHeartbeat(heartbeat_interval);
+                    break;
+                case config_1.OpCodes.DISPATCH:
+                    switch (event) {
+                        case "READY":
+                            this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
+                            data.spaces.forEach((spaceData) => {
+                                spaceData.client = this.client;
+                                const space = new Space_1.Space(spaceData);
+                                if (spaceData.rooms) {
+                                    spaceData.rooms.forEach((roomData) => {
+                                        roomData.client = this.client;
+                                        const room = new Room_1.Room(roomData);
+                                        room.messages.forEach((messageData) => {
+                                            messageData.client = this.client;
+                                            const message = messageData;
+                                            room.messages.set(message.id, message);
+                                        });
+                                        space.rooms.set(room.id, room);
+                                    });
+                                    spaceData.members.forEach((membersData) => {
+                                        const member = new Member_1.Member(membersData);
+                                        space.members.set(member.userId, member);
+                                    });
+                                }
+                                this.client.spaces.set(space.id, space);
+                            });
+                            this.client.emit("ready", data);
+                            break;
+                        case "PRESENCE_UPDATE":
+                            if (this.client.user?.id === data.user.id)
+                                this.client.user.presence = data.presence;
+                            this.client.spaces
+                                .toArray()
+                                .map((space) => {
+                                let member = space.members.get(data.user.id);
+                                if (!data.user.space_ids.includes(space.id))
+                                    return;
+                                let oldUser = data.user;
+                                let presence = data.presence;
+                                let user = { ...oldUser, presence };
+                                space.members.set(data.user.id, { ...member, user });
+                            });
+                            this.client.emit("presenceUpdate", data);
+                            break;
+                        case "MESSAGE_CREATE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                data.room = room;
+                                data.space = space;
+                                data.client = this.client;
+                                const message = new Message_1.Message(data);
+                                room?.messages.set(message.id, message);
+                                this.client.emit("messageCreate", message);
                             }
-                        });
-                        this._ws.addEventListener("close", function (event) {
-                            console.log(event);
-                            _this.client.emit("error", { message: "The websocket connection has been closed. Attempting to reconnect." });
-                            setTimeout(function () {
-                                _this.reconnect();
-                            }, 5000);
-                        });
-                        return [2 /*return*/];
-                }
-            });
+                            break;
+                        case "MESSAGE_UPDATE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                data.createdAt = data.created_at;
+                                data.room = room;
+                                data.space = space;
+                                data.client = this.client;
+                                const message = new Message_1.Message(data);
+                                room?.messages.set(message.id, message);
+                                this.client.emit("messageUpdate", message);
+                            }
+                            break;
+                        case "MESSAGE_DELETE":
+                            if (data.space_id) {
+                                const space = this.client.spaces.get(data.space_id);
+                                const room = space?.rooms.get(data.room_id);
+                                data.client = this.client;
+                                const message = new Message_1.Message(data);
+                                room?.messages.delete(message.id);
+                                this.client.emit("messageDelete", message);
+                            }
+                            break;
+                        case "TYPING_START":
+                            this.client.emit("typingStart", data);
+                            break;
+                        default:
+                            this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
+                            break;
+                    }
+                    break;
+            }
         });
-    };
-    WebsocketClient.prototype.send = function (_a) {
-        var _b;
-        var op = _a.op, data = _a.data;
-        return __awaiter(this, void 0, void 0, function () {
-            return __generator(this, function (_c) {
-                (_b = this._ws) === null || _b === void 0 ? void 0 : _b.send(JSON.stringify({ op: op, data: data }));
-                return [2 /*return*/];
-            });
+        this._ws.addEventListener("close", (event) => {
+            this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
+            if (event.code > 1000 && event.code != 4004) {
+                setTimeout(() => {
+                    this.reconnect();
+                }, 5000);
+            }
         });
-    };
-    WebsocketClient.prototype.identify = function () {
-        var _a;
-        var payload = {
+    }
+    /**
+     * Sends a message to stargate.
+     * @param op The opcode of the message.
+     * @param data The data of the message.
+     */
+    async send({ op, data }) {
+        this._ws?.send(JSON.stringify({ op, data }));
+    }
+    identify() {
+        const payload = {
             op: config_1.OpCodes.IDENTIFY,
             data: {
                 token: this.client.token
             }
         };
-        (_a = this._ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify(payload));
-    };
-    WebsocketClient.prototype.reconnect = function () {
-        var _this = this;
+        this._ws?.send(JSON.stringify(payload));
+    }
+    reconnect() {
         this.stopHeartbeat();
         this._ws = null;
-        setTimeout(function () { return _this.connect(); }, 5000);
-    };
-    WebsocketClient.prototype.startHeartbeat = function (interval) {
-        var _this = this;
-        this.heartbeatInterval = setInterval(function () {
-            _this.sendHeartbeat();
+        setTimeout(() => this.connect(), 5000);
+    }
+    startHeartbeat(interval) {
+        this.heartbeatInterval = setInterval(() => {
+            this.sendHeartbeat();
         }, interval);
-    };
-    WebsocketClient.prototype.stopHeartbeat = function () {
+    }
+    stopHeartbeat() {
         if (this.heartbeatInterval)
             clearInterval(this.heartbeatInterval);
-    };
-    WebsocketClient.prototype.sendHeartbeat = function () {
-        var _a;
-        (_a = this._ws) === null || _a === void 0 ? void 0 : _a.send(JSON.stringify({ op: config_1.OpCodes.HEARTBEAT }));
-    };
-    return WebsocketClient;
-}());
-exports.WebsocketClient = WebsocketClient;
+    }
+    sendHeartbeat() {
+        this._ws?.send(JSON.stringify({ op: config_1.OpCodes.HEARTBEAT }));
+    }
+}
+exports.WebsocketNodeClient = WebsocketNodeClient;
