@@ -1,5 +1,6 @@
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
+import { Member } from "../structure/Member";
 import { Room } from "../structure/Room";
 import { Space } from "../structure/Space";
 /***
@@ -62,17 +63,20 @@ export interface MessageEmbedField {
     inline: boolean;
 }
 export interface MessageEmbed {
-    title?: string | null;
+    title: string | null;
     description: string | null;
-    url?: string | null;
-    timestamp?: number | null;
-    color?: string | null;
-    footer?: MessageEmbedFooter | null;
-    image?: MessageEmbedMedia | null;
-    thumbnail?: MessageEmbedMedia | null;
-    video?: MessageEmbedMedia | null;
-    author?: MessageEmbedAuthor | null;
-    fields?: MessageEmbedField[] | null;
+    url: string | null;
+    timestamp: number | null;
+    color: string | null;
+    footer: MessageEmbedFooter | null;
+    image: MessageEmbedMedia | null;
+    thumbnail: MessageEmbedMedia | null;
+    video: MessageEmbedMedia | null;
+    author: MessageEmbedAuthor | null;
+    fields: MessageEmbedField[] | null;
+}
+export interface HasPermissionOptions {
+    permission: string;
 }
 export interface RoomMessageOptions {
     content: string;
@@ -82,6 +86,7 @@ export interface RoomCreateOptions {
     name: string;
     type: number;
     space_id?: string;
+    parent_id?: string;
 }
 /***
  * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE" | "MESSAGE_UPDATE"} Events
@@ -217,12 +222,20 @@ export interface ISpaceMember {
     edited_at: number;
     user: IUser;
 }
+export interface ISpaceRole {
+    space_id: string;
+    color: string;
+    hoist: boolean;
+    rank: number;
+    permissions: PermissionOverwrite[];
+}
 export interface MessageSudo {
     name: string | null;
     avatar_url: string | null;
     color: string | null;
 }
 export interface IMessage {
+    member: Member;
     space: Space;
     room: Room;
     client: Client;

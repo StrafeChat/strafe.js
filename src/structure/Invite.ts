@@ -1,4 +1,5 @@
 import { ApiError, IInvite, ISpace } from "../types";
+import { Space } from "./Space";
 
 /**
  * Represents an invite to a space on Strafe.
@@ -92,16 +93,17 @@ export class Invite {
       }
     );
   
-    const resData = (await res.json()) as ApiError | IInvite;
+    const resData = await res.json();
 
     if (!res.ok)
       throw new Error(
         "Failed to acecpt: " + (resData as ApiError).message
       );
 
-    const message = new Invite(resData as IInvite);
-
-    return message;
+    const space = new Space(resData.space as ISpace);
+    this.client.spaces.set(space.id, space); 
+    
+    return space;
   } 
 
 }
