@@ -92,6 +92,8 @@ export interface HasPermissionOptions {
 export interface RoomMessageOptions {
     content: string;
     embeds?: MessageEmbed[];
+    reference_id?: string;
+    attachments?: object[];
 }
 
 export interface RoomCreateOptions {
