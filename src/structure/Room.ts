@@ -1,11 +1,12 @@
-import { ApiError, IMessage, IRoom, RoomMessageOptions, RoomCreateOptions } from "../types";
+import { ApiError, IMessage, IRoom, RoomMessageOptions, RoomCreateOptions, CreateInviteOptions, IInvite } from "../types";
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
 import { Message } from "./Message";
 import { VoiceConnection } from "../voice/";
+import { Invite } from "./Invite";
 
 /**
- * Represents a space on Strafe.
+ * Represents a room on Strafe.
  */
 export class Room {
   /**
@@ -155,31 +156,33 @@ export class Room {
    * @param client The client.
    */
 
-  public async send(data: Partial<RoomMessageOptions>) {
-    const res = await fetch(
-      `${this.client.config.equinox}/rooms/${this.id}/messages`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": this.client.token!,
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      }
-    );
+  public async send(data: RoomMessageOptions) {
+
+    const res = await fetch(`${this.client.config.equinox}/rooms/${this.id}/messages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.client.token!,
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
 
     const resData = (await res.json()) as ApiError | IMessage;
 
-    if (!res.ok)
-      throw new Error(
-        "Failed to send message: " + (resData as ApiError).message
-      );
+    if (!res.ok) {
+      throw new Error("Failed to send message: " + (resData as ApiError).message);
+    }
 
     const message = new Message(resData as IMessage);
 
     return message;
   }
+
+    /**
+   * Start typing inside a room.
+   * @param client The client.
+   */
 
   public async sendTyping() {
     const res = await fetch(
@@ -227,4 +230,98 @@ export class Room {
       res(connection);
     });
   }
+
+    /**
+   * Creates an invite for the room.
+   * @param data The data to create the invite with.
+   * @param client The client.
+   */
+    public async createInvite(data: Partial<CreateInviteOptions> | null = null) {
+      if (data) {
+        const res = await fetch(
+          `${this.client.config.equinox}/rooms/${this.id}/invites`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": this.client.token!,
+            },
+            body: JSON.stringify(data),
+            credentials: "include",
+          }
+        );
+  
+    if (!res.ok) {
+      const resData = await res.json();
+      throw new Error("Failed to send delete request: " + (resData as ApiError).message);
+    }
+  
+    const resData = (await res.json()) as ApiError | IInvite;
+  
+    if (!res.ok)
+      throw new Error(
+        "Failed to create invite: " + (resData as ApiError).message
+      );
+
+      console.log(resData)
+  
+    const invite = new Invite(resData as IInvite);
+  
+    return invite;
+      } else {
+        const res = await fetch(
+          `${this.client.config.equinox}/rooms/${this.id}/invites`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": this.client.token!,
+            },
+            credentials: "include",
+          }
+        );
+  
+    if (!res.ok) {
+      const resData = await res.json();
+      throw new Error("Failed to send delete request: " + (resData as ApiError).message);
+    }
+  
+    const resData = await res.json();
+  
+    if (!res.ok)
+      throw new Error(
+        "Failed to create invite: " + (resData as ApiError).message
+      );
+  
+    const invite = new Invite(resData!.invite as IInvite);
+  
+    return invite;
+      }
+  }  
+
+    /**
+   * Deletes a room.
+   * @param client The client.
+   */
+
+public async delete() {
+  const res = await fetch(
+    `${this.client.config.equinox}/rooms/${this.id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.client.token!,
+      },
+      credentials: "include",
+    }
+  );
+
+  if (!res.ok) {
+    const resData = await res.json();
+    throw new Error("Failed to send delete request: " + (resData as ApiError).message);
+  }
+
+  return res.status;
+  }  
 }

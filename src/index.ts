@@ -16,6 +16,7 @@ export * from "./structure/Member";
 export * from "./structure/Message";
 export * from "./voice/VoiceConnection";
 export * from "./managers/";
+export * from "./structure/Invite";
 
 const path = require("path");
 

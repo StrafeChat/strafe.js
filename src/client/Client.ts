@@ -1,11 +1,13 @@
 import { EventEmitter2, Listener, ListenerFn, OnOptions, OnceOptions, event } from "eventemitter2";
 import { API, CDN, LIVEKIT } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { ApiError, ClientOptions, EventMap, ISpace } from "../types";
+import { ClientOptions, EventMap } from "../types";
 import { chooseClient, WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
 import { VoiceManager } from "../managers/VoiceManager";
 import { Space } from "../structure/Space";
+import { InviteManager } from "../managers/InviteManager";
+import { UserManager } from "../managers/UserManager";
 
 /**
  * The main hub for interacting with strafe.
@@ -43,6 +45,16 @@ export class Client extends EventEmitter2 {
      * The voice interface for the client.
      */
     public voice: VoiceManager = new VoiceManager(this, this.config.livekit);
+
+    /**
+     * The invites cached on the client.
+     */
+    public invites = new InviteManager(this);
+
+    /**
+     * The users cached on the client.
+     */
+    public users = new UserManager(this);
 
     /**
      * Attaches a listener for the specified event.

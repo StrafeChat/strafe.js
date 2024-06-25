@@ -1,5 +1,6 @@
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
+import { Member } from "../structure/Member";
 import { Room } from "../structure/Room";
 import { Space } from "../structure/Space";
 
@@ -77,7 +78,7 @@ export interface MessageEmbed {
     description: string | null;
     url: string | null;
     timestamp: number | null;
-    color: number | null;
+    color: string | null;
     footer: MessageEmbedFooter | null;
     image: MessageEmbedMedia | null;
     thumbnail: MessageEmbedMedia | null;
@@ -86,16 +87,22 @@ export interface MessageEmbed {
     fields: MessageEmbedField[] | null;
 }
 
+export interface HasPermissionOptions {
+    permission: string;
+}
 
 export interface RoomMessageOptions {
     content: string;
     embeds?: MessageEmbed[];
+    reference_id?: string;
+    attachments?: object[];
 }
 
 export interface RoomCreateOptions {
     name: string;
     type: number;
     space_id?: string;
+    parent_id?: string;
 }
 
 /*** 
@@ -240,6 +247,14 @@ export interface ISpaceMember {
     user: IUser;
 }
 
+export interface ISpaceRole {
+    space_id: string;
+    color: string;
+    hoist: boolean;
+    rank: number;
+    permissions: PermissionOverwrite[];
+}
+
 export interface MessageSudo {
     name: string | null;
     avatar_url: string | null;
@@ -247,6 +262,7 @@ export interface MessageSudo {
 }
 
 export interface IMessage {
+    member: Member;
     space: Space;
     room: Room;
     client: Client;
@@ -275,6 +291,26 @@ export interface IMessage {
     thread_id: string | null;
     stickers: string[] | null;
     nonce: number | null;
+}
+
+export interface IInvite {
+    code: string;
+    vanity: boolean;
+    inviter_id: string;
+    uses: number;
+    max_uses: number;
+    space_id: string;
+    room_id: string;
+    created_at: number;
+    expires_at: number | null;
+    member_count: number;
+    space: ISpace;
+    inviter: IUser;
+}
+
+export interface CreateInviteOptions {
+    max_uses: number | null;
+    expires_at: number | null;
 }
 
 /*** 
