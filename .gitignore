@@ -130,4 +130,5 @@ out
 .yarn/install-state.gz
 .pnp.*
 
-dist
+dist/
+website/docs.json
