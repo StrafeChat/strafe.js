@@ -11,7 +11,7 @@ export const CDN = "https://nebula.strafe.chat";
 /**
  * The default livekit server url
  */
-export const LIVEKIT = "ws://localhost:7880"
+export const LIVEKIT = "ws://localhost:3001/portal/signaling"
 
 /**
  * List of opcodes used for interacting with strafe.

@@ -108,7 +108,7 @@ export interface RoomCreateOptions {
 /*** 
  * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE" | "MESSAGE_UPDATE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "VOICE_JOIN" | "VOICE_LEAVE";
 
 export interface ReadyEvent {
     user: IUser;
@@ -125,6 +125,8 @@ export interface EventMap {
     messageDelete: any;
     messageUpdate: any;
     typingStart: any;
+    voiceJoin: any;
+    voiceLeave: any;
 }
 
 /*** 

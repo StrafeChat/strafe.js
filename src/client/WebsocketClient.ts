@@ -146,6 +146,12 @@ export class WebsocketWorkerClient implements WebsocketClient {
                     case "TYPING_START":
                         this.client.emit("typingStart", data)
                     break;
+                    case "VOICE_JOIN":
+                        this.client.emit("voiceJoin", data);
+                    break;
+                    case "VOICE_LEAVE":
+                        this.client.emit("voiceLeave", data);
+                    break;
                     default:
                         this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
                     break;
@@ -289,6 +295,12 @@ export class WebsocketNodeClient implements WebsocketClient {
                         break;
                         case "TYPING_START":
                             this.client.emit("typingStart", data)
+                        break;
+                        case "VOICE_JOIN":
+                            this.client.emit("voiceJoin", data);
+                        break;
+                        case "VOICE_LEAVE":
+                            this.client.emit("voiceLeave", data);
                         break;
                         default:
                             this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
