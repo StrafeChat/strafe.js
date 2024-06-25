@@ -31,6 +31,9 @@ __exportStar(require("./managers/MessageManager"), exports);
 __exportStar(require("./managers/RoomManager"), exports);
 __exportStar(require("./structure/Member"), exports);
 __exportStar(require("./structure/Message"), exports);
+__exportStar(require("./voice/VoiceConnection"), exports);
+__exportStar(require("./managers/"), exports);
 const path = require("path");
 exports.workerPath = path.resolve(__filename, "./worker.js"); // TODO: fix, this doesn't work in ts/next environment (I haven't figured that out yet). It is being fixed by the postinstall script atm
-exports.workerPath = '/mnt/c/Users/samue/Documents/projects/strafe/strafe.js/dist/worker.js'
+exports.workerPath = '/mnt/d/JS/strafe/strafe.js/dist/worker.js'
+exports.workerPath = '/mnt/d/JS/strafe/strafe.js/dist/worker.js'

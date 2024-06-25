@@ -4,6 +4,7 @@ import { ClientUser } from "../structure/ClientUser";
 import { ApiError, ClientOptions, EventMap, ISpace } from "../types";
 import { chooseClient, WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
+import { VoiceManager } from "../managers/VoiceManager";
 import { Space } from "../structure/Space";
 
 /**
@@ -37,6 +38,11 @@ export class Client extends EventEmitter2 {
      * The spaces cached on the client.
      */
     public spaces = new SpaceManager(this);
+
+    /**
+     * The voice interface for the client.
+     */
+    public voice: VoiceManager = new VoiceManager(this, this.config.livekit);
 
     /**
      * Attaches a listener for the specified event.

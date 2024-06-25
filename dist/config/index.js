@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ErrorCodes = exports.OpCodes = exports.CDN = exports.API = void 0;
+exports.ErrorCodes = exports.OpCodes = exports.LIVEKIT = exports.CDN = exports.API = void 0;
 /**
  * The default url that will be used for equinox.
  */
@@ -9,6 +9,10 @@ exports.API = "https://equinox.strafe.chat/v1";
  * The default url that will be used for nebula.
  */
 exports.CDN = "https://nebula.strafe.chat";
+/**
+ * The default livekit server url
+ */
+exports.LIVEKIT = "ws://localhost:7880";
 /**
  * List of opcodes used for interacting with strafe.
  */

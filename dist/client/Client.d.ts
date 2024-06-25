@@ -3,6 +3,7 @@ import { ClientUser } from "../structure/ClientUser";
 import { ClientOptions, EventMap } from "../types";
 import { WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
+import { VoiceManager } from "../managers/VoiceManager";
 /**
  * The main hub for interacting with strafe.
  * @extends EventEmitter2
@@ -16,6 +17,7 @@ export declare class Client extends EventEmitter2 {
     config: {
         equinox: string;
         nebula: string;
+        livekit: string;
     };
     /**
      * The token associated with the client.
@@ -29,6 +31,10 @@ export declare class Client extends EventEmitter2 {
      * The spaces cached on the client.
      */
     spaces: SpaceManager;
+    /**
+     * The voice interface for the client.
+     */
+    voice: VoiceManager;
     /**
      * Attaches a listener for the specified event.
      * @method

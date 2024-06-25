@@ -7,6 +7,10 @@ export declare const API = "https://equinox.strafe.chat/v1";
  */
 export declare const CDN = "https://nebula.strafe.chat";
 /**
+ * The default livekit server url
+ */
+export declare const LIVEKIT = "ws://localhost:7880";
+/**
  * List of opcodes used for interacting with strafe.
  */
 export declare enum OpCodes {
