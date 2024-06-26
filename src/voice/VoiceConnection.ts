@@ -1,4 +1,4 @@
-import { Room } from "livekit-client";
+import { Room, RoomEvent, LocalTrack, TrackPublication } from "livekit-client";
 import { EventEmitter2, OnOptions, Listener, ListenerFn } from "eventemitter2";
 import { EventMap } from "../types/voice";
 
@@ -111,12 +111,37 @@ export class VoiceConnection extends VoiceEventEmitter {
       this.emit("connected", null);
     });
 
-    room.on("trackSubscribed", (track) => {
+    room.on(RoomEvent.TrackSubscribed, (track) => {
       this.emit("trackAdd", track);
+    });
+
+    room.on(RoomEvent.ParticipantConnected, (participant) => {
+      this.emit("userJoin", participant);
+    });
+
+    room.on(RoomEvent.TrackMuted, (pub, part) => {
+      this.emit("userMute", part);
+    });
+    room.on(RoomEvent.TrackUnmuted, (pub, part) => {
+      this.emit("userUnmute", part);
     });
   }
 
-  disconnect() {
+  // TODO: implement simulcast handling
+  public publishTracks(tracks: LocalTrack[]): Promise<TrackPublication[]> {
+    return new Promise((res, rej) => {
+      const promises = tracks.map(t => {
+        return this.room.localParticipant.publishTrack(t);
+      });
+      Promise.all(promises).then(ps => {
+        return res(ps);
+      }).catch(r => {
+        throw "Track publication failed: " + r;
+      });
+    });
+  }
+
+  public disconnect(): void {
     this.room.disconnect();
   }
 }
