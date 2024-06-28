@@ -1,4 +1,4 @@
-import { Room, RoomEvent, LocalTrack, TrackPublication } from "livekit-client";
+import { Room, RoomEvent, TrackPublication } from "livekit-client";
 import { EventEmitter2, OnOptions, Listener, ListenerFn } from "eventemitter2";
 import { EventMap } from "../types/voice";
 
@@ -128,7 +128,7 @@ export class VoiceConnection extends VoiceEventEmitter {
   }
 
   // TODO: implement simulcast handling
-  public publishTracks(tracks: LocalTrack[]): Promise<TrackPublication[]> {
+  public publishTracks(tracks: MediaStreamTrack[]): Promise<TrackPublication[]> {
     return new Promise((res, rej) => {
       const promises = tracks.map(t => {
         return this.room.localParticipant.publishTrack(t);
