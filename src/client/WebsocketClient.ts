@@ -1,7 +1,7 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { Events, IMessage, ISpace } from "../types";
+import { Events, IMessage, IRoomUserChange, ISpace } from "../types";
 import { Client } from "./Client";
 import { Space } from "../structure/Space";
 import { Room } from "../structure/Room";
@@ -79,17 +79,19 @@ export class WebsocketWorkerClient implements WebsocketClient {
                                     space.members.set(member.userId, member);
                                 });
                                 if (spaceData.rooms) {
-                                    spaceData.rooms.forEach((roomData: any) => {
-                                        const room = new Room(roomData);
-                                        room.client = this.client;
-                                        room.messages.forEach((messageData: any) => {
-                                            const message = messageData;
-                                            message.client = this.client;
-                                            message.member = space.members.get(message.author.id);
-                                            room.messages.set(message.id, message)      
-                                        });
-                                        space.rooms.set(room.id, room);
+                                  spaceData.rooms.forEach((roomData: any) => {
+                                    roomData.space_members = space.members;
+                                    const room = new Room(roomData);
+                                    room.client = this.client;
+                                    room.messages.forEach((messageData: any) => {
+                                      const message = messageData;
+                                      message.client = this.client;
+                                      message.member = space.members.get(message.author.id);
+                                      room.messages.set(message.id, message)
                                     });
+                                    console.log(room);
+                                    space.rooms.set(room.id, room);
+                                  });
                                 }
                                 this.client.spaces.set(space.id, space);
                             });
@@ -147,10 +149,19 @@ export class WebsocketWorkerClient implements WebsocketClient {
                         this.client.emit("typingStart", data)
                     break;
                     case "VOICE_JOIN":
-                        this.client.emit("voiceJoin", data);
-                    break;
+                      var meta = data as IRoomUserChange;
+                      var space = this.client.spaces.get(meta.space_id);
+                      var room = space?.rooms.get(meta.room);
+                      room?.addParticipant(meta.user);
+                      this.client.emit("voiceJoin", data);
+                      break;
                     case "VOICE_LEAVE":
-                        this.client.emit("voiceLeave", data);
+                      var meta = data as IRoomUserChange;
+                      var space = this.client.spaces.get(meta.space_id);
+                      var room = space?.rooms.get(meta.room);
+                      room?.removeParticipant(meta.user);
+
+                      this.client.emit("voiceLeave", data);
                     break;
                     default:
                         this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
@@ -228,15 +239,17 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 });
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData: any) => {
-                                        const room = new Room(roomData);
-                                        room.client = this.client;
-                                        room.messages.forEach((messageData: any) => {
-                                            const message = messageData;
-                                            message.client = this.client;
-                                            message.member = space.members.get(message.author.id);
-                                            room.messages.set(message.id, message)      
-                                        });
-                                        space.rooms.set(room.id, room);
+                                      roomData.space_members = space.members;
+                                      const room = new Room(roomData);
+                                      room.client = this.client;
+                                      room.messages.forEach((messageData: any) => {
+                                        const message = messageData;
+                                        message.client = this.client;
+                                        message.member = space.members.get(message.author.id);
+                                        room.messages.set(message.id, message)
+                                      });
+                                      console.log(room);
+                                      space.rooms.set(room.id, room);
                                     });
                                 }
                                 this.client.spaces.set(space.id, space);
@@ -297,9 +310,18 @@ export class WebsocketNodeClient implements WebsocketClient {
                             this.client.emit("typingStart", data)
                         break;
                         case "VOICE_JOIN":
+                            var meta = data as IRoomUserChange;
+                            var space = this.client.spaces.get(meta.space_id);
+                            var room = space?.rooms.get(meta.room);
+                            room?.addParticipant(meta.user);
                             this.client.emit("voiceJoin", data);
                         break;
                         case "VOICE_LEAVE":
+                            var meta = data as IRoomUserChange;
+                            var space = this.client.spaces.get(meta.space_id);
+                            var room = space?.rooms.get(meta.room);
+                            room?.removeParticipant(meta.user);
+
                             this.client.emit("voiceLeave", data);
                         break;
                         default:

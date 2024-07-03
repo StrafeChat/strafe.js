@@ -1,4 +1,4 @@
-import { Room, RoomEvent, TrackPublication } from "livekit-client";
+import { RemoteParticipant, Room, RoomEvent, TrackPublication, RemoteTrackPublication } from "livekit-client";
 import { EventEmitter2, OnOptions, Listener, ListenerFn } from "eventemitter2";
 import { EventMap } from "../types/voice";
 
@@ -143,5 +143,24 @@ export class VoiceConnection extends VoiceEventEmitter {
 
   public disconnect(): void {
     this.room.disconnect();
+  }
+}
+
+export class Participant {
+  /**
+   * @see {@link https://docs.livekit.io/client-sdk-js/classes/RemoteParticipant.html} for Property explanations
+   */
+  public audioLevel: number = 0;
+  public identity: string = "nil";
+  public isSpeaking: boolean = false;
+  public metadata: string = "";
+  public name: string = "";
+  // TODO: permissions
+  public audioTrackPublications: Map<string, RemoteTrackPublication> = new Map<string, RemoteTrackPublication>();
+  public trackPublications: Map<string, RemoteTrackPublication> = new Map<string, RemoteTrackPublication>();
+  public videoTrackPublications: Map<string, RemoteTrackPublication> = new Map<string, RemoteTrackPublication>();
+
+  constructor(remote: RemoteParticipant) {
+    
   }
 }

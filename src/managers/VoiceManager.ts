@@ -22,6 +22,18 @@ export class VoiceManager {
     if (livekitServer) this.livekitServer = livekitServer;
   }
 
+  public updateRooms(): void {
+
+  }
+
+  /**
+   * Change the url of the Livekit server
+   * @param url The websocket URL of the livekit server to use. (for example 'ws://localhost:7880')
+   */
+  public setServer(url: string): void {
+    this.livekitServer = url;
+  }
+
   /**
    * Initiates a VoiceConnection instance in a certain room
    * @param roomId The id of the room to join
@@ -41,7 +53,6 @@ export class VoiceManager {
         const token = json.token;
 
         const connection = new VoiceConnection(token, this.livekitServer);
-        console.log(connection);
         this.connections.set(roomId, connection)
         resolve(connection);
       });

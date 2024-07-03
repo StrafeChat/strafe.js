@@ -163,10 +163,15 @@ export class Client extends EventEmitter2 {
     constructor(options?: ClientOptions) {
         super();
 
+        console.log(options);
+
         if (options && options.config) {
             this.config.equinox = options.config.equinox ?? this.config.equinox;
             this.config.nebula = options.config.nebula ?? this.config.nebula;
-            this.config.livekit = options.config.livekit ?? this.config.livekit;
+            if (options.config.livekit) {
+              this.config.livekit = options.config.livekit;
+              this.voice.setServer(options.config.livekit);
+            }
         };
 
         this.ws = chooseClient(this);

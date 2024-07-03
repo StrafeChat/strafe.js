@@ -134,7 +134,7 @@ export class Space {
     if (data.rooms) {
       data.rooms.forEach((roomData: IRoom) => {
         roomData.client = this.client;
-        const room = new Room(roomData);
+        const room = new Room(roomData); // TODO: prevent double room creation here and in websocketclient
         this.rooms.set(room.id, room);
       });
     }

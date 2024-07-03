@@ -1,4 +1,5 @@
 import { Client } from "../client/Client";
+import { MemberManager } from "../managers/MemberManager";
 import { MessageManager } from "../managers/MessageManager";
 import { Member } from "../structure/Member";
 import { Room } from "../structure/Room";
@@ -234,6 +235,8 @@ export interface IRoom {
     last_pin_timestamp: string | null;
     rtc_region: number | null;
     edited_at: number;
+    participants?: { id: string }[];
+    space_members?: MemberManager;
 }
 
 export interface ISpaceMember {
@@ -308,6 +311,13 @@ export interface IInvite {
     member_count: number;
     space: ISpace;
     inviter: IUser;
+}
+
+export interface IRoomUserChange {
+  room: string;
+  space: string;
+  space_id: string;
+  user: string;
 }
 
 export interface CreateInviteOptions {

@@ -1,4 +1,4 @@
-import { Track, Participant } from "livekit-client";
+import type { Track, Participant } from "livekit-client";
 
 export interface EventMap {
   ready: any;
