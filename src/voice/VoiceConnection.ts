@@ -85,6 +85,10 @@ export class VoiceConnection extends VoiceEventEmitter {
   private joinToken: string | null;
   room: Room;
 
+  localTracks: MediaStreamTrack[] = [];
+
+  private _isMuted = false;
+
   /**
    * Creates a new VoiceConnection object.
    * @param token Grant token for the room, returned by the portal endpoint
@@ -111,25 +115,29 @@ export class VoiceConnection extends VoiceEventEmitter {
       this.emit("connected", null);
     });
 
-    room.on(RoomEvent.TrackSubscribed, (track) => {
-      this.emit("trackAdd", track);
+    room.on(RoomEvent.TrackSubscribed, (track, pub, participant) => {
+      this.emit("trackAdd", { publication: pub, participant });
     });
 
     room.on(RoomEvent.ParticipantConnected, (participant) => {
       this.emit("userJoin", participant);
     });
+    room.on(RoomEvent.ParticipantDisconnected, (participant) => {
+      this.emit("userLeave", participant);
+    });
 
     room.on(RoomEvent.TrackMuted, (pub, part) => {
-      this.emit("userMute", part);
+      this.emit("trackMute", { publication: pub, participant: part });
     });
     room.on(RoomEvent.TrackUnmuted, (pub, part) => {
-      this.emit("userUnmute", part);
+      this.emit("trackUnmute", { publication: pub, participant: part });
     });
   }
 
   // TODO: implement simulcast handling
   public publishTracks(tracks: MediaStreamTrack[]): Promise<TrackPublication[]> {
     return new Promise((res, rej) => {
+      this.localTracks.push(...tracks);
       const promises = tracks.map(t => {
         return this.room.localParticipant.publishTrack(t);
       });
@@ -139,6 +147,24 @@ export class VoiceConnection extends VoiceEventEmitter {
         throw "Track publication failed: " + r;
       });
     });
+  }
+
+  public isMuted(): boolean {
+    return this._isMuted;
+  }
+  public mute(): void {
+    this.localTracks.filter(t => t.kind === "audio").forEach(t => {
+      t.enabled = false;
+      //this.room.localParticipant.unpublishTrack(t);
+    });
+    this._isMuted = true;
+  }
+  public unmute(): void {
+    this.localTracks.filter(t => t.kind === "audio").forEach(t => {
+      t.enabled = true;
+      //this.room.localParticipant.publishTrack(t);
+    });
+    this._isMuted = false;
   }
 
   public disconnect(): void {

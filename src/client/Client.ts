@@ -163,8 +163,6 @@ export class Client extends EventEmitter2 {
     constructor(options?: ClientOptions) {
         super();
 
-        console.log(options);
-
         if (options && options.config) {
             this.config.equinox = options.config.equinox ?? this.config.equinox;
             this.config.nebula = options.config.nebula ?? this.config.nebula;

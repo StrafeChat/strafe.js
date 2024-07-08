@@ -18,8 +18,8 @@ export function chooseClient(client: Client): WebsocketClient {
     console.log("choosing");
     if (typeof window !== "undefined") {
         console.log("worker")
-        // return new WebsocketWorkerClient(client);
-        return new WebsocketNodeClient(client);
+        return new WebsocketWorkerClient(client);
+        //return new WebsocketNodeClient(client);
     } else {
         console.log("node")
         return new WebsocketNodeClient(client);
@@ -64,36 +64,33 @@ export class WebsocketWorkerClient implements WebsocketClient {
           messageEvent.data.values as string
         ) as { op: OpCodes; data: any; event: Events };
 
-        console.log(op, data, event);
-
         switch (op) {
             case OpCodes.DISPATCH:
                 switch (event) {
                     case "READY":
                             this.client.user = new ClientUser({ ...data.user, client: this.client });
                             data.spaces.forEach((spaceData: any) => {
-                                spaceData.client = this.client;
-                                const space = new Space(spaceData);
-                                spaceData.members.forEach((membersData: any) => {
-                                    const member = new Member(membersData);
-                                    space.members.set(member.userId, member);
-                                });
-                                if (spaceData.rooms) {
-                                  spaceData.rooms.forEach((roomData: any) => {
-                                    roomData.space_members = space.members;
-                                    const room = new Room(roomData);
-                                    room.client = this.client;
-                                    room.messages.forEach((messageData: any) => {
-                                      const message = messageData;
-                                      message.client = this.client;
-                                      message.member = space.members.get(message.author.id);
-                                      room.messages.set(message.id, message)
-                                    });
-                                    console.log(room);
-                                    space.rooms.set(room.id, room);
+                              spaceData.client = this.client;
+                              const space = new Space(spaceData);
+                              spaceData.members.forEach((membersData: any) => {
+                                const member = new Member(membersData);
+                                space.members.set(member.userId, member);
+                              });
+                              if (spaceData.rooms) {
+                                spaceData.rooms.forEach((roomData: any) => {
+                                  roomData.space_members = space.members;
+                                  const room = new Room(roomData);
+                                  room.client = this.client;
+                                  room.messages.forEach((messageData: any) => {
+                                    const message = messageData;
+                                    message.client = this.client;
+                                    message.member = space.members.get(message.author.id);
+                                    room.messages.set(message.id, message)
                                   });
-                                }
-                                this.client.spaces.set(space.id, space);
+                                  space.rooms.set(room.id, room);
+                                });
+                              }
+                              this.client.spaces.set(space.id, space);
                             });
                             this.client.emit("ready", data);
                             break;
@@ -160,7 +157,6 @@ export class WebsocketWorkerClient implements WebsocketClient {
                       var space = this.client.spaces.get(meta.space_id);
                       var room = space?.rooms.get(meta.room);
                       room?.removeParticipant(meta.user);
-
                       this.client.emit("voiceLeave", data);
                     break;
                     default:
@@ -248,7 +244,6 @@ export class WebsocketNodeClient implements WebsocketClient {
                                         message.member = space.members.get(message.author.id);
                                         room.messages.set(message.id, message)
                                       });
-                                      console.log(room);
                                       space.rooms.set(room.id, room);
                                     });
                                 }
@@ -321,7 +316,6 @@ export class WebsocketNodeClient implements WebsocketClient {
                             var space = this.client.spaces.get(meta.space_id);
                             var room = space?.rooms.get(meta.room);
                             room?.removeParticipant(meta.user);
-
                             this.client.emit("voiceLeave", data);
                         break;
                         default:

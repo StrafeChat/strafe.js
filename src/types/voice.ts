@@ -1,4 +1,4 @@
-import type { Track, Participant } from "livekit-client";
+import type { Track, Participant, TrackPublication } from "livekit-client";
 
 export interface EventMap {
   ready: any;
@@ -6,8 +6,9 @@ export interface EventMap {
   reconnecting: any;
   connected: any;
   disconnected: any;
-  trackAdd: Track,
+  trackAdd: { publication: TrackPublication, participant: Participant },
   userJoin: Participant,
-  userMute: Participant,
-  userUnmute: Participant,
+  userLeave: Participant,
+  trackMute: { publication: TrackPublication, participant: Participant },
+  trackUnmute: { publication: TrackPublication, participant: Participant },
 }
