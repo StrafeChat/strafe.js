@@ -14,7 +14,17 @@ export class ClientUser extends User {
   /**
    * The phone number of the client user.
    */
+  public phoneNumber: string | null;
+
+  /**
+   * The locale of the client user.
+   */
   public locale: string;
+
+  /**
+   * The user ids of the friends of the user
+   */
+  public friends: string[] = [];
 
   /**
    * Creates a new instance of a ClientUser.
@@ -25,6 +35,7 @@ export class ClientUser extends User {
     this.email = data.email!;
     this.phoneNumber = data.phone_number;
     this.locale = data.locale!;
+    this.friends = data.friends!;
   }
 
   /**
@@ -33,6 +44,69 @@ export class ClientUser extends User {
    */
   public async setPresence(presence: Partial<UserPresence>) {
     await this.client.ws.send({ op: OpCodes.PRESENCE, data: presence });
+  }
+
+  public async acceptFriendRequest(id: string): Promise<void> {
+    const res = await fetch(`${this.client.config.equinox}/users/friends/${id}/accept`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.client.token!,
+      },
+      credentials: "include"
+    });
+    const resData = await res.json();
+    if (!res.ok) throw new Error("Failed to accept friend request: " + resData.message);
+  }
+  /**
+   * Decline the friend request from a certain user.
+   * @param id The user id of the sender of the friend request.
+   */
+  public async declineFriendRequest(id: string): Promise<void> {
+    const res = await fetch(`${this.client.config.equinox}/users/friends/${id}/decline`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.client.token!,
+      },
+      credentials: "include"
+    });
+    const resData = await res.json();
+    if (!res.ok) throw new Error("Failed to decline friend request: " + resData.message);
+  }
+
+  public async sendFriendRequest(username: string, discriminator: number): Promise<{ ok: boolean, message?: string }> {
+    const res = await fetch(`${this.client.config.equinox}/users/friends/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.client.token!,
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        username,
+        discriminator
+      }),
+    });
+    
+    const resData = await res.json();
+    if (!res.ok) return { ok: false, message: resData.message };
+
+    return {
+      ok: true
+    }
+  }
+  public async cancelFriendRequest(id: string): Promise<void> {
+    const res = await fetch(`${this.client.config.equinox}/users/friends/${id}/cancel`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.client.token!,
+      },
+      credentials: "include"
+    });
+    const resData = await res.json();
+    if (!res.ok) throw new Error("Failed to cancel friend request: " + resData.message);
   }
 
   /**

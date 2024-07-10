@@ -107,9 +107,9 @@ export interface RoomCreateOptions {
 }
 
 /*** 
- * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE" | "MESSAGE_UPDATE"} Events
+ * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "FRIEND_REQUEST_CREATE" | "FRIEND_REQUEST_CANCEL" | "FRIEND_REQUEST_DECLINE" | "FRIEND_REQUEST_ACCEPT" | "VOICE_JOIN" | "VOICE_LEAVE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "VOICE_JOIN" | "VOICE_LEAVE";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "FRIEND_REQUEST_CREATE" | "FRIEND_REQUEST_CANCEL" | "FRIEND_REQUEST_DECLINE" | "FRIEND_REQUEST_ACCEPT" | "VOICE_JOIN" | "VOICE_LEAVE";
 
 export interface ReadyEvent {
     user: IUser;
@@ -126,6 +126,10 @@ export interface EventMap {
     messageDelete: any;
     messageUpdate: any;
     typingStart: any;
+    friendRequestCreate: IFriendRequest;
+    friendRequestAccept: IPartialFriendRequest;
+    friendRequestDecline: IPartialFriendRequest;
+    friendRequestDelete: IPartialFriendRequest;
     voiceJoin: any;
     voiceLeave: any;
 }
@@ -160,6 +164,19 @@ export interface IUser {
     username: string;
     display_name: string;
     verified: boolean;
+    friends?: string[];
+}
+
+export interface IFriendRequest {
+    id: string;
+    sender_id: string;
+    recipient_id: string;
+    created_at: number;
+}
+export interface IPartialFriendRequest {
+  id: string;
+  sender_id: string;
+  recipient_id: string;
 }
 
 /*** 

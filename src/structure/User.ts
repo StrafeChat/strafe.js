@@ -154,4 +154,21 @@ export class User {
     this.displayName = data.display_name ?? data.global_name ?? this.username;
     this.verified = data.verified;
   }
+
+  public async addFriend() {
+    const res = await fetch(`${this.client.config.equinox}/users/friends/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: this.client.token!,
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        username: this.username,
+        discriminator: this.discriminator
+      }),
+    });
+    const resData = await res.json();
+    if (!res.ok) throw new Error("Failed to add friend: " + resData.message);
+  }
 }

@@ -2,12 +2,13 @@ import { EventEmitter2, Listener, ListenerFn, OnOptions, OnceOptions, event } fr
 import { API, CDN, LIVEKIT } from "../config";
 import { ClientUser } from "../structure/ClientUser";
 import { ClientOptions, EventMap } from "../types";
-import { chooseClient, WebsocketClient } from "./WebsocketClient";
+import { chooseClient, WebsocketStrafeClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
 import { VoiceManager } from "../managers/VoiceManager";
 import { Space } from "../structure/Space";
 import { InviteManager } from "../managers/InviteManager";
 import { UserManager } from "../managers/UserManager";
+import { FriendRequestManager } from "../managers/FriendRequestManager";
 
 /**
  * The main hub for interacting with strafe.
@@ -55,6 +56,11 @@ export class Client extends EventEmitter2 {
      * The users cached on the client.
      */
     public users = new UserManager(this);
+
+    /**
+     * The friend requests cached on the client.
+     */
+    public friendRequests = new FriendRequestManager(this);
 
     /**
      * Attaches a listener for the specified event.
@@ -154,7 +160,9 @@ export class Client extends EventEmitter2 {
     /**
      * The websocket connection associated with the client.
      */
-    public readonly ws: WebsocketClient;
+    public readonly ws: WebsocketStrafeClient;
+
+    public ready: boolean = false;
 
     /**
      * Constructs a new Client
@@ -182,5 +190,8 @@ export class Client extends EventEmitter2 {
     public async login(token: string) {
         this.token = token;
         this.ws.connect();
+        this.once("ready", () => {
+          this.ready = true;
+        });
     }
 }
