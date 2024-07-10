@@ -35,7 +35,7 @@ export class ClientUser extends User {
     this.email = data.email!;
     this.phoneNumber = data.phone_number;
     this.locale = data.locale!;
-    this.friends = data.friends!;
+    this.friends = data.friends! || [];
   }
 
   /**
