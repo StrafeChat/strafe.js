@@ -19,7 +19,7 @@ export function chooseClient(client: Client): WebsocketStrafeClient {
   console.log("choosing");
   if (typeof window !== "undefined") {
     console.log("worker")
-    if (window.SharedWorker && false) {
+    if (window.SharedWorker) {
       return new WebsocketWorkerClient(client);
     }
     console.log("SharedWorker API is unsupported, falling back to node client.");
