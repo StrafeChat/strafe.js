@@ -1,13 +1,14 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { Events, IFriendRequest, IMessage, IPartialFriendRequest, IRoomUserChange, ISpace } from "../types";
+import { Events, IFriendRequest, IMessage, IPartialFriendRequest, IRoomUserChange, ISpace, IUser } from "../types";
 import { Client } from "./Client";
 import { Space } from "../structure/Space";
 import { Room } from "../structure/Room";
 import { Member } from "../structure/Member";
 import { Message } from "../structure/Message";
 import { FriendRequest } from "../structure/FriendRequest";
+import { User } from "../structure/User";
 
 
 export interface WebsocketStrafeClient {
@@ -39,6 +40,11 @@ class WebsocketClient {
     switch (event) {
       case "READY":
         this.client.user = new ClientUser({ ...data.user, client: this.client });
+        // console.log(data)
+        // data.friend.forEach((friendsData: any) => {
+        //   const member = new User(friendsData);
+        //   this.client.users.set(member.userId, member);
+        // })
         data.spaces.forEach((spaceData: any) => {
           spaceData.client = this.client;
           const space = new Space(spaceData);
@@ -66,11 +72,17 @@ class WebsocketClient {
         break;
       case "PRESENCE_UPDATE":
         if (this.client.user?.id === data.user.id) this.client.user!.presence = data.presence;
+        if (this.client.user?.friends.includes(data.user.id)) {
+          let presence = data.presence;
+          let oldUser = data.user;
+          let newUser = new User({...oldUser, presence} as IUser)
+          this.client.users.set(data.user.id, newUser)
+        }
         this.client.spaces
           .toArray()
           .map((space: any) => {
             let member = space.members.get(data.user.id);
-            if (!data.user.space_ids.includes(space.id)) return;
+            if (!member || !data.user.space_ids.includes(space.id)) return;
             let oldUser = data.user;
             let presence = data.presence;
             let user = { ...oldUser, presence };
