@@ -25340,9 +25340,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 225,
+							"line": 237,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L225"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L237"
 						}
 					],
 					"signatures": [
@@ -25363,9 +25363,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 225,
+									"line": 237,
 									"character": 2,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L225"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L237"
 								}
 							],
 							"parameters": [
@@ -25421,9 +25421,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 217,
+							"line": 229,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L217"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L229"
 						}
 					],
 					"type": {
@@ -25455,9 +25455,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 32,
+							"line": 33,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L32"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L33"
 						}
 					],
 					"type": {
@@ -25483,9 +25483,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 216,
+							"line": 228,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L216"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L228"
 						}
 					],
 					"type": {
@@ -25514,9 +25514,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 218,
+							"line": 230,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L218"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L230"
 						}
 					],
 					"type": {
@@ -25551,9 +25551,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 232,
+							"line": 244,
 							"character": 15,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L232"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L244"
 						}
 					],
 					"signatures": [
@@ -25574,9 +25574,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 232,
+									"line": 244,
 									"character": 15,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L232"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L244"
 								}
 							],
 							"type": {
@@ -25618,9 +25618,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 285,
+							"line": 297,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L285"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L297"
 						}
 					],
 					"signatures": [
@@ -25633,9 +25633,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 285,
+									"line": 297,
 									"character": 10,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L285"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L297"
 								}
 							],
 							"type": {
@@ -25654,9 +25654,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 38,
+							"line": 39,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L38"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L39"
 						}
 					],
 					"signatures": [
@@ -25669,9 +25669,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 38,
+									"line": 39,
 									"character": 2,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L38"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L39"
 								}
 							],
 							"parameters": [
@@ -25728,9 +25728,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 296,
+							"line": 308,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L296"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L308"
 						}
 					],
 					"signatures": [
@@ -25743,9 +25743,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 296,
+									"line": 308,
 									"character": 10,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L296"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L308"
 								}
 							],
 							"type": {
@@ -25766,9 +25766,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 281,
+							"line": 293,
 							"character": 15,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L281"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L293"
 						}
 					],
 					"signatures": [
@@ -25789,9 +25789,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 281,
+									"line": 293,
 									"character": 15,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L281"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L293"
 								}
 							],
 							"parameters": [
@@ -25819,9 +25819,9 @@
 													"sources": [
 														{
 															"fileName": "src/client/WebsocketClient.ts",
-															"line": 281,
+															"line": 293,
 															"character": 49,
-															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L281"
+															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L293"
 														}
 													],
 													"type": {
@@ -25838,9 +25838,9 @@
 													"sources": [
 														{
 															"fileName": "src/client/WebsocketClient.ts",
-															"line": 281,
+															"line": 293,
 															"character": 36,
-															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L281"
+															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L293"
 														}
 													],
 													"type": {
@@ -25863,9 +25863,9 @@
 											"sources": [
 												{
 													"fileName": "src/client/WebsocketClient.ts",
-													"line": 281,
+													"line": 293,
 													"character": 34,
-													"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L281"
+													"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L293"
 												}
 											]
 										}
@@ -25911,9 +25911,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 312,
+							"line": 324,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L312"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L324"
 						}
 					],
 					"signatures": [
@@ -25926,9 +25926,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 312,
+									"line": 324,
 									"character": 10,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L312"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L324"
 								}
 							],
 							"type": {
@@ -25949,9 +25949,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 302,
+							"line": 314,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L302"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L314"
 						}
 					],
 					"signatures": [
@@ -25964,9 +25964,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 302,
+									"line": 314,
 									"character": 10,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L302"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L314"
 								}
 							],
 							"parameters": [
@@ -26000,9 +26000,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 308,
+							"line": 320,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L308"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L320"
 						}
 					],
 					"signatures": [
@@ -26015,9 +26015,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 308,
+									"line": 320,
 									"character": 10,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L308"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L320"
 								}
 							],
 							"type": {
@@ -26061,9 +26061,9 @@
 			"sources": [
 				{
 					"fileName": "src/client/WebsocketClient.ts",
-					"line": 214,
+					"line": 226,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L214"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L226"
 				}
 			],
 			"extendedTypes": [
@@ -26102,9 +26102,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 162,
+							"line": 174,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L162"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L174"
 						}
 					],
 					"signatures": [
@@ -26117,9 +26117,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 162,
+									"line": 174,
 									"character": 2,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L162"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L174"
 								}
 							],
 							"parameters": [
@@ -26165,9 +26165,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 32,
+							"line": 33,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L32"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L33"
 						}
 					],
 					"type": {
@@ -26193,9 +26193,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 161,
+							"line": 173,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L161"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L173"
 						}
 					],
 					"type": {
@@ -26229,9 +26229,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 182,
+							"line": 194,
 							"character": 15,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L182"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L194"
 						}
 					],
 					"signatures": [
@@ -26244,9 +26244,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 182,
+									"line": 194,
 									"character": 15,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L182"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L194"
 								}
 							],
 							"type": {
@@ -26288,9 +26288,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 167,
+							"line": 179,
 							"character": 10,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L167"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L179"
 						}
 					],
 					"signatures": [
@@ -26303,9 +26303,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 167,
+									"line": 179,
 									"character": 10,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L167"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L179"
 								}
 							],
 							"parameters": [
@@ -26337,9 +26337,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 38,
+							"line": 39,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L38"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L39"
 						}
 					],
 					"signatures": [
@@ -26352,9 +26352,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 38,
+									"line": 39,
 									"character": 2,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L38"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L39"
 								}
 							],
 							"parameters": [
@@ -26411,9 +26411,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 206,
+							"line": 218,
 							"character": 15,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L206"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L218"
 						}
 					],
 					"signatures": [
@@ -26426,9 +26426,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 206,
+									"line": 218,
 									"character": 15,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L206"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L218"
 								}
 							],
 							"parameters": [
@@ -26456,9 +26456,9 @@
 													"sources": [
 														{
 															"fileName": "src/client/WebsocketClient.ts",
-															"line": 206,
+															"line": 218,
 															"character": 49,
-															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L206"
+															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L218"
 														}
 													],
 													"type": {
@@ -26475,9 +26475,9 @@
 													"sources": [
 														{
 															"fileName": "src/client/WebsocketClient.ts",
-															"line": 206,
+															"line": 218,
 															"character": 36,
-															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L206"
+															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L218"
 														}
 													],
 													"type": {
@@ -26500,9 +26500,9 @@
 											"sources": [
 												{
 													"fileName": "src/client/WebsocketClient.ts",
-													"line": 206,
+													"line": 218,
 													"character": 34,
-													"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L206"
+													"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L218"
 												}
 											]
 										}
@@ -26565,9 +26565,9 @@
 			"sources": [
 				{
 					"fileName": "src/client/WebsocketClient.ts",
-					"line": 160,
+					"line": 172,
 					"character": 13,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L160"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L172"
 				}
 			],
 			"extendedTypes": [
@@ -32185,9 +32185,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 14,
+							"line": 15,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L14"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
 						}
 					],
 					"signatures": [
@@ -32200,9 +32200,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 14,
+									"line": 15,
 									"character": 2,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L14"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
 								}
 							],
 							"type": {
@@ -32232,9 +32232,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 15,
+							"line": 16,
 							"character": 2,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L16"
 						}
 					],
 					"signatures": [
@@ -32247,9 +32247,9 @@
 							"sources": [
 								{
 									"fileName": "src/client/WebsocketClient.ts",
-									"line": 15,
+									"line": 16,
 									"character": 2,
-									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
+									"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L16"
 								}
 							],
 							"parameters": [
@@ -32277,9 +32277,9 @@
 													"sources": [
 														{
 															"fileName": "src/client/WebsocketClient.ts",
-															"line": 15,
+															"line": 16,
 															"character": 36,
-															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
+															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L16"
 														}
 													],
 													"type": {
@@ -32296,9 +32296,9 @@
 													"sources": [
 														{
 															"fileName": "src/client/WebsocketClient.ts",
-															"line": 15,
+															"line": 16,
 															"character": 23,
-															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
+															"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L16"
 														}
 													],
 													"type": {
@@ -32321,9 +32321,9 @@
 											"sources": [
 												{
 													"fileName": "src/client/WebsocketClient.ts",
-													"line": 15,
+													"line": 16,
 													"character": 21,
-													"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L15"
+													"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L16"
 												}
 											]
 										}
@@ -32361,9 +32361,9 @@
 			"sources": [
 				{
 					"fileName": "src/client/WebsocketClient.ts",
-					"line": 13,
+					"line": 14,
 					"character": 17,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L13"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L14"
 				}
 			],
 			"implementedBy": [
@@ -32568,9 +32568,9 @@
 			"sources": [
 				{
 					"fileName": "src/client/WebsocketClient.ts",
-					"line": 18,
+					"line": 19,
 					"character": 16,
-					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L18"
+					"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L19"
 				}
 			],
 			"signatures": [
@@ -32583,9 +32583,9 @@
 					"sources": [
 						{
 							"fileName": "src/client/WebsocketClient.ts",
-							"line": 18,
+							"line": 19,
 							"character": 16,
-							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L18"
+							"url": "https://github.com/StrafeChat/strafe.js/blob/c76f192/src/client/WebsocketClient.ts#L19"
 						}
 					],
 					"parameters": [
@@ -32708,7 +32708,7 @@
 	"readme": [
 		{
 			"kind": "text",
-			"text": "# strafe.js\n\n~~*Note: due to a necessary postinstall script this package can only be installed in a bash shell*~~"
+			"text": "# strafe.js\r\n\r\n~~*Note: due to a necessary postinstall script this package can only be installed in a bash shell*~~"
 		}
 	],
 	"symbolIdMap": {
