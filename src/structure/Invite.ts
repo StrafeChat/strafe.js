@@ -1,7 +1,8 @@
-import { IInvite, ISpace } from "../types";
+import { ApiError, IInvite, ISpace } from "../types";
+import { Space } from "./Space";
 
 /**
- * Represents a space on Strafe.
+ * Represents an invite to a space on Strafe.
  */
 export class Invite {
   /**
@@ -40,6 +41,11 @@ export class Invite {
    */
    public readonly uses: number;
 
+    /**
+   * The number of max uses of the invite.
+   */
+    public readonly maxUses: number;
+
   /**
    * The time the invite expires.
    */
@@ -54,6 +60,7 @@ export class Invite {
    * The space object of the invite.
    */
   public readonly space: ISpace;
+  client: any;
 
   /**
    * Creates a new instance of a space.
@@ -69,6 +76,34 @@ export class Invite {
     this.memberCount = data.member_count;
     this.vanity = data.vanity;
     this.uses = data.uses;
+    this.maxUses = data.max_uses;
     this.space = data.space;
   }
+   
+  public async accept () {
+    const res = await fetch(
+      `${this.client.config.equinox}/invites/${this.code}/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": this.client.token!,
+        },
+        credentials: "include",
+      }
+    );
+  
+    const resData = await res.json();
+
+    if (!res.ok)
+      throw new Error(
+        "Failed to acecpt: " + (resData as ApiError).message
+      );
+
+    const space = new Space(resData.space as ISpace);
+    this.client.spaces.set(space.id, space); 
+    
+    return space;
+  } 
+
 }

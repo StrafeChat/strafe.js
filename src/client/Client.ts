@@ -1,11 +1,10 @@
-import { EventEmitter2, Listener, ListenerFn, OnOptions, OnceOptions, event } from "eventemitter2";
+import { EventEmitter2, Listener, ListenerFn, OnOptions } from "eventemitter2";
 import { API, CDN } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { ApiError, ClientOptions, EventMap, ISpace } from "../types";
+import { ClientOptions, EventMap } from "../types";
 import { chooseClient, WebsocketClient } from "./WebsocketClient";
 import { SpaceManager } from "../managers/SpaceManager";
 import { InviteManager } from "../managers/InviteManager";
-import { Space } from "../structure/Space";
 import { UserManager } from "../managers/UserManager";
 
 /**

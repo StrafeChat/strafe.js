@@ -1,9 +1,12 @@
+import { Client } from "../client/Client";
 import { ISpaceMember, IUser } from "../types";
+import { HasPermissionOptions } from "../types";
 
 /**
- * Represents a space on Strafe.
+ * Represents a member of a space on Strafe.
  */
 export class Member {
+  
   /**
    * The User ID of the member.
    */
@@ -69,5 +72,19 @@ export class Member {
     this.avatar = data.avatar;
     this.editedAt = data.edited_at;
     this.user = data.user;
+  }
+
+  public async hasPermission(data: Partial<HasPermissionOptions>) {
+    // // Fetch permissions for each role
+    // const rolePermissionsPromises = this.roles.map(async (roleId) => {
+    //   const role = await RoleModel.findOne({ id: roleId });
+    //   return role ? role.permissions : 0;
+    // });
+
+    // const rolePermissions = await Promise.all(rolePermissionsPromises);
+    // const combinedPermissions = rolePermissions.reduce((acc, perm) => acc | perm, 0);
+
+    // // Check if the permission exists
+    // return (combinedPermissions & permission) === permission;
   }
 }

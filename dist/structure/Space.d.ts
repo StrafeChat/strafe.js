@@ -88,4 +88,10 @@ export declare class Space {
      * @param data The data for the space.
      */
     constructor(data: ISpace);
+    /**
+       * Sends a message in a room.
+       * @param data The data to post in the room
+       * @param client The client.
+       */
+    leave(): Promise<void>;
 }
