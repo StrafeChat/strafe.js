@@ -1,6 +1,6 @@
 {
   "name": "@strafechat/strafe.js",
-  "version": "1.4.53",
+  "version": "1.4.54",
   "description": "NodeJS library for interacting with the Strafe API and websocket.",
   "repository": "https://github.com/StrafeChat/strafe.js",
   "homepage": "https://strafe.js.org",

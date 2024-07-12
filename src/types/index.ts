@@ -109,7 +109,7 @@ export interface RoomCreateOptions {
 /*** 
  * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "FRIEND_REQUEST_CREATE" | "FRIEND_REQUEST_CANCEL" | "FRIEND_REQUEST_DECLINE" | "FRIEND_REQUEST_ACCEPT" | "VOICE_JOIN" | "VOICE_LEAVE"} Events
  */
-export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "FRIEND_REQUEST_CREATE" | "FRIEND_REQUEST_CANCEL" | "FRIEND_REQUEST_DECLINE" | "FRIEND_REQUEST_ACCEPT" | "VOICE_JOIN" | "VOICE_LEAVE";
+export type Events = "READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "MESSAGE_DELETE" | "MESSAGE_UPDATE" | "TYPING_START" | "FRIEND_REQUEST_CREATE" | "FRIEND_REQUEST_CANCEL" | "FRIEND_REQUEST_DECLINE" | "FRIEND_REQUEST_ACCEPT" | "CALL_INIT" | "VOICE_JOIN" | "VOICE_LEAVE";
 
 export interface ReadyEvent {
     user: IUser;
@@ -130,6 +130,7 @@ export interface EventMap {
     friendRequestAccept: IPartialFriendRequest;
     friendRequestDecline: IPartialFriendRequest;
     friendRequestDelete: IPartialFriendRequest;
+    callInit: { caller: string, token: string };
     voiceJoin: any;
     voiceLeave: any;
 }

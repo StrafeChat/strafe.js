@@ -148,6 +148,10 @@ class WebsocketClient {
 
         this.client.emit("friendRequestDecline", data as IPartialFriendRequest);
         break;
+      case "CALL_INIT":
+        console.log("call init");
+        this.client.emit("callInit", data);
+        break;
       case "VOICE_JOIN":
         var meta = data as IRoomUserChange;
         var space = this.client.spaces.get(meta.space_id);
@@ -314,7 +318,7 @@ export class WebsocketNodeClient extends WebsocketClient implements WebsocketStr
   private startHeartbeat(interval: number) {
     this.heartbeatInterval = setInterval(() => {
       this.sendHeartbeat();
-    }, interval);
+    }, interval) as NodeJS.Timeout;
   }
 
   private stopHeartbeat() {
