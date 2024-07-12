@@ -74,6 +74,10 @@ export class WebsocketWorkerClient implements WebsocketClient {
                             data.spaces.forEach((spaceData: any) => {
                                 spaceData.client = this.client;
                                 const space = new Space(spaceData);
+                                spaceData.members.forEach((membersData: any) => {
+                                    const member = new Member(membersData);
+                                    space.members.set(member.userId, member);
+                                });
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData: any) => {
                                         const room = new Room(roomData);
@@ -81,13 +85,10 @@ export class WebsocketWorkerClient implements WebsocketClient {
                                         room.messages.forEach((messageData: any) => {
                                             const message = messageData;
                                             message.client = this.client;
+                                            message.member = space.members.get(message.author.id);
                                             room.messages.set(message.id, message)      
                                         });
                                         space.rooms.set(room.id, room);
-                                    });
-                                    spaceData.members.forEach((membersData: any) => {
-                                        const member = new Member(membersData);
-                                        space.members.set(member.userId, member);
                                     });
                                 }
                                 this.client.spaces.set(space.id, space);
@@ -215,20 +216,21 @@ export class WebsocketNodeClient implements WebsocketClient {
                             data.spaces.forEach((spaceData: any) => {
                                 spaceData.client = this.client;
                                 const space = new Space(spaceData);
+                                spaceData.members.forEach((membersData: any) => {
+                                    const member = new Member(membersData);
+                                    space.members.set(member.userId, member);
+                                });
                                 if (spaceData.rooms) {
                                     spaceData.rooms.forEach((roomData: any) => {
-                                        roomData.client = this.client;
                                         const room = new Room(roomData);
+                                        room.client = this.client;
                                         room.messages.forEach((messageData: any) => {
-                                            messageData.client = this.client;
                                             const message = messageData;
+                                            message.client = this.client;
+                                            message.member = space.members.get(message.author.id);
                                             room.messages.set(message.id, message)      
                                         });
                                         space.rooms.set(room.id, room);
-                                    });
-                                    spaceData.members.forEach((membersData: any) => {
-                                        const member = new Member(membersData);
-                                        space.members.set(member.userId, member);
                                     });
                                 }
                                 this.client.spaces.set(space.id, space);
@@ -255,6 +257,7 @@ export class WebsocketNodeClient implements WebsocketClient {
                                 const room = space?.rooms.get(data.room_id);
                                 data.room = room;
                                 data.space = space;
+                                data.member = space?.members.get(data.author.id);
                                 (data as IMessage).client = this.client;
                                 const message = new Message(data as IMessage);
                                 room?.messages.set(message.id, message as Message)
