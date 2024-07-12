@@ -1,5 +1,6 @@
 import { Client } from "../client/Client";
 import { ApiError, IMessage, IUser, MessageEmbed, MessageSudo, RoomMessageOptions } from "../types";
+import { Member } from "./Member";
 import { Room } from "./Room";
 import { Space } from "./Space";
 
@@ -7,6 +8,7 @@ export class Message {
   public client: Client;
   public room: Room;
   public space: Space;
+  public member: Member
   public readonly id: string;
   public readonly roomId: string;
   public readonly authorId: string;
@@ -37,6 +39,7 @@ export class Message {
     this.client = data.client;
     this.room = data.room;
     this.space = data.space;
+    this.member = data.member;
     this.id = data.id;
     this.roomId = data.room_id;
     this.authorId = data.author_id;
