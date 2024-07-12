@@ -155,26 +155,23 @@ export class Room {
    * @param client The client.
    */
 
-  public async send(data: Partial<RoomMessageOptions>) {
-    const res = await fetch(
-      `${this.client.config.equinox}/rooms/${this.id}/messages`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": this.client.token!,
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      }
-    );
+  public async send(data: RoomMessageOptions) {
+
+    const res = await fetch(`${this.client.config.equinox}/rooms/${this.id}/messages`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.client.token!,
+      },
+      body: JSON.stringify(data),
+      credentials: "include",
+    });
 
     const resData = (await res.json()) as ApiError | IMessage;
 
-    if (!res.ok)
-      throw new Error(
-        "Failed to send message: " + (resData as ApiError).message
-      );
+    if (!res.ok) {
+      throw new Error("Failed to send message: " + (resData as ApiError).message);
+    }
 
     const message = new Message(resData as IMessage);
 
