@@ -1,5 +1,6 @@
 import { Client } from "../client/Client";
 import { MessageManager } from "../managers/MessageManager";
+import { Member } from "../structure/Member";
 import { Room } from "../structure/Room";
 import { Space } from "../structure/Space";
 /***
@@ -66,7 +67,7 @@ export interface MessageEmbed {
     description: string | null;
     url: string | null;
     timestamp: number | null;
-    color: number | null;
+    color: string | null;
     footer: MessageEmbedFooter | null;
     image: MessageEmbedMedia | null;
     thumbnail: MessageEmbedMedia | null;
@@ -74,14 +75,20 @@ export interface MessageEmbed {
     author: MessageEmbedAuthor | null;
     fields: MessageEmbedField[] | null;
 }
+export interface HasPermissionOptions {
+    permission: string;
+}
 export interface RoomMessageOptions {
     content: string;
     embeds?: MessageEmbed[];
+    reference_id?: string;
+    attachments?: object[];
 }
 export interface RoomCreateOptions {
     name: string;
     type: number;
     space_id?: string;
+    parent_id?: string;
 }
 /***
  * @typedef {"READY" | "PRESENCE_UPDATE" | "MESSAGE_CREATE" | "TYPING_START" | "MESSAGE_DELETE" | "MESSAGE_UPDATE"} Events
@@ -217,12 +224,20 @@ export interface ISpaceMember {
     edited_at: number;
     user: IUser;
 }
+export interface ISpaceRole {
+    space_id: string;
+    color: string;
+    hoist: boolean;
+    rank: number;
+    permissions: PermissionOverwrite[];
+}
 export interface MessageSudo {
     name: string | null;
     avatar_url: string | null;
     color: string | null;
 }
 export interface IMessage {
+    member: Member;
     space: Space;
     room: Room;
     client: Client;
@@ -257,6 +272,7 @@ export interface IInvite {
     vanity: boolean;
     inviter_id: string;
     uses: number;
+    max_uses: number;
     space_id: string;
     room_id: string;
     created_at: number;
@@ -264,6 +280,10 @@ export interface IInvite {
     member_count: number;
     space: ISpace;
     inviter: IUser;
+}
+export interface CreateInviteOptions {
+    max_uses: number | null;
+    expires_at: number | null;
 }
 /***
  * @typedef {Object} ApiError

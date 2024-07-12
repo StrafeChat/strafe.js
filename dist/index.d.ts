@@ -14,4 +14,5 @@ export * from "./managers/MessageManager";
 export * from "./managers/RoomManager";
 export * from "./structure/Member";
 export * from "./structure/Message";
+export * from "./structure/Invite";
 export declare const workerPath: any;

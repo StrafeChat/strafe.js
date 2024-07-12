@@ -31,5 +31,6 @@ __exportStar(require("./managers/MessageManager"), exports);
 __exportStar(require("./managers/RoomManager"), exports);
 __exportStar(require("./structure/Member"), exports);
 __exportStar(require("./structure/Message"), exports);
+__exportStar(require("./structure/Invite"), exports);
 const path = require("path");
 exports.workerPath = path.resolve(__filename, "./worker.js"); // TODO: fix, this doesn't work in ts/next environment (I haven't figured that out yet). It is being fixed by the postinstall script atm

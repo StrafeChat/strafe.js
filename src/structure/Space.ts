@@ -1,7 +1,7 @@
 import { Client } from "../client/Client";
 import { RoomManager } from "../managers/RoomManager";
 import { MemberManager } from "../managers/MemberManager";
-import { IRoom, ISpace, ISpaceMember } from "../types";
+import { ApiError, IRoom, ISpace, ISpaceMember } from "../types";
 import { Room } from "./Room";
 import { Member } from "./Member";
 
@@ -146,4 +146,33 @@ export class Space {
       });
     }
   }
-}
+
+/**
+   * Sends a message in a room.
+   * @param data The data to post in the room
+   * @param client The client.
+   */
+
+public async leave() {
+  const res = await fetch(
+    `${this.client.config.equinox}/users/@me/spaces/${this.id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": this.client.token!,
+      },
+      credentials: "include",
+    }
+  );
+
+  const resData = (await res.json()) as ApiError;
+
+  if (!res.ok)
+    throw new Error(
+      "Failed to send message: " + (resData as ApiError).message
+    );
+
+  this.client.spaces.delete(this.id);
+ }
+} 
