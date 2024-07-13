@@ -1,5 +1,6 @@
 import { Client } from "../";
 import { VoiceConnection } from "../voice";
+import { P2PConnection } from "../voice/P2PConnection";
 
 export class VoiceManager {
   /**
@@ -32,6 +33,41 @@ export class VoiceManager {
    */
   public setServer(url: string): void {
     this.livekitServer = url;
+  }
+
+  public getRoomId(user1: string, user2: string): string {
+    return [user1, user2].sort().join(":");
+  }
+
+  public callUser(userId: string): Promise<P2PConnection> {
+    return new Promise(async (resolve, reject) => {
+      const room = this.getRoomId(this.client.user!.id, userId);
+
+      const res = await fetch(`${this.client.config.equinox}/portal/personal/join`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: this.client.token!,
+        },
+        body: JSON.stringify({ roomId: room }),
+      });
+
+      const resData = await res.json();
+      if (!res.ok) return reject(resData);
+
+      const connection = new P2PConnection({
+        token: resData.token,
+        roomId: room,
+      }, this.client, this.livekitServer + "p2p");
+
+      resolve(connection);
+    });
+  }
+  public joinCall(token: string, caller: string): P2PConnection {
+    return new P2PConnection({
+      token,
+      roomId: this.getRoomId(this.client.user!.id, caller),
+    }, this.client, this.livekitServer + "p2p");
   }
 
   /**
