@@ -25,7 +25,7 @@
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.55",
     "@types/ws": "^8.5.10",
-    "typedoc": "^0.25.6"
+    "typedoc": "^0.26.4"
   },
   "files": [
     "dist"
