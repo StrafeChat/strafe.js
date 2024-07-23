@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc -p . && typedoc --json website/docs.json",
     "build-worker-unix": "cd ./src/client; tsc worker.ts; cp worker.js ../../dist/worker.js",
-    "build-worker-windows": "cd ./src/client & tsc worker.ts & cp worker.js ../../dist/worker.js",
+    "build-worker-windows": "cd ./src/client & tsc worker.ts & @powershell copy worker.js ../../dist/worker.js",
     "postinstall": "node ./postinstall.js",
     "devbuild-windows": "npm run build & npm run build-worker-windows & npm run postinstall",
     "devbuild-unix": "npm run build; npm run build-worker-unix; npm run postinstall"
