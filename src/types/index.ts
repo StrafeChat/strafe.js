@@ -168,6 +168,13 @@ export interface IUser {
     friends?: string[];
 }
 
+export interface IRoomUnread {
+    room_id: string;
+    user_id: string;
+    message_id: string;
+    mention: boolean
+}
+
 export interface IFriendRequest {
     id: string;
     sender_id: string;
@@ -299,7 +306,7 @@ export interface IMessage {
     edited_at: number | null;
     tts: boolean;
     mention_everyone: boolean;
-    mentions: string[] | null;
+    mentions: string[];
     mention_roles: string[] | null;
     mention_rooms: string[] | null;
     attachments: string[] | null;
@@ -336,6 +343,18 @@ export interface IRoomUserChange {
   space: string;
   space_id: string;
   user: string;
+}
+
+export interface IRoomUnread {
+    room_id: string;
+    user_id: string;
+    message_id: string;
+}
+
+export interface IRoomMention {
+    room_id: string;
+    user_id: string;
+    message_ids: string[];
 }
 
 export interface CreateInviteOptions {

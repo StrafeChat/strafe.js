@@ -19,7 +19,7 @@ export class Message {
   public readonly editedAt: number | null;
   public readonly tts: boolean;
   public readonly mentionEveryone: boolean;
-  public readonly mentions: string[] | null;
+  public readonly mentions: string[];
   public readonly mentionRoles: string[] | null;
   public readonly mentionRooms: string[] | null;
   public readonly attachments: string[] | null;

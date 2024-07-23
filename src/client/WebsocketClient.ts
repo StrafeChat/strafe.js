@@ -1,7 +1,15 @@
 import WebSocket from "isomorphic-ws";
 import { OpCodes } from "../config";
 import { ClientUser } from "../structure/ClientUser";
-import { Events, IFriendRequest, IMessage, IPartialFriendRequest, IRoomUserChange, ISpace, IUser } from "../types";
+import {
+  Events,
+  IFriendRequest,
+  IMessage,
+  IPartialFriendRequest,
+  IRoomUserChange,
+  ISpace,
+  IUser,
+} from "../types";
 import { Client } from "./Client";
 import { Space } from "../structure/Space";
 import { Room } from "../structure/Room";
@@ -9,7 +17,6 @@ import { Member } from "../structure/Member";
 import { Message } from "../structure/Message";
 import { FriendRequest } from "../structure/FriendRequest";
 import { User } from "../structure/User";
-
 
 export interface WebsocketStrafeClient {
   connect(): Promise<void>;
@@ -19,13 +26,15 @@ export interface WebsocketStrafeClient {
 export function chooseClient(client: Client): WebsocketStrafeClient {
   console.log("choosing");
   if (typeof window !== "undefined") {
-    console.log("worker")
+    console.log("worker");
     if (window.SharedWorker) {
       return new WebsocketWorkerClient(client);
     }
-    console.log("SharedWorker API is unsupported, falling back to node client.");
+    console.log(
+      "SharedWorker API is unsupported, falling back to node client."
+    );
   }
-  console.log("node")
+  console.log("node");
   return new WebsocketNodeClient(client);
 }
 
@@ -39,13 +48,16 @@ class WebsocketClient {
   processEvent(data: any, event: Events) {
     switch (event) {
       case "READY":
-        this.client.user = new ClientUser({ ...data.user, client: this.client });
+        this.client.user = new ClientUser({
+          ...data.user,
+          client: this.client,
+        });
         // console.log(data)
         // data.friend.forEach((friendsData: any) => {
         //   const member = new User(friendsData);
         //   this.client.users.set(member.userId, member);
         // })
-        data.spaces.forEach((spaceData: any) => {
+          data.spaces.forEach((spaceData: any) => {
           spaceData.client = this.client;
           const space = new Space(spaceData);
           spaceData.members.forEach((membersData: any) => {
@@ -57,11 +69,23 @@ class WebsocketClient {
               roomData.space_members = space.members;
               const room = new Room(roomData);
               room.client = this.client;
+
+              roomData.unreads.forEach((unreadData: any) => {
+                const unread = unreadData;
+                room.unreads.set(unread.room_id, unread);
+              })
+
+              
+              roomData.mentions.forEach((unreadData: any) => {
+                const unread = unreadData;
+                room.mentions.set(unread.room_id, unread);
+              })
+
               room.messages.forEach((messageData: any) => {
                 const message = messageData;
                 message.client = this.client;
                 message.member = space.members.get(message.author.id);
-                room.messages.set(message.id, message)
+                room.messages.set(message.id, message);
               });
               space.rooms.set(room.id, room);
             });
@@ -71,23 +95,22 @@ class WebsocketClient {
         this.client.emit("ready", data);
         break;
       case "PRESENCE_UPDATE":
-        if (this.client.user?.id === data.user.id) this.client.user!.presence = data.presence;
+        if (this.client.user?.id === data.user.id)
+          this.client.user!.presence = data.presence;
         if (this.client.user?.friends.includes(data.user.id)) {
           let presence = data.presence;
           let oldUser = data.user;
-          let newUser = new User({...oldUser, presence} as IUser)
-          this.client.users.set(data.user.id, newUser)
+          let newUser = new User({ ...oldUser, presence } as IUser);
+          this.client.users.set(data.user.id, newUser);
         }
-        this.client.spaces
-          .toArray()
-          .map((space: any) => {
-            let member = space.members.get(data.user.id);
-            if (!member || !data.user.space_ids.includes(space.id)) return;
-            let oldUser = data.user;
-            let presence = data.presence;
-            let user = { ...oldUser, presence };
-            space.members.set(data.user.id, { ...member, user })
-          })
+        this.client.spaces.toArray().map((space: any) => {
+          let member = space.members.get(data.user.id);
+          if (!member || !data.user.space_ids.includes(space.id)) return;
+          let oldUser = data.user;
+          let presence = data.presence;
+          let user = { ...oldUser, presence };
+          space.members.set(data.user.id, { ...member, user });
+        });
         this.client.emit("presenceUpdate", data);
         break;
       case "MESSAGE_CREATE":
@@ -98,8 +121,11 @@ class WebsocketClient {
           data.space = space;
           (data as IMessage).client = this.client;
           const message = new Message(data as IMessage);
-          room?.messages.set(message.id, message)
-          this.client.emit("messageCreate", message as Message)
+          room?.unreads.set(message.roomId, 
+            {roomId: message.roomId, userId: this.client.user?.id!, messageId: message.id}
+          )
+          room?.messages.set(message.id, message);
+          this.client.emit("messageCreate", message as Message);
         }
         break;
       case "MESSAGE_UPDATE":
@@ -110,8 +136,8 @@ class WebsocketClient {
           data.space = space;
           (data as IMessage).client = this.client;
           const message = new Message(data as IMessage);
-          room?.messages.set(message.id, message)
-          this.client.emit("messageUpdate", message as Message)
+          room?.messages.set(message.id, message);
+          this.client.emit("messageUpdate", message as Message);
         }
         break;
       case "MESSAGE_DELETE":
@@ -121,30 +147,36 @@ class WebsocketClient {
           (data as IMessage).client = this.client;
           const message = new Message(data as IMessage);
           room?.messages.delete(message.id);
-          this.client.emit("messageDelete", message as Message)
+          this.client.emit("messageDelete", message as Message);
         }
         break;
       case "TYPING_START":
-        this.client.emit("typingStart", data)
+        this.client.emit("typingStart", data);
         break;
       case "FRIEND_REQUEST_CREATE":
-        this.client.friendRequests.set(data.id, new FriendRequest(data, this.client));
+        this.client.friendRequests.set(
+          data.id,
+          new FriendRequest(data, this.client)
+        );
 
         this.client.emit("friendRequestCreate", data as IFriendRequest);
         break;
       case "FRIEND_REQUEST_ACCEPT":
-        if (this.client.friendRequests.has(data.id)) this.client.friendRequests.delete(data.id);
+        if (this.client.friendRequests.has(data.id))
+          this.client.friendRequests.delete(data.id);
         this.client.user?.friends.push(data.sender_id);
 
         this.client.emit("friendRequestAccept", data as IPartialFriendRequest);
         break;
       case "FRIEND_REQUEST_CANCEL":
-        if (this.client.friendRequests.has(data.id)) this.client.friendRequests.delete(data.id);
+        if (this.client.friendRequests.has(data.id))
+          this.client.friendRequests.delete(data.id);
 
         this.client.emit("friendRequestDelete", data as IPartialFriendRequest);
         break;
       case "FRIEND_REQUEST_DECLINE":
-        if (this.client.friendRequests.has(data.id)) this.client.friendRequests.delete(data.id);
+        if (this.client.friendRequests.has(data.id))
+          this.client.friendRequests.delete(data.id);
 
         this.client.emit("friendRequestDecline", data as IPartialFriendRequest);
         break;
@@ -167,13 +199,20 @@ class WebsocketClient {
         this.client.emit("voiceLeave", data);
         break;
       default:
-        this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
+        this.client.emit("error", {
+          code: 404,
+          message:
+            "An unknown event has been emitted. Is strafe.js up to date?",
+        });
         break;
     }
   }
 }
 
-export class WebsocketWorkerClient extends WebsocketClient implements WebsocketStrafeClient {
+export class WebsocketWorkerClient
+  extends WebsocketClient
+  implements WebsocketStrafeClient
+{
   private worker: SharedWorker | null = null;
   constructor(client: Client) {
     super(client);
@@ -227,12 +266,13 @@ export class WebsocketWorkerClient extends WebsocketClient implements WebsocketS
 /**
  * Represents a websocket client in non-browser environments.
  */
-export class WebsocketNodeClient extends WebsocketClient implements WebsocketStrafeClient {
-
+export class WebsocketNodeClient
+  extends WebsocketClient
+  implements WebsocketStrafeClient
+{
   private gateway: string | null = null;
   private _ws: WebSocket | null = null;
   private heartbeatInterval: NodeJS.Timeout | null = null;
-
 
   /**
    * Constructs a new WebsocketClient.
@@ -250,11 +290,17 @@ export class WebsocketNodeClient extends WebsocketClient implements WebsocketStr
       try {
         var res = await fetch(this.client.config.equinox + "/gateway");
       } catch (err) {
-        this.client.emit("error", { code: 503, message: "Looks like the Strafe API is down. Please try reconnecting later." })
-        throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`)
+        this.client.emit("error", {
+          code: 503,
+          message:
+            "Looks like the Strafe API is down. Please try reconnecting later.",
+        });
+        throw new Error(
+          `Looks like ${this.client.config.equinox + "/gateway"} might be down!`
+        );
       }
 
-      const data = await res.json() as { ws: string };
+      const data = (await res.json()) as { ws: string };
       this.gateway = data.ws;
     }
 
@@ -264,9 +310,12 @@ export class WebsocketNodeClient extends WebsocketClient implements WebsocketStr
       this.identify();
     });
 
-
-    this._ws!.addEventListener("message", (message) => {
-      const { op, data, event } = JSON.parse(message.data.toString()) as { op: OpCodes, data: any, event: Events };
+    this._ws!.addEventListener("message", (message: any) => {
+      const { op, data, event } = JSON.parse(message.data.toString()) as {
+        op: OpCodes;
+        data: any;
+        event: Events;
+      };
       switch (op) {
         case OpCodes.HELLO:
           const { heartbeat_interval } = data;
@@ -279,14 +328,18 @@ export class WebsocketNodeClient extends WebsocketClient implements WebsocketStr
       }
     });
 
-    this._ws.addEventListener("close", (event) => {
-      this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
+    this._ws.addEventListener("close", (event: any) => {
+      this.client.emit("error", {
+        code: 1006,
+        message:
+          "The websocket connection has been closed. Attempting to reconnect.",
+      });
       if (event.code > 1000 && event.code != 4004) {
         setTimeout(() => {
           this.reconnect();
         }, 5000);
       }
-    })
+    });
   }
 
   /**
@@ -294,7 +347,7 @@ export class WebsocketNodeClient extends WebsocketClient implements WebsocketStr
    * @param op The opcode of the message.
    * @param data The data of the message.
    */
-  public async send({ op, data }: { op: OpCodes, data: any }) {
+  public async send({ op, data }: { op: OpCodes; data: any }) {
     this._ws?.send(JSON.stringify({ op, data }));
   }
 
@@ -302,9 +355,9 @@ export class WebsocketNodeClient extends WebsocketClient implements WebsocketStr
     const payload = {
       op: OpCodes.IDENTIFY,
       data: {
-        token: this.client.token
-      }
-    }
+        token: this.client.token,
+      },
+    };
 
     this._ws?.send(JSON.stringify(payload));
   }

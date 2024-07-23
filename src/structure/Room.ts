@@ -5,6 +5,9 @@ import { MessageManager } from "../managers/MessageManager";
 import { Message } from "./Message";
 import { VoiceConnection } from "../voice/";
 import { Invite } from "./Invite";
+import { RoomUnreadManager } from "../managers/RoomUnreadManager";
+import { RoomUnread } from "./RoomUnread";
+import { RoomMentionManager } from "../managers/RoomMentionManager";
 
 /**
  * Represents a room on Strafe.
@@ -60,6 +63,14 @@ export class Room {
    * The position of the room.
    */
   public readonly messages: MessageManager;
+  /**
+   * The client's unread messages in the room.
+   */
+  public unreads: RoomUnreadManager;
+  /** 
+   * THe client's unread mentions in the room
+  */
+  public mentions: RoomMentionManager;
 
   /**
    * The id of the last message sent in the room.
@@ -151,6 +162,8 @@ export class Room {
     this.createdAt = data.created_at;
     this.editedAt = data.edited_at;
     this.messages = new MessageManager(this.client);
+    this.unreads = new RoomUnreadManager(this.client);
+    this.mentions = new RoomMentionManager(this.client);
     if (data.messages) {
         data.messages.forEach((messageData: any) => {
             messageData.client = this.client;
@@ -348,4 +361,31 @@ public async delete() {
 
   return res.status;
   }  
+
+  public async read() {
+
+  if (!this.unreads.toArray()[0]) return;
+
+  this.unreads.delete(this.id);
+  
+    const res = await fetch(
+      `${this.client.config.equinox}/rooms/${this.id}/ack`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": this.client.token!,
+        },
+        credentials: "include",
+      }
+    );
+
+    if (!res.ok) {
+      const resData = await res.json();
+      throw new Error("Failed to send ack request: "+ (resData as ApiError).message);
+    }
+
+
+    return res.status;
+  }
 }

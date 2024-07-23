@@ -9,6 +9,7 @@ import { Space } from "../structure/Space";
 import { InviteManager } from "../managers/InviteManager";
 import { UserManager } from "../managers/UserManager";
 import { FriendRequestManager } from "../managers/FriendRequestManager";
+import { RoomUnreadManager } from "../managers/RoomUnreadManager";
 
 /**
  * The main hub for interacting with strafe.
@@ -61,6 +62,11 @@ export class Client extends EventEmitter2 {
      * The friend requests cached on the client.
      */
     public friendRequests = new FriendRequestManager(this);
+
+    /**
+     * The unread rooms of the client user.
+     */
+    public unreads = new RoomUnreadManager(this);
 
     /**
      * Attaches a listener for the specified event.

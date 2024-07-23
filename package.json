@@ -1,14 +1,15 @@
 {
   "name": "@strafechat/strafe.js",
-  "version": "1.4.54",
+  "version": "1.4.59",
   "description": "NodeJS library for interacting with the Strafe API and websocket.",
   "repository": "https://github.com/StrafeChat/strafe.js",
   "homepage": "https://strafe.js.org",
   "main": "dist/index",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -p . && typedoc --json website/docs.json",
     "build-worker-unix": "cd ./src/client; tsc worker.ts; cp worker.js ../../dist/worker.js",
-    "build-worker-windows": "cd ./src/client & tsc worker.ts & cp worker.js ../../dist/worker.js",
+    "build-worker-windows": "cd ./src/client; tsc worker.ts; copy worker.js ../../dist/worker.js",
     "postinstall": "node ./postinstall.js",
     "devbuild-windows": "npm run build & npm run build-worker-windows & npm run postinstall",
     "devbuild-unix": "npm run build; npm run build-worker-unix; npm run postinstall"
@@ -24,13 +25,11 @@
     "@types/sharedworker": "^0.0.112",
     "eventemitter2": "^6.4.9",
     "isomorphic-ws": "^5.0.0",
-    "livekit-client": "^2.3.1",
-    "ws": "^8.16.0"
+    "livekit-client": "^2.3.1"
   },
   "devDependencies": {
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.55",
-    "@types/ws": "^8.5.10",
     "typedoc": "^0.25.6"
   },
   "files": [
