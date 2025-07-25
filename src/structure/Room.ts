@@ -1,303 +1,145 @@
-import { ApiError, IMessage, IRoom, RoomMessageOptions, RoomCreateOptions, CreateInviteOptions, IInvite } from "../types";
 import { Client } from "../client/Client";
-import { MessageManager } from "../managers/MessageManager";
+import { ApiError, IRoom, IMessage, CreateMessageOptions } from "../types";
+import { Space } from "./Space";
 import { Message } from "./Message";
-import { Invite } from "./Invite";
 
 /**
- * Represents a room on Strafe.
+ * Represents a channel on Strafe.
  */
 export class Room {
-  /**
-   * The ID of the room.
-   */
-  public readonly id: string;
-
-  /**
-   * The name of the room.
-   */
-  public readonly name: string | null;
-
-  /**
-   * The type of the room.
-   */
-  public readonly type: number;
-
-  /**
-   * The space ID of the room.
-   */
-  public readonly spaceId: string | null;
-
-  /**
-   * The icon of the room.
-   */
-  public readonly icon: string | null;
-
-  /**
-   * The owner of the space.
-   */
-  public readonly ownerId: string | null;
-
-  /**
-   * The topic of the room.
-   */
-  public readonly topic: string | null;
-
-  /**
-   * The position of the room.
-   */
-  public readonly position: number;
-
-  /**
-   * The position of the room.
-   */
-  public readonly messages: MessageManager;
-
-  /**
-   * The id of the last message sent in the room.
-   */
-  public readonly lastMessageId: string | null;
-
-  /**
-   * The bitrate of the voice room.
-   */
-  public readonly bitrate: number | null;
-
-  /**
-   * The user limit for the voice room.
-   */
-  public readonly userLimit: number | null;
-
-  /**
-   * The rate limit for messaging in the room.
-   */
-  public readonly rateLimit: number | null;
-
-  /**
-   * A list of user id's for the pm.
-   */
-  public readonly recipients: string[];
-
-  /**
-   * The permission overwrites of the room.
-   */
-  public readonly permissionOverwrites: any[];
-
-  /**
-   * The permission overwrites of the room.
-   */
-  public readonly parentId: string | null;
-
   /**
    * The client.
    */
   public client: Client;
 
   /**
-   * The timestamp of the last timestamp.
+   * The space the rooms in if any.
    */
-  public readonly lastPinTimestamp: string | null;
+  public space: Space | null;
 
   /**
-   * The region for the voice room.
+   * The channels's ID.
    */
-  public readonly rtcRegion: number | null;
+  public readonly id: string;
 
   /**
-   * The creation date of the space.
+   * The ID of the space the rooms in, if any.
    */
-  public readonly createdAt: number;
+  public readonly spaceId: string | null;
 
   /**
-   * The edit date of the space.
+   * The type of channel it is, ex: dm, text or voice.
    */
-  public readonly editedAt: number;
+  public readonly type: string;
 
   /**
-   * Creates a new instance of a space.
-   * @param data The data for the space.
+   * The topic of channel, if any.
+   */
+  public readonly topic: string | null;
+
+  /**
+   * Is the channel NSFW?
+   */
+  public readonly nsfw: boolean;
+
+  /**
+   * Is the channel locked?.
+   */
+  public readonly locked: boolean;
+
+  /**
+   * The channel's slowmode.
+   */
+  public readonly slowmode: number;
+
+  /**
+   * The last message in the channel.
+   */
+  public readonly lastMessage: IMessage | null;
+
+  /**
+   * The name of the channel.
+   */
+  public readonly name: string;
+
+  /**
+   * The color of the channel, if any.
+   */
+  public readonly color: string | null;
+
+  /**
+   * The channel's icon, if any.
+   */
+  public readonly icon: string | null;
+
+  /**
+   * The position of the channel.
+   */
+  public readonly position: number;
+
+  /**
+   * The permission overwrites for the channel.
+   */
+  public readonly overwrites: [];
+
+  /**
+   * The ID of the channel's category, if any.
+   */
+  public readonly parentId: string | null;
+
+  /**
+   * Creates a new instance of a channel.
+   * @param data The data for the channel.
    * @param client The client.
    */
   constructor(data: IRoom) {
     this.client = data.client;
+    this.space = data.space;
     this.id = data.id;
-    this.name = data.name;
-    this.type = data.type;
     this.spaceId = data.space_id;
+    this.type = data.type;
     this.topic = data.topic;
+    this.nsfw = data.nsfw;
+    this.locked = data.locked;
+    this.slowmode = data.slowmode;
+    this.lastMessage = data.last_message;
+    this.name = data.name;
+    this.color = data.color;
     this.icon = data.icon;
-    this.ownerId = data.owner_id;
     this.position = data.position;
-    this.lastMessageId = data.last_message_id;
-    this.bitrate = data.bitrate;
-    this.userLimit = data.user_limit;
-    this.rateLimit = data.rate_limit;
-    this.recipients = data.recipients;
-    this.permissionOverwrites = data.permission_overwrites;
+    this.overwrites = data.overwrites;
     this.parentId = data.parent_id;
-    this.lastPinTimestamp = data.last_pin_timestamp;
-    this.rtcRegion = data.rtc_region;
-    this.createdAt = data.created_at;
-    this.editedAt = data.edited_at;
-    this.messages = new MessageManager(this.client);
-    if (data.messages) {
-        data.messages.forEach((messageData: any) => {
-            messageData.client = this.client;
-            const message = new Message(messageData);
-            this.messages.set(message.id, message);
-        });
-    }
   }
 
   /**
-   * Sends a message in a room.
-   * @param data The data to post in the room
+   * Sends a message in a channel.
+   * @param data The data to post for the message.
    * @param client The client.
    */
 
-  public async send(data: Partial<RoomMessageOptions>) {
+  public async send(data: CreateMessageOptions) {
     const res = await fetch(
       `${this.client.config.equinox}/rooms/${this.id}/messages`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": this.client.token!,
+          "X-Bot-Token": this.client.token!,
         },
         body: JSON.stringify(data),
-        credentials: "include",
       }
     );
 
     const resData = (await res.json()) as ApiError | IMessage;
 
-    if (!res.ok)
+    if (!res.ok) {
       throw new Error(
         "Failed to send message: " + (resData as ApiError).message
       );
+    }
 
     const message = new Message(resData as IMessage);
 
     return message;
   }
-
-    /**
-   * Start typing inside a room.
-   * @param client The client.
-   */
-
-  public async sendTyping() {
-    const res = await fetch(
-      `${this.client.config.equinox}/rooms/${this.id}/typing`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": this.client.token!,
-        },
-        credentials: "include",
-      }
-    );
-  
-    if (!res.ok) {
-      const resData = await res.json();
-      throw new Error("Failed to send typing request: " + (resData as ApiError).message);
-    }
-
-    return res.status;
-  }  
-
-    /**
-   * Creates an invite for the room.
-   * @param data The data to create the invite with.
-   * @param client The client.
-   */
-    public async createInvite(data: Partial<CreateInviteOptions> | null = null) {
-      if (data) {
-        const res = await fetch(
-          `${this.client.config.equinox}/rooms/${this.id}/invites`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": this.client.token!,
-            },
-            body: JSON.stringify(data),
-            credentials: "include",
-          }
-        );
-  
-    if (!res.ok) {
-      const resData = await res.json();
-      throw new Error("Failed to send delete request: " + (resData as ApiError).message);
-    }
-  
-    const resData = (await res.json()) as ApiError | IInvite;
-  
-    if (!res.ok)
-      throw new Error(
-        "Failed to create invite: " + (resData as ApiError).message
-      );
-
-      console.log(resData)
-  
-    const invite = new Invite(resData as IInvite);
-  
-    return invite;
-      } else {
-        const res = await fetch(
-          `${this.client.config.equinox}/rooms/${this.id}/invites`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Authorization": this.client.token!,
-            },
-            credentials: "include",
-          }
-        );
-  
-    if (!res.ok) {
-      const resData = await res.json();
-      throw new Error("Failed to send delete request: " + (resData as ApiError).message);
-    }
-  
-    const resData = await res.json();
-  
-    if (!res.ok)
-      throw new Error(
-        "Failed to create invite: " + (resData as ApiError).message
-      );
-  
-    const invite = new Invite(resData!.invite as IInvite);
-  
-    return invite;
-      }
-  }  
-
-    /**
-   * Deletes a room.
-   * @param client The client.
-   */
-
-public async delete() {
-  const res = await fetch(
-    `${this.client.config.equinox}/rooms/${this.id}`,
-    {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": this.client.token!,
-      },
-      credentials: "include",
-    }
-  );
-
-  if (!res.ok) {
-    const resData = await res.json();
-    throw new Error("Failed to send delete request: " + (resData as ApiError).message);
-  }
-
-  return res.status;
-  }  
 }

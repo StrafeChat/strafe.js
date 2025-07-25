@@ -1,114 +1,107 @@
 import { Client } from "../client/Client";
-import { ApiError, IMessage, IUser, MessageEmbed, MessageSudo, RoomMessageOptions } from "../types";
+import { IMessage, IUser, MessageAttachment, MessageEmbed } from "../types";
 import { Room } from "./Room";
-import { Space } from "./Space";
+import { User } from "./User";
 
+/**
+ * Represents a message on Strafe.
+ */
 export class Message {
+  /**
+   * The client.
+   */
   public client: Client;
-  public room: Room;
-  public space: Space;
-  public readonly id: string;
-  public readonly roomId: string;
-  public readonly authorId: string;
-  public readonly author: IUser;
-  public readonly spaceId: string | null;
-  public readonly content: string | null;
-  public readonly createdAt: number;
-  public readonly editedAt: number | null;
-  public readonly tts: boolean;
-  public readonly mentionEveryone: boolean;
-  public readonly mentions: string[] | null;
-  public readonly mentionRoles: string[] | null;
-  public readonly mentionRooms: string[] | null;
-  public readonly attachments: string[] | null;
-  public readonly embeds: MessageEmbed[] | null;
-  public readonly sudo: MessageSudo | null;
-  public readonly reactions: any[] | null;
-  public readonly pinned: boolean;
-  public readonly webhookId: string | null;
-  public readonly system: boolean;
-  public readonly messageReferenceId: string | null;
-  public readonly flags: number | null;
-  public readonly threadId: string | null;
-  public readonly stickers: string[] | null;
-  public readonly nonce: number | null;
 
+  /**
+   * The room the message was sent in.
+   */
+  public room: Room;
+
+  /**
+   * The message's ID.
+   */
+  public readonly id: string;
+
+  /**
+   * The message's nonce if any.
+   */
+  public readonly nonce: string | null;
+
+  /**
+   * The message's room ID.
+   */
+  public readonly roomId: string;
+
+  /**
+   * The ID of the message author.
+   */
+  public readonly authorId: string;
+
+  /**
+   * The ID of the message author.
+   */
+  public readonly author: User;
+
+  /**
+   * The type of message it is.
+   */
+  public readonly type: string;
+
+  /**
+   * The content of the message, if any.
+   */
+  public readonly content: string | null;
+
+  /**
+   * Embed in the message, if any.
+   */
+  public readonly embeds: MessageEmbed[];
+
+  /**
+   * Attachments in the message, if any.
+   */
+  public readonly attachments: MessageAttachment[];
+
+  /**
+   * Flags in the message.
+   */
+  public readonly flags: number;
+
+  /**
+   * Mentions in the message.
+   */
+  public readonly mentions: string[];
+
+  /**
+   * When the message was last edited at.
+   */
+  public readonly editedAt: number | null;
+
+  /**
+   * References in the message, if any.
+   */
+  public readonly references: object[];
+
+  /**
+   * Creates a new instance of a message.
+   * @param data The data for the message.
+   * @param client The client.
+   */
   constructor(data: IMessage) {
     this.client = data.client;
     this.room = data.room;
-    this.space = data.space;
     this.id = data.id;
+    this.nonce = data.nonce;
     this.roomId = data.room_id;
     this.authorId = data.author_id;
     this.author = data.author;
-    this.spaceId = data.space_id;
+    this.type = data.type;
     this.content = data.content;
-    this.createdAt = data.created_at;
-    this.editedAt = data.edited_at;
-    this.tts = data.tts;
-    this.mentionEveryone = data.mention_everyone;
-    this.mentions = data.mentions;
-    this.mentionRoles = data.mention_roles;
-    this.mentionRooms = data.mention_rooms;
-    this.attachments = data.attachments;
     this.embeds = data.embeds;
-    this.sudo = data.sudo;
-    this.reactions = data.reactions;
-    this.pinned = data.pinned;
-    this.webhookId = data.webhook_id;
-    this.system = data.system;
-    this.messageReferenceId = data.message_reference_id;
+    this.attachments = data.attachments;
     this.flags = data.flags;
-    this.threadId = data.thread_id;
-    this.stickers = data.stickers;
-    this.nonce = data.nonce;
-  }
-
-  public async delete() {
-   const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/rooms/${this.roomId}/messages/${this.id}`,
-        {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": this.client.token!,
-         },
-         credentials: "include"
-        }
-      );
-
-    if (!res.ok) {
-      const resData = (await res.json()) as ApiError;
-       throw new Error(
-         "Failed to send message: " + (resData as ApiError).message
-        );
-      } 
-    return;
-  }
-
-  public async edit(data: Partial<RoomMessageOptions>) {
-    const res = await fetch(
-      `${this.client.config.equinox}/rooms/${this.roomId}/messages/${this.id}`,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": this.client.token!,
-        },
-        body: JSON.stringify(data),
-        credentials: "include",
-      }
-    );
-
-    const resData = (await res.json()) as ApiError | IMessage;
-
-    if (!res.ok)
-      throw new Error(
-        "Failed to send message: " + (resData as ApiError).message
-      );
-
-    const message = new Message(resData as IMessage);
-
-    return message;
+    this.mentions = data.mentions;
+    this.editedAt = data.edited_at;
+    this.references = data.references;
   }
 }

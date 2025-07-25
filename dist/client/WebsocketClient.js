@@ -3,162 +3,30 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.WebsocketNodeClient = exports.WebsocketWorkerClient = exports.chooseClient = void 0;
+exports.sanitizeSnowflakes = exports.WebsocketNodeClient = exports.chooseClient = void 0;
 const isomorphic_ws_1 = __importDefault(require("isomorphic-ws"));
+const msgpack_1 = require("@msgpack/msgpack");
 const config_1 = require("../config");
-const ClientUser_1 = require("../structure/ClientUser");
-const Space_1 = require("../structure/Space");
-const Room_1 = require("../structure/Room");
-const Member_1 = require("../structure/Member");
-const Message_1 = require("../structure/Message");
+const structure_1 = require("../structure");
+const message_1 = require("../events/message");
+const space_1 = require("../events/space");
+const room_1 = require("../events/room");
+const typing_1 = require("../events/typing");
 function chooseClient(client) {
-    console.log("choosing");
     if (typeof window !== "undefined") {
-        console.log("worker");
-        // return new WebsocketWorkerClient(client);
         return new WebsocketNodeClient(client);
+        // return new WebsocketWorkerClient(client);
     }
     else {
-        console.log("node");
         return new WebsocketNodeClient(client);
     }
 }
 exports.chooseClient = chooseClient;
-class WebsocketWorkerClient {
-    client;
-    worker = null;
-    constructor(client) {
-        this.client = client;
-    }
-    // Credit: https://stackoverflow.com/questions/21913673/execute-web-worker-from-different-origin
-    getWorkerUrl(url) {
-        // why is it not accepting the interface??? huh
-        // type 'typeof WebsocketNodeClient' is missing the following properties from type 'WebsocketClient': connect, send
-        // it literally implements the interface, what the hell (╯°□°）╯︵ ┻━┻) (completion by copilot)
-        // Returns a blob:// URL which points
-        // to a javascript file which will call
-        // importScripts with the given URL
-        const content = `importScripts( "${url}" );`;
-        return URL.createObjectURL(new Blob([content], { type: "text/javascript" }));
-    }
-    async connect() {
-        this.worker = new SharedWorker(// TODO: make it dynamic
-        //this.getWorkerUrl(this.client.config.equinox.replace("/v1", "") + "/worker.js") // due to cors issues, as equinox is on a different origin, this needs to be done
-        //"/js/worker.js"
-        "/api/worker.js");
-        this.worker.port.start();
-        this.worker.port.postMessage({
-            type: "connect",
-            token: this.client.token,
-            url: this.client.config.equinox,
-        });
-        this.worker.port.onmessage = (messageEvent) => {
-            if (messageEvent.data.event === "message") {
-                const { op, data, event } = JSON.parse(messageEvent.data.values);
-                console.log(op, data, event);
-                switch (op) {
-                    case config_1.OpCodes.DISPATCH:
-                        switch (event) {
-                            case "READY":
-                                this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
-                                data.spaces.forEach((spaceData) => {
-                                    spaceData.client = this.client;
-                                    const space = new Space_1.Space(spaceData);
-                                    if (spaceData.rooms) {
-                                        spaceData.rooms.forEach((roomData) => {
-                                            const room = new Room_1.Room(roomData);
-                                            room.client = this.client;
-                                            room.messages.forEach((messageData) => {
-                                                const message = messageData;
-                                                message.client = this.client;
-                                                room.messages.set(message.id, message);
-                                            });
-                                            space.rooms.set(room.id, room);
-                                        });
-                                        spaceData.members.forEach((membersData) => {
-                                            const member = new Member_1.Member(membersData);
-                                            space.members.set(member.userId, member);
-                                        });
-                                    }
-                                    this.client.spaces.set(space.id, space);
-                                });
-                                this.client.emit("ready", data);
-                                break;
-                            case "PRESENCE_UPDATE":
-                                if (this.client.user?.id === data.user.id)
-                                    this.client.user.presence = data.presence;
-                                this.client.spaces
-                                    .toArray()
-                                    .map((space) => {
-                                    let member = space.members.get(data.user.id);
-                                    if (!data.user.space_ids.includes(space.id))
-                                        return;
-                                    let oldUser = data.user;
-                                    let presence = data.presence;
-                                    let user = { ...oldUser, presence };
-                                    space.members.set(data.user.id, { ...member, user });
-                                });
-                                this.client.emit("presenceUpdate", data);
-                                break;
-                            case "MESSAGE_CREATE":
-                                if (data.space_id) {
-                                    const space = this.client.spaces.get(data.space_id);
-                                    const room = space?.rooms.get(data.room_id);
-                                    data.room = room;
-                                    data.space = space;
-                                    data.client = this.client;
-                                    const message = new Message_1.Message(data);
-                                    room?.messages.set(message.id, message);
-                                    this.client.emit("messageCreate", message);
-                                }
-                                break;
-                            case "MESSAGE_UPDATE":
-                                if (data.space_id) {
-                                    const space = this.client.spaces.get(data.space_id);
-                                    const room = space?.rooms.get(data.room_id);
-                                    data.room = room;
-                                    data.space = space;
-                                    data.client = this.client;
-                                    const message = new Message_1.Message(data);
-                                    room?.messages.set(message.id, message);
-                                    this.client.emit("messageUpdate", message);
-                                }
-                                break;
-                            case "MESSAGE_DELETE":
-                                if (data.space_id) {
-                                    const space = this.client.spaces.get(data.space_id);
-                                    const room = space?.rooms.get(data.room_id);
-                                    data.client = this.client;
-                                    const message = new Message_1.Message(data);
-                                    room?.messages.delete(message.id);
-                                    this.client.emit("messageDelete", message);
-                                }
-                                break;
-                            case "TYPING_START":
-                                this.client.emit("typingStart", data);
-                                break;
-                            default:
-                                this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
-                                break;
-                        }
-                        break;
-                }
-                return;
-            }
-            this.client.emit(messageEvent.data.event, messageEvent.data.values);
-        };
-    }
-    async send({ op, data }) {
-        this.worker?.port.postMessage({ type: "send", message: { op, data } });
-    }
-}
-exports.WebsocketWorkerClient = WebsocketWorkerClient;
 /**
- * Represents a websocket client in non-browser environments.
+ * Represents a websocket client in node environments.
  */
 class WebsocketNodeClient {
     client;
-    gateway = null;
     _ws = null;
     heartbeatInterval = null;
     /**
@@ -169,121 +37,196 @@ class WebsocketNodeClient {
         this.client = client;
     }
     /**
-     * Establishes a websocket connection to stargate.
+     * Establishes a websocket connection to harmony.
      */
     async connect() {
-        if (!this.gateway) {
-            try {
-                var res = await fetch(this.client.config.equinox + "/gateway");
-            }
-            catch (err) {
-                this.client.emit("error", { code: 503, message: "Looks like the Strafe API is down. Please try reconnecting later." });
-                throw new Error(`Looks like ${this.client.config.equinox + "/gateway"} might be down!`);
-            }
-            const data = await res.json();
-            this.gateway = data.ws;
-        }
-        this._ws = new isomorphic_ws_1.default(this.gateway);
+        this._ws = new isomorphic_ws_1.default(this.client.config.stargate);
         this._ws.addEventListener("open", () => {
             this.identify();
         });
-        this._ws.addEventListener("message", (message) => {
-            const { op, data, event } = JSON.parse(message.data.toString());
-            switch (op) {
-                case config_1.OpCodes.HELLO:
-                    const { heartbeat_interval } = data;
-                    this.startHeartbeat(heartbeat_interval);
-                    break;
-                case config_1.OpCodes.DISPATCH:
-                    switch (event) {
-                        case "READY":
-                            this.client.user = new ClientUser_1.ClientUser({ ...data.user, client: this.client });
-                            data.spaces.forEach((spaceData) => {
-                                spaceData.client = this.client;
-                                const space = new Space_1.Space(spaceData);
-                                if (spaceData.rooms) {
-                                    spaceData.rooms.forEach((roomData) => {
-                                        roomData.client = this.client;
-                                        const room = new Room_1.Room(roomData);
-                                        room.messages.forEach((messageData) => {
-                                            messageData.client = this.client;
-                                            const message = messageData;
-                                            room.messages.set(message.id, message);
-                                        });
-                                        space.rooms.set(room.id, room);
-                                    });
-                                    spaceData.members.forEach((membersData) => {
-                                        const member = new Member_1.Member(membersData);
-                                        space.members.set(member.userId, member);
-                                    });
-                                }
-                                this.client.spaces.set(space.id, space);
+        this._ws.addEventListener("message", async (message) => {
+            try {
+                const rawPayload = (0, msgpack_1.decode)(new Uint8Array(message.data), {
+                    useBigInt64: true,
+                });
+                // console.log("Raw decoded payload:", rawPayload);
+                const payload = {
+                    op: rawPayload.Op || rawPayload.op,
+                    d: rawPayload.D || rawPayload.d,
+                };
+                // console.log("Received event:", payload.op, payload.d);
+                switch (payload.op) {
+                    case config_1.OpCodes.HELLO:
+                        const heartbeatInterval = payload.d?.heartbeat_interval || 45000;
+                        this.startHeartbeat(heartbeatInterval);
+                        break;
+                    case config_1.OpCodes.READY:
+                        const userData = payload.d.client_user || payload.d.user;
+                        if (userData) {
+                            this.client.user = new structure_1.ClientUser({
+                                ...userData,
+                                id: userData.ID || userData.id,
+                                username: userData.Username || userData.username,
+                                discriminator: userData.Discriminator || userData.discriminator,
+                                displayName: userData.DisplayName ||
+                                    userData.displayName ||
+                                    userData.display_name,
+                                email: userData.Email || userData.email,
+                                avatar: userData.Avatar || userData.avatar,
+                                banner: userData.Banner || userData.banner,
+                                bot: userData.Bot || userData.bot,
+                                system: userData.System || userData.system,
+                                bio: userData.Bio || userData.bio,
+                                aboutMe: userData.AboutMe || userData.aboutMe || userData.about_me,
+                                createdAt: userData.CreatedAt ||
+                                    userData.createdAt ||
+                                    userData.created_at,
+                                updatedAt: userData.UpdatedAt ||
+                                    userData.updatedAt ||
+                                    userData.updated_at,
+                                flags: userData.Flags || userData.flags,
+                                presence: userData.Presence || userData.presence,
+                                client: this.client,
                             });
-                            this.client.emit("ready", data);
-                            break;
-                        case "PRESENCE_UPDATE":
-                            if (this.client.user?.id === data.user.id)
-                                this.client.user.presence = data.presence;
-                            this.client.spaces
-                                .toArray()
-                                .map((space) => {
-                                let member = space.members.get(data.user.id);
-                                if (!data.user.space_ids.includes(space.id))
-                                    return;
-                                let oldUser = data.user;
-                                let presence = data.presence;
-                                let user = { ...oldUser, presence };
-                                space.members.set(data.user.id, { ...member, user });
+                            // Set bot presence to online after READY event
+                            if (this.client.user) {
+                                await this.client.user.setPresence({ status: "online" });
+                            }
+                        }
+                        // Process standalone rooms first
+                        payload.d.rooms?.forEach((roomData) => {
+                            const room = new structure_1.Room(roomData);
+                            room.client = this.client;
+                            this.client.rooms.set(roomData.id, room);
+                        });
+                        // Process spaces and their rooms
+                        payload.d.spaces?.forEach((spaceData) => {
+                            spaceData.client = this.client;
+                            spaceData.rooms?.forEach((roomData) => {
+                                const room = new structure_1.Room(roomData);
+                                room.client = this.client;
+                                this.client.rooms.set(roomData.id, room);
                             });
-                            this.client.emit("presenceUpdate", data);
+                            const space = new structure_1.Space(spaceData);
+                            this.client.spaces.set(spaceData.id, space);
+                        });
+                        this.client.emit("ready", payload.d);
+                        break;
+                    case config_1.OpCodes.HEARTBEAT_ACK:
+                        // console.log("Heartbeat acknowledged");
+                        break;
+                    case config_1.OpCodes.DISPATCH:
+                    case config_1.OpCodes.MESSAGE:
+                        // Handle dispatch/message events with nested type and data structure
+                        // For MESSAGE op, the structure is: payload.d.d.type and payload.d.d.data
+                        // For DISPATCH op with nested MESSAGE, the structure is: payload.d.d.type and payload.d.d.data
+                        // For regular DISPATCH op, the structure is: payload.d.type and payload.d.data
+                        let eventType;
+                        let eventData;
+                        if ((payload.op === "MESSAGE" && payload.d?.op === "DISPATCH") ||
+                            (payload.op === "DISPATCH" && payload.d?.op === "MESSAGE")) {
+                            // Handle MESSAGE events or DISPATCH events containing MESSAGE operations
+                            eventType = payload.d?.d?.type;
+                            eventData = payload.d?.d?.data;
+                        }
+                        else {
+                            // Handle regular DISPATCH events
+                            eventType = payload.d?.type;
+                            eventData = payload.d?.data;
+                        }
+                        if (!eventType) {
+                            console.log(`${payload.op} event missing type:`, JSON.stringify(payload, null, 2));
                             break;
-                        case "MESSAGE_CREATE":
-                            if (data.space_id) {
-                                const space = this.client.spaces.get(data.space_id);
-                                const room = space?.rooms.get(data.room_id);
-                                data.room = room;
-                                data.space = space;
-                                data.client = this.client;
-                                const message = new Message_1.Message(data);
-                                room?.messages.set(message.id, message);
-                                this.client.emit("messageCreate", message);
-                            }
-                            break;
-                        case "MESSAGE_UPDATE":
-                            if (data.space_id) {
-                                const space = this.client.spaces.get(data.space_id);
-                                const room = space?.rooms.get(data.room_id);
-                                data.createdAt = data.created_at;
-                                data.room = room;
-                                data.space = space;
-                                data.client = this.client;
-                                const message = new Message_1.Message(data);
-                                room?.messages.set(message.id, message);
-                                this.client.emit("messageUpdate", message);
-                            }
-                            break;
-                        case "MESSAGE_DELETE":
-                            if (data.space_id) {
-                                const space = this.client.spaces.get(data.space_id);
-                                const room = space?.rooms.get(data.room_id);
-                                data.client = this.client;
-                                const message = new Message_1.Message(data);
-                                room?.messages.delete(message.id);
-                                this.client.emit("messageDelete", message);
-                            }
-                            break;
-                        case "TYPING_START":
-                            this.client.emit("typingStart", data);
-                            break;
-                        default:
-                            this.client.emit("error", { code: 404, message: "An unknown event has been emitted. Is strafe.js up to date?" });
-                            break;
-                    }
-                    break;
+                        }
+                        // console.log(`Received ${payload.op} event: ${eventType}`, eventData);
+                        // Handle the specific event type using dedicated handlers
+                        switch (eventType) {
+                            case "MESSAGE_CREATE":
+                                (0, message_1.handleMessageCreate)(this.client, eventData);
+                                break;
+                            case "MESSAGE_UPDATE":
+                                (0, message_1.handleMessageUpdate)(this.client, eventData);
+                                break;
+                            case "MESSAGE_DELETE":
+                                (0, message_1.handleMessageDelete)(this.client, eventData);
+                                break;
+                            case "SPACE_CREATE":
+                                (0, space_1.handleSpaceCreate)(this.client, eventData);
+                                break;
+                            case "SPACE_UPDATE":
+                            case "spaceUpdate":
+                                (0, space_1.handleSpaceUpdate)(this.client, eventData);
+                                break;
+                            case "SPACE_DELETE":
+                                (0, space_1.handleSpaceDelete)(this.client, eventData);
+                                break;
+                            case "SPACE_MEMBER_ADD":
+                                (0, space_1.handleSpaceMemberAdd)(this.client, eventData);
+                                break;
+                            case "SPACE_MEMBER_REMOVE":
+                                (0, space_1.handleSpaceMemberRemove)(this.client, eventData);
+                                break;
+                            case "SPACE_ROLE_CREATE":
+                                (0, space_1.handleSpaceRoleCreate)(this.client, eventData);
+                                break;
+                            case "SPACE_ROLE_UPDATE":
+                                (0, space_1.handleSpaceRoleUpdate)(this.client, eventData);
+                                break;
+                            case "SPACE_ROLE_DELETE":
+                                (0, space_1.handleSpaceRoleDelete)(this.client, eventData);
+                                break;
+                            case "SPACE_MEMBER_ROLE_UPDATE":
+                                (0, space_1.handleSpaceMemberRoleUpdate)(this.client, eventData);
+                                break;
+                            case "ROOM_CREATE":
+                                (0, room_1.handleRoomCreate)(this.client, eventData);
+                                break;
+                            case "ROOM_UPDATE":
+                                (0, room_1.handleRoomUpdate)(this.client, eventData);
+                                break;
+                            case "ROOM_DELETE":
+                                (0, room_1.handleRoomDelete)(this.client, eventData);
+                                break;
+                            case "ROOM_MEMBER_ADD":
+                                (0, room_1.handleRoomMemberAdd)(this.client, eventData);
+                                break;
+                            case "ROOM_MEMBER_REMOVE":
+                                (0, room_1.handleRoomMemberRemove)(this.client, eventData);
+                                break;
+                            case "ROOM_POSITIONS_UPDATE":
+                                (0, room_1.handleRoomPositionsUpdate)(this.client, eventData);
+                                break;
+                            case "ROOM_OWNERSHIP_TRANSFER":
+                                (0, room_1.handleRoomOwnershipTransfer)(this.client, eventData);
+                                break;
+                            case "TYPING_INDICATOR":
+                                (0, typing_1.handleTypingIndicator)(this.client, eventData);
+                                break;
+                            default:
+                                console.log(`Unknown DISPATCH event type: ${eventType}`, eventData);
+                                // Emit generic dispatch event for unknown types
+                                this.client.emit("dispatch", {
+                                    type: eventType,
+                                    data: eventData,
+                                });
+                                break;
+                        }
+                        break;
+                    default:
+                        console.log("Unknown event type:", payload.op);
+                        break;
+                }
+            }
+            catch (error) {
+                console.error("Error processing message:", error);
+                console.error("Raw message data:", message.data);
             }
         });
         this._ws.addEventListener("close", (event) => {
-            this.client.emit("error", { code: 1006, message: "The websocket connection has been closed. Attempting to reconnect." });
+            this.client.emit("error", {
+                code: 1006,
+                message: "The websocket connection has been closed. Attempting to reconnect.",
+            });
             if (event.code > 1000 && event.code != 4004) {
                 setTimeout(() => {
                     this.reconnect();
@@ -292,28 +235,25 @@ class WebsocketNodeClient {
         });
     }
     /**
-     * Sends a message to stargate.
-     * @param op The opcode of the message.
+     * Sends a message to Harmony.
      * @param data The data of the message.
      */
-    async send({ op, data }) {
-        this._ws?.send(JSON.stringify({ op, data }));
+    async send({ data }) {
+        this._ws?.send((0, msgpack_1.encode)(data));
     }
     identify() {
         const payload = {
-            op: config_1.OpCodes.IDENTIFY,
-            data: {
-                token: this.client.token
-            }
+            type: config_1.OpCodes.IDENTIFY,
+            bot_token: this.client.token,
         };
-        this._ws?.send(JSON.stringify(payload));
+        this._ws?.send((0, msgpack_1.encode)(payload));
     }
     reconnect() {
         this.stopHeartbeat();
         this._ws = null;
         setTimeout(() => this.connect(), 5000);
     }
-    startHeartbeat(interval) {
+    startHeartbeat(interval = 45000) {
         this.heartbeatInterval = setInterval(() => {
             this.sendHeartbeat();
         }, interval);
@@ -323,7 +263,42 @@ class WebsocketNodeClient {
             clearInterval(this.heartbeatInterval);
     }
     sendHeartbeat() {
-        this._ws?.send(JSON.stringify({ op: config_1.OpCodes.HEARTBEAT }));
+        const payload = {
+            type: config_1.OpCodes.HEARTBEAT,
+            timestamp: Date.now(),
+        };
+        this._ws?.send((0, msgpack_1.encode)(payload));
     }
 }
 exports.WebsocketNodeClient = WebsocketNodeClient;
+/**
+ * Recursively sanitize snowflakes in the object by converting BigInt to string.
+ * @param json The object to sanitize.
+ */
+function sanitizeSnowflakes(json) {
+    if (json == null)
+        return json;
+    if (typeof json === "bigint") {
+        return json.toString();
+    }
+    if (typeof json === "object") {
+        if (Array.isArray(json)) {
+            return json.map(sanitizeSnowflakes);
+        }
+        for (const [key, value] of Object.entries(json)) {
+            if (typeof value === "number" && (key.endsWith("_id") || key === "id")) {
+                json[key] = BigInt(value).toString();
+            }
+            else if (key.endsWith("_id") && Array.isArray(value)) {
+                json[key] = value.map((val) => typeof val === "number"
+                    ? BigInt(val).toString()
+                    : sanitizeSnowflakes(val));
+            }
+            else {
+                json[key] = sanitizeSnowflakes(value);
+            }
+        }
+    }
+    return json;
+}
+exports.sanitizeSnowflakes = sanitizeSnowflakes;

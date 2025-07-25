@@ -30,5 +30,21 @@ class Collection extends Map {
         // TODO: Implement LRU System
         return super.set(key, value);
     }
+    find(predicate) {
+        for (const [key, value] of this.entries()) {
+            if (predicate(value, key, this)) {
+                return value;
+            }
+        }
+        return undefined;
+    }
+    map(mapper) {
+        const mappedCollection = new Collection();
+        for (const [key, value] of this.entries()) {
+            const mappedValue = mapper(value, key, this);
+            mappedCollection.set(key, mappedValue);
+        }
+        return mappedCollection;
+    }
 }
 exports.Collection = Collection;

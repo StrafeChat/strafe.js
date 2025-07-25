@@ -3,12 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Client = void 0;
 const eventemitter2_1 = require("eventemitter2");
 const config_1 = require("../config");
-const WebsocketClient_1 = require("./WebsocketClient");
-const SpaceManager_1 = require("../managers/SpaceManager");
-const InviteManager_1 = require("../managers/InviteManager");
-const UserManager_1 = require("../managers/UserManager");
+const collections_1 = require("../collections");
+const collections_2 = require("../collections");
+const WebSocketClient_1 = require("./WebSocketClient");
 /**
- * The main hub for interacting with strafe.
+ * The main hub for interacting with Strafe.
  * @extends EventEmitter2
  * @fires ready - Emitted when the client is ready.
  * @fires error - Emitted when an error occurs.
@@ -18,29 +17,31 @@ class Client extends eventemitter2_1.EventEmitter2 {
      * The configuration for the client.
      */
     config = {
-        equinox: config_1.API,
-        nebula: config_1.CDN,
+        equinox: config_1.EQUINOX,
+        nebula: config_1.NEBULA,
+        stargate: config_1.STARGATE,
+        status: config_1.STATUS,
     };
     /**
-     * The token associated with the client.
+     * The token associated with the client user.
      */
     token = null;
     /**
-     * The user associated with the client.
+     * The user associated with the client user.
      */
     user = null;
     /**
-     * The spaces cached on the client.
+     * The spaces the client is in.
      */
-    spaces = new SpaceManager_1.SpaceManager(this);
+    spaces = new collections_1.SpaceCollection(this);
     /**
-     * The invites cached on the client.
+     * The channels cached on the client.
      */
-    invites = new InviteManager_1.InviteManager(this);
+    rooms = new collections_2.RoomCollection(this);
     /**
      * The users cached on the client.
      */
-    users = new UserManager_1.UserManager(this);
+    users = new collections_2.UserCollection(this);
     /**
      * Attaches a listener for the specified event.
      * @method
@@ -139,12 +140,13 @@ class Client extends eventemitter2_1.EventEmitter2 {
         if (options && options.config) {
             this.config.equinox = options.config.equinox ?? this.config.equinox;
             this.config.nebula = options.config.nebula ?? this.config.nebula;
+            this.config.stargate = options.config.stargate ?? this.config.stargate;
+            this.config.status = options.config.status ?? this.config.status;
         }
-        ;
-        this.ws = (0, WebsocketClient_1.chooseClient)(this);
+        this.ws = (0, WebSocketClient_1.chooseClient)(this);
     }
     /**
-     * Logs the client in, establishing a WebSocket connection to strafe.
+     * Logs the client in, establishing a WebSocket connection to Adapt.
      * @param token The bot token
      */
     async login(token) {

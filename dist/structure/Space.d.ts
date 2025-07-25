@@ -1,97 +1,50 @@
 import { Client } from "../client/Client";
-import { RoomManager } from "../managers/RoomManager";
-import { MemberManager } from "../managers/MemberManager";
-import { ISpace } from "../types";
+import { ISpace } from "../types/space";
+import { Room } from "./Room";
 /**
  * Represents a space on Strafe.
  */
 export declare class Space {
-    readonly client: Client;
     /**
-     * The ID of the space.
+     * The client.
+     */
+    client: Client;
+    /**
+     * The space's rooms.
+     */
+    rooms: Room[];
+    /**
+     * The space's id.
      */
     readonly id: string;
     /**
-     * The name of the space.
+     * The space's name.
      */
     readonly name: string;
     /**
-     * The acronym of the space.
+     * The space's description, if any.
      */
-    readonly nameAcronym: string;
+    readonly description: string | null;
     /**
-     * The icon of the space.
+     * The space's icon, if any.
      */
     readonly icon: string | null;
     /**
-     * The owner of the space.
+     * The guild's banner, if any.
      */
-    readonly ownerId: string;
+    readonly banner: string | null;
     /**
-     * The AFK room of the space.
+     * The ID of the guild's owner.
      */
-    readonly afkRoomId: string;
+    readonly owner_id: string;
     /**
-     * The AFK timeout of the space.
+     * The space's flags.
      */
-    readonly afkTimeout: number;
-    /**
-     * The verification level of the space.
-     */
-    readonly verifcationLevel: number;
-    /**
-     * The rooms of the space.
-     */
-    readonly rooms: RoomManager;
-    /**
-     * The rooms of the space.
-     */
-    readonly members: MemberManager;
-    /**
-     * The roles of the space.
-     */
-    readonly roles: never[];
-    /**
-     * The rules room of the space.
-     */
-    readonly rulesRoomId: string;
-    /**
-     * The description of the space.
-     */
-    readonly description: string;
-    /**
-     * The banner of the space.
-     */
-    readonly banner: string;
-    /**
-     * The preferred locale of the space.
-     */
-    readonly preferredLocale: string;
-    /**
-     * The stickers of the space.
-     */
-    readonly stickers: never[];
-    /**
-     * The emojis of the space.
-     */
-    readonly emojis: never[];
-    /**
-     * The creation date of the space.
-     */
-    readonly createdAt: number;
-    /**
-     * The edit date of the space.
-     */
-    readonly editedAt: number;
+    readonly flags: number;
     /**
      * Creates a new instance of a space.
      * @param data The data for the space.
+     * @param client The client.
      */
     constructor(data: ISpace);
-    /**
-       * Sends a message in a room.
-       * @param data The data to post in the room
-       * @param client The client.
-       */
-    leave(): Promise<void>;
 }

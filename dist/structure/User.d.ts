@@ -1,105 +1,53 @@
 import { Client } from "../client/Client";
-import { IUser, UserPresence } from "../types";
+import { IUser } from "../types/user";
 /**
- * Represents a user on strafe.
+ * Represents a user on Strafe.
  */
 export declare class User {
-    /**
-     * The user's id.
-     */
-    id: string;
-    /**
-     * The user's accent color.
-     */
-    accentColor: number | null;
-    /**
-     * The user's avatar.
-     */
-    avatar: string | null;
-    /**
-     * The user's avatar decoration.
-     */
-    avatarDecoration: string | null;
-    /**
-     * The user's avatar decoration.
-     */
-    aboutMe: string | null;
-    /**
-     * Whether the user is banned.
-     */
-    banned: boolean;
-    /**
-     * The user's banner.
-     */
-    banner: string | null;
-    /**
-     * Whether the user is a bot.
-     */
-    bot: boolean;
     /**
      * The client.
      */
     client: Client;
     /**
-     * The user's creation date.
+     * The user's id.
      */
-    createdAt: number;
+    id: string;
     /**
-     * The user's discriminator.
+     * The user's avatar.
      */
-    discriminator: number;
+    avatar: string | null;
     /**
-     * The user's edit date.
+     * The user's about me.
      */
-    editedAt: number;
+    aboutMe: string | null;
     /**
-     * The user's email.
+     * The user's bio.
      */
-    email: string | null;
+    bio: string | null;
+    /**
+     * Whether the user is a bot.
+     */
+    bot: boolean;
+    /**
+     * The user's banner.
+     */
+    banner: string | null;
     /**
      * The user's flags.
      */
     flags: number;
     /**
-     * The user's global name.
-     */
-    globalName: string;
-    /**
-     * The user's locale.
-     */
-    locale: string | null;
-    /**
-     * The user's phone number.
-     */
-    phoneNumber: string | null;
-    /**
-     * The user's premium type.
-     */
-    premiumType: number;
-    /**
-     * The user's presence.
-     */
-    presence: UserPresence;
-    /**
-     * The user's public flags.
-     */
-    publicFlags: number;
-    /**
-     * Whether the user is a system user.
-     */
-    system: boolean;
-    /**
      * The user's username.
      */
     username: string;
     /**
-   * The user's global name or username.
-   */
+     * The user's global name or username.
+     */
     displayName: string;
     /**
-     * Whether the user is verified.
+     * The user's email.
      */
-    verified: boolean;
+    email: string | null;
     /**
      * Creates a new instance of a User.
      * @param data The data for the user.

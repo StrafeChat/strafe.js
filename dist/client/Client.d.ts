@@ -1,12 +1,11 @@
 import { EventEmitter2, Listener, ListenerFn, OnOptions } from "eventemitter2";
-import { ClientUser } from "../structure/ClientUser";
 import { ClientOptions, EventMap } from "../types";
-import { WebsocketClient } from "./WebsocketClient";
-import { SpaceManager } from "../managers/SpaceManager";
-import { InviteManager } from "../managers/InviteManager";
-import { UserManager } from "../managers/UserManager";
+import { SpaceCollection } from "../collections";
+import { ClientUser } from "../structure";
+import { RoomCollection, UserCollection } from "../collections";
+import { WebsocketClient } from "./WebSocketClient";
 /**
- * The main hub for interacting with strafe.
+ * The main hub for interacting with Strafe.
  * @extends EventEmitter2
  * @fires ready - Emitted when the client is ready.
  * @fires error - Emitted when an error occurs.
@@ -18,27 +17,29 @@ export declare class Client extends EventEmitter2 {
     config: {
         equinox: string;
         nebula: string;
+        stargate: string;
+        status: string;
     };
     /**
-     * The token associated with the client.
+     * The token associated with the client user.
      */
     token: string | null;
     /**
-     * The user associated with the client.
+     * The user associated with the client user.
      */
     user: ClientUser | null;
     /**
-     * The spaces cached on the client.
+     * The spaces the client is in.
      */
-    spaces: SpaceManager;
+    spaces: SpaceCollection;
     /**
-     * The invites cached on the client.
+     * The channels cached on the client.
      */
-    invites: InviteManager;
+    rooms: RoomCollection;
     /**
      * The users cached on the client.
      */
-    users: UserManager;
+    users: UserCollection;
     /**
      * Attaches a listener for the specified event.
      * @method
@@ -118,7 +119,7 @@ export declare class Client extends EventEmitter2 {
      */
     constructor(options?: ClientOptions);
     /**
-     * Logs the client in, establishing a WebSocket connection to strafe.
+     * Logs the client in, establishing a WebSocket connection to Adapt.
      * @param token The bot token
      */
     login(token: string): Promise<void>;

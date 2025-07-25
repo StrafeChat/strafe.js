@@ -1,19 +1,19 @@
 import { Client } from "../client/Client";
-import { IUser, UserPresence } from "../types";
+import { IUser } from "../types/user";
 
 /**
- * Represents a user on strafe.
+ * Represents a user on Strafe.
  */
 export class User {
+  /**
+   * The client.
+   */
+  public client: Client;
+
   /**
    * The user's id.
    */
   public id: string;
-
-  /**
-   * The user's accent color.
-   */
-  public accentColor: number | null;
 
   /**
    * The user's avatar.
@@ -21,23 +21,14 @@ export class User {
   public avatar: string | null;
 
   /**
-   * The user's avatar decoration.
-   */
-  public avatarDecoration: string | null;
-  /**
-   * The user's avatar decoration.
+   * The user's about me.
    */
   public aboutMe: string | null;
 
   /**
-   * Whether the user is banned.
+   * The user's bio.
    */
-  public banned: boolean;
-
-  /**
-   * The user's banner.
-   */
-  public banner: string | null;
+  public bio: string | null;
 
   /**
    * Whether the user is a bot.
@@ -45,29 +36,9 @@ export class User {
   public bot: boolean;
 
   /**
-   * The client.
+   * The user's banner.
    */
-  public client: Client;
-
-  /**
-   * The user's creation date.
-   */
-  public createdAt: number;
-
-  /**
-   * The user's discriminator.
-   */
-  public discriminator: number;
-
-  /**
-   * The user's edit date.
-   */
-  public editedAt: number;
-
-  /**
-   * The user's email.
-   */
-  public email: string | null;
+  public banner: string | null;
 
   /**
    * The user's flags.
@@ -75,53 +46,19 @@ export class User {
   public flags: number;
 
   /**
-   * The user's global name.
-   */
-  public globalName: string;
-
-  /**
-   * The user's locale.
-   */
-  public locale: string | null;
-
-  /**
-   * The user's phone number.
-   */
-  public phoneNumber: string | null;
-
-  /**
-   * The user's premium type.
-   */
-  public premiumType: number;
-
-  /**
-   * The user's presence.
-   */
-  public presence: UserPresence;
-
-  /**
-   * The user's public flags.
-   */
-  public publicFlags: number;
-
-  /**
-   * Whether the user is a system user.
-   */
-  public system: boolean;
-
-  /**
    * The user's username.
    */
   public username: string;
 
-    /**
+  /**
    * The user's global name or username.
    */
   public displayName: string;
+
   /**
-   * Whether the user is verified.
+   * The user's email.
    */
-  public verified: boolean;
+  public email: string | null;
 
   /**
    * Creates a new instance of a User.
@@ -129,29 +66,16 @@ export class User {
    * @param client The client.
    */
   constructor(data: IUser) {
-    this.id = data.id;
-    this.accentColor = data.accent_color;
-    this.avatar = data.avatar;
-    this.avatarDecoration = data.avatar_decoration;
-    this.aboutMe = data.about_me;
-    this.banned = data.banned;
-    this.banner = data.banner;
-    this.bot = data.bot;
     this.client = data.client;
-    this.createdAt = data.created_at;
-    this.discriminator = data.discriminator ?? 0;
-    this.email = null;
-    this.editedAt = data.edited_at;
+    this.id = data.id;
+    this.avatar = data.avatar;
+    this.aboutMe = data.about_me;
+    this.bio = data.bio;
+    this.bot = data.bot;
+    this.banner = data.banner;
     this.flags = data.flags;
-    this.globalName = data.global_name;
-    this.locale = data.locale;
-    this.phoneNumber = null;
-    this.premiumType = data.premium_type;
-    this.presence = data.presence;
-    this.publicFlags = data.public_flags;
-    this.system = data.system;
     this.username = data.username ?? "Unkown User";
-    this.displayName = data.display_name ?? data.global_name ?? this.username;
-    this.verified = data.verified;
+    this.displayName = data.display_name ?? data.display_name ?? this.username;
+    this.email = null;
   }
 }
