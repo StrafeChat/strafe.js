@@ -24,6 +24,8 @@ export interface FakeSocket {
   receive(packet: unknown): void;
   serverClose(code?: number): void;
   fail(): void;
+  failWithoutClose(): void;
+  node22: boolean;
 }
 
 export function fakeGateway() {
@@ -36,6 +38,8 @@ export function fakeGateway() {
     public onmessage: FakeSocket['onmessage'] = null;
     public onclose: FakeSocket['onclose'] = null;
     public onerror: FakeSocket['onerror'] = null;
+    /** Behave like Node 22's WebSocket while connecting (see failWithoutClose and close). */
+    public node22 = false;
     public constructor(
       public url: string,
       public init: { headers: Record<string, string> },
@@ -47,6 +51,11 @@ export function fakeGateway() {
       this.sent.push(JSON.parse(data));
     }
     public close(code = 1000, reason = ''): void {
+      if (this.node22 && this.readyState === 0) {
+        // Node 22: closing a socket that is still connecting fires `error` synchronously, every time.
+        this.onerror?.({ type: 'error', message: 'Connection was closed before it was established.' });
+        return;
+      }
       if (this.readyState === 3) return;
       this.readyState = 3;
       this.closedWith = { code, reason };
@@ -66,6 +75,11 @@ export function fakeGateway() {
     public fail(): void {
       this.onerror?.({ type: 'error' });
       this.serverClose(1006);
+    }
+    public failWithoutClose(): void {
+      // Node 22: a refused handshake fires `error` only, and the socket stays CONNECTING.
+      this.node22 = true;
+      this.onerror?.({ type: 'error', message: 'Received network error or non-101 status code.' });
     }
   }
   return {

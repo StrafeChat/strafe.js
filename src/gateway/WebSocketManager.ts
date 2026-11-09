@@ -328,6 +328,10 @@ export class WebSocketManager {
       if (socket !== this.socket) return;
       const message = (event as { message?: unknown } | null)?.message;
       this.debug(`Socket error${typeof message === 'string' && message !== '' ? `: ${message}` : ''}`);
+      // Node 22's WebSocket fires no `close` after a refused or failed handshake and leaves the socket
+      // CONNECTING, so an error before `open` is handled as the close here; a `close` the runtime still
+      // sends afterwards is ignored, as the socket is no longer ours.
+      if (!this.opened) this.dropSocket(socket, 1006, typeof message === 'string' ? message : '');
     };
     socket.onclose = (event) => {
       this.onClose(socket, event);
@@ -437,14 +441,21 @@ export class WebSocketManager {
     }
   }
 
-  /** Closes a socket we gave up on and handles it as closed right away (a dead socket may never fire `close`). */
+  /**
+   * Handles a socket we gave up on as closed right away (a dead socket may never fire `close`), then
+   * closes it. In that order: closing a socket that is still connecting fires `error` synchronously on
+   * Node 22, and by then the socket must no longer be ours or the handler would close it again.
+   *
+   * @param code - The close code to report; 1006 (a failed connection) is reported but never sent.
+   */
   private dropSocket(socket: WebSocketLike, code: number, reason: string): void {
+    this.onClose(socket, { code, reason });
     try {
-      socket.close(code, reason);
+      if (code === 1006) socket.close();
+      else socket.close(code, reason);
     } catch {
       // Already closing.
     }
-    this.onClose(socket, { code, reason });
   }
 
   private onClose(socket: WebSocketLike | null, event: { code?: number; reason?: string }): void {

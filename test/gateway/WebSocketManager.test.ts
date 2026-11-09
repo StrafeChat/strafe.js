@@ -112,6 +112,37 @@ describe('login', () => {
     expect(gateway.sockets).toHaveLength(1);
   });
 
+  it('handles a failed handshake that never fires close (Node 22) without waiting for READY', async () => {
+    const { client, gateway, api } = track(offline({ ws: { readyTimeout: 60_000 } }));
+    const login = client.login('test-token');
+    const socket = await nthSocket(gateway, 1);
+    api.on('GET /users/@me', unauthorized);
+    socket.failWithoutClose();
+    expect((await rejection(login)).code).toBe(ErrorCodes.TokenInvalid);
+    expect(client.ws.status).toBe(Status.Disconnected);
+  });
+
+  it('reconnects after failed handshakes that never fire close (Node 22)', async () => {
+    const { client, gateway } = track(offline({ ws: { loginAttempts: 2, readyTimeout: 60_000 } }));
+    const login = client.login('test-token');
+    (await nthSocket(gateway, 1)).failWithoutClose();
+    (await nthSocket(gateway, 2)).failWithoutClose();
+    expect((await rejection(login)).code).toBe(ErrorCodes.GatewayUnreachable);
+  });
+
+  it('drops a socket stuck connecting on READY timeout without re-entering its error handler (Node 22)', async () => {
+    const { client, gateway } = track(offline({ ws: { readyTimeout: 30, loginAttempts: 2 } }));
+    const login = client.login('test-token');
+    const first = await nthSocket(gateway, 1);
+    first.node22 = true;
+    const second = await nthSocket(gateway, 2);
+    second.open();
+    second.receive({ op: 4, d: readyPayload() });
+    await login;
+    expect(client.isReady()).toBe(true);
+    expect(gateway.sockets).toHaveLength(2);
+  });
+
   it('gives up with GatewayUnreachable after ws.loginAttempts failed connections', async () => {
     const { client, gateway } = track(offline({ ws: { loginAttempts: 2 } }));
     const login = client.login('test-token');
