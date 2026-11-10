@@ -1,0 +1,31 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "src/index.ts"
+  ],
+  "tsconfig": "tsconfig.build.json",
+  "out": "docs/public/api",
+  "name": "strafe.js",
+  "readme": "none",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "excludeExternals": true,
+  "sort": [
+    "kind",
+    "instance-first",
+    "alphabetical-ignoring-documents"
+  ],
+  "categorizeByGroup": true,
+  "treatWarningsAsErrors": true,
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": false
+  },
+  "gitRevision": "v2",
+  "navigationLinks": {
+    "Guide": "/guide/getting-started.html",
+    "Examples": "/examples.html",
+    "GitHub": "https://github.com/StrafeChat/strafe.js"
+  }
+}
