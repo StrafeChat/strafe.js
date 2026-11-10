@@ -22,7 +22,11 @@
     "invalidLink": true,
     "notDocumented": false
   },
-  "gitRevision": "v2",
+  "plugin": ["./scripts/typedoc-source-links.js"],
+  "disableGit": true,
+  "displayBasePath": ".",
+  "gitRevision": "dev",
+  "sourceLinkTemplate": "https://github.com/StrafeChat/strafe.js/blob/{gitRevision}/{path}#L{line}",
   "navigationLinks": {
     "Guide": "/guide/getting-started.html",
     "Examples": "/examples.html",
