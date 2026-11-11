@@ -1,0 +1,14 @@
+{
+  "about": "One Light token colours mapped to the Strafe client's light-mode code colours (web.strafe.chat/src/index.css, --code-*). Used by config.mts for the guide and by docs/typedoc/plugin.js for the API reference. Dark mode uses One Dark Pro unchanged.",
+  "light": {
+    "#A0A1A7": "#737373",
+    "#A626A4": "#8D2BAB",
+    "#50A14F": "#376D36",
+    "#986801": "#AE5909",
+    "#0184BC": "#0F7B8A",
+    "#4078F2": "#126EBA",
+    "#C18401": "#AE5E13",
+    "#E45649": "#B6202D",
+    "#CA1243": "#B6202D"
+  }
+}

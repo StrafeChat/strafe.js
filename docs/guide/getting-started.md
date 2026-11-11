@@ -8,14 +8,17 @@ federated, self-hostable chat platform. It covers three things:
 - **The REST API**: a `REST` client with rate-limit queues and retries, usable on its own.
 - **OAuth2**: "Log in with Strafe" for websites, with PKCE.
 
-Strafe uses the same interaction model as Discord (spaces with rooms and roles, reactions, invites,
-moderation) under its own names: a **Space** is a server, a **Room** is a text or voice room, a
-**Section** groups rooms, and a **PM** is a private message. The library keeps discord.js's class
-shapes and method names and uses Strafe's nouns, so `guild.members.fetch()` <!-- terms-ok -->
-becomes `space.members.fetch()`. [Coming from discord.js](./coming-from-discord-js.md) has the full
-mapping.
+On Strafe, a **Space** is a community with its own members, roles and invites, a **Room** is a text
+or voice room in it, a **Section** groups rooms, and a **PM** is a private message.
 
-Two things make Strafe different from Discord, and both show up in the API:
+::: details Coming from discord.js
+Strafe uses the same interaction model as Discord under its own names: a Space is a server and a
+Room is a text or voice room. The library keeps discord.js's class shapes and method names and uses
+Strafe's nouns, so `guild.members.fetch()` becomes `space.members.fetch()`. <!-- terms-ok -->
+[Coming from discord.js](./coming-from-discord-js.md) has the full mapping.
+:::
+
+Two things set Strafe apart, and both show up in the API:
 
 - **There is no central server.** Each instance runs its own API, gateway and applications. A bot
   belongs to the instance its application was created on, so every client starts by naming one.

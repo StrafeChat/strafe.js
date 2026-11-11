@@ -1,8 +1,8 @@
 # Spaces, members and roles
 
 A **space** holds rooms, roles, members, custom emojis, invites and bans. Each is reached through a
-manager on the `Space`, with discord.js's shape: a `cache` (a [`Collection`](#collections)),
-`fetch()`, `resolve()` and `resolveId()`, plus `create`/`edit`/`delete` where the API allows.
+manager on the `Space`: a `cache` (a [`Collection`](#collections)), `fetch()`, `resolve()` and
+`resolveId()`, plus `create`/`edit`/`delete` where the API allows.
 
 | Manager | Holds | Filled from |
 | --- | --- | --- |
