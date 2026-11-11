@@ -1,21 +1,17 @@
 # Instances and federation
 
-Strafe is federated. Each instance is an independent server with its own domain, accounts, API,
-gateway and applications, and instances talk to each other so that people can join spaces and
-message people elsewhere. No instance is the official one, so strafe.js has no default: every
+Strafe is federated: each instance has its own domain, accounts and API. There is no default, so every
 `Client`, `REST` and `OAuth2Client` names its instance.
 
 ## Pointing at an instance
 
 ```ts
-new Client({ instance: 'app.strafe.chat' });            // a domain
-new Client({ instance: 'https://chat.example.org' });   // an origin
-new Client({ instance: 'https://example.org/strafe/api' }); // the API base itself
-new Client({ instance: 'http://localhost:4000' });      // a development server
-new Client();                                           // STRAFE_INSTANCE
+new Client({ instance: 'app.strafe.chat' });
+new Client({ instance: 'https://chat.example.org' });
+new Client({ instance: 'https://example.org/strafe/api' });
+new Client({ instance: 'http://localhost:4000' });
+new Client(); // STRAFE_INSTANCE
 ```
-
-The URLs are derived without any request:
 
 | `instance` | API | Gateway | Web client |
 | --- | --- | --- | --- |
@@ -24,31 +20,28 @@ The URLs are derived without any request:
 | Another URL with a path | that URL | `wss://<host>/gateway/events` | the origin |
 | An origin with a port (`http://localhost:4000`) | that origin | the next port: `ws://localhost:4001/events` | the origin |
 
-Local names (`localhost`, `*.localhost`, `*.local`, `*.test`, IP addresses) default to `http` and
-`ws`; everything else to `https` and `wss`. `client.urls` shows the result.
+Local names (`localhost`, `*.localhost`, `*.local`, `*.test`, IPs) use `http` and `ws`. `client.urls`
+shows the result.
 
-At login, the client reads the instance's public index (`GET <api>/`). It records the instance's
-federation domain (`client.federationDomain`), and takes the CDN and gateway addresses the
-instance advertises, unless you set them yourself. `client.fetchInstance()` returns the whole index
-(version, features, services).
+At login the client reads the instance index and picks up its CDN, gateway and
+`client.federationDomain`. `client.fetchInstance()` returns the whole index.
 
 ### Unusual layouts
 
-Any address can be set explicitly; explicit values always win:
+Explicit addresses always win:
 
 ```ts
 const client = new Client({
   instance: 'chat.example.org',
   rest: { api: 'https://api.chat.example.org' },
   ws: { gateway: 'wss://gateway.chat.example.org/events' },
-  web: 'https://chat.example.org',     // invite links and the OAuth2 consent page
+  web: 'https://chat.example.org', // invite links, OAuth2 consent
   cdn: 'https://cdn.chat.example.org',
 });
 ```
 
-`discoverInstance(instance)` finds the addresses over the network instead, the way the desktop app
-does: it tries the URL as an API, then `https://<host>/.well-known/strafe`, then the standard
-layout, and returns `{ urls, version, federationDomain, index }`. Pass its `urls` back as overrides.
+`discoverInstance()` finds them over the network, trying the URL, then `/.well-known/strafe`, then the
+standard layout:
 
 ```ts
 import { Client, discoverInstance } from '@strafechat/strafe.js';
@@ -59,13 +52,9 @@ const client = new Client({ instance: urls.origin, rest: { api: urls.api }, ws: 
 
 ## A bot belongs to one instance
 
-A bot is an account on the instance where its application was created, and it connects to that
-instance only. It still reaches the rest of the network through it: spaces hosted elsewhere that
-it joins are mirrored on its home instance, and people from other instances appear in its spaces.
+A bot connects only to its application's instance. Spaces it joins elsewhere are mirrored there.
 
 ## People from other instances
-
-Users carry where they come from:
 
 | Property | Local user | User from `other.example` |
 | --- | --- | --- |
@@ -75,32 +64,24 @@ Users carry where they come from:
 | `user.isRemote` | `false` | `true` |
 | `user.originId` | the same as `id` | the user's id on their own instance |
 
-Ids are per instance: the same person has a different id on each instance that knows them. Use
-`user.id` within the bot's instance, and `handle` when showing or storing who someone is across
-the network. Strafe has no discriminators: a handle is unique.
+Ids differ per instance. Use `user.id` locally and `handle`, which is unique, to identify someone across the network.
 
 ## Spaces on other instances
 
-A space can live on another instance and be mirrored on the bot's. Its `space.federated` is `true`
-and `space.federation` names the origin; rooms carry `room.federation` too. Everything works the
-same way: messages, members and moderation go to the origin through the bot's instance, and the
-events come back over the bot's own gateway.
+A mirrored space has `space.federated` set to `true`, and `space.federation` and `room.federation`
+name the origin. Everything works the same.
 
 ## Invites across instances
 
-Invite codes are local to an instance. A code for a space on another instance is written
-`code@domain`:
+A code for a space on another instance is written `code@domain`:
 
 ```ts
-await client.fetchInvite('abc123');                    // this instance
-await client.fetchInvite('abc123@other.example');       // a space hosted on other.example
-await client.fetchInvite('https://other.example/invite/abc123'); // read as abc123@other.example
+await client.fetchInvite('abc123');
+await client.fetchInvite('abc123@other.example');
+await client.fetchInvite('https://other.example/invite/abc123'); // abc123@other.example
 ```
 
-`client.fetchInvite()` works before login. A link from another instance's web client becomes
-`code@host`, so the bot's instance fetches it from that host over federation. If your bot reads
-invite links from messages, decide first whether it should follow links to other hosts at all:
-`parseInviteCode(text)` returns `{ code, domain, linkHost }` without any request.
+`fetchInvite()` works before login. To check a link without a request, use `parseInviteCode()`:
 
 ```ts
 import { parseInviteCode } from '@strafechat/strafe.js';
@@ -108,10 +89,8 @@ import { parseInviteCode } from '@strafechat/strafe.js';
 const { code, linkHost } = parseInviteCode('https://other.example/invite/abc123');
 ```
 
-`invite.url` is a link on the bot's own instance's web client.
+`invite.url` always points at the bot's own instance.
 
 ## Developer documentation of an instance
 
-Every instance serves the documentation of its own API and gateway at `https://<instance>/docs/`.
-strafe.js follows the server's code where the two disagree, but the instance's pages are the
-reference for the raw protocol.
+Each instance serves its API reference at `https://<instance>/docs/`.
