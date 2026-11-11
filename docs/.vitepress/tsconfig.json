@@ -1,0 +1,10 @@
+{
+  // The docs config and theme run in the browser and in VitePress's build, not in the library's
+  // runtime, so they get the DOM types the library must not see. `npm run typecheck` checks both.
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "lib": ["es2023", "dom", "dom.iterable"],
+    "types": ["node", "vitepress/client"]
+  },
+  "include": ["config.mts", "theme/**/*.ts"]
+}

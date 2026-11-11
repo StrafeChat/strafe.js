@@ -1,9 +1,12 @@
 # Permissions
 
-Strafe's permission system is Discord's model with Strafe's own bits: roles carry permissions,
-rooms can override them per role or per member, and the space owner and Administrators get
-everything. The names and the bit values differ from Discord's, so use `PermissionFlagsBits`
-rather than numbers copied from Discord documentation.
+Roles carry permissions, rooms can override them per role or per member, and the space owner and
+Administrators get everything. Each permission is a bit, named in `PermissionFlagsBits`.
+
+::: warning Coming from discord.js
+The model is Discord's, but the names and the bit values are Strafe's own (Send Messages is
+`1n << 1n` here). Use `PermissionFlagsBits` rather than numbers copied from Discord documentation.
+:::
 
 ## PermissionsBitField
 

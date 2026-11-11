@@ -5,7 +5,10 @@ import { BitField } from './BitField.js';
 export type UserFlagsString = keyof typeof UserFlags;
 
 /**
- * A user's badges (`public_flags`), like discord.js's `UserFlagsBitField`.
+ * A user's badges (`public_flags`).
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `UserFlagsBitField`.
  *
  * @example
  * ```ts

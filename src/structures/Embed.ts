@@ -37,8 +37,11 @@ export interface EmbedAssetData {
 }
 
 /**
- * A received embed (read-only), like discord.js's `Embed`. To change one, copy it:
+ * A received embed (read-only). To change one, copy it:
  * `EmbedBuilder.from(message.embeds[0]).setTitle('New')`.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `Embed`.
  */
 export class Embed implements JSONEncodable<APIEmbed> {
   /** The wire data. */

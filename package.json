@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "node scripts/clean.js",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p docs/.vitepress/tsconfig.json --noEmit",
     "lint": "eslint . && node scripts/check-terms.js",
     "lint:fix": "eslint . --fix",
     "test": "vitest run",

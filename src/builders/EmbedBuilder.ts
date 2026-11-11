@@ -246,13 +246,16 @@ export function embedDataToAPI(data: APIEmbed | EmbedData): APIEmbed {
 }
 
 /**
- * Builds a rich embed, with discord.js's setters and Strafe's limits ({@link EmbedLimits}).
- * Setters check their own field and throw {@link StrafeRangeError} `EmbedInvalid`; the whole
- * message (count, 6000-character total) is checked when it is sent.
+ * Builds a rich embed within Strafe's limits ({@link EmbedLimits}). Setters check their own field
+ * and throw {@link StrafeRangeError} `EmbedInvalid`; the whole message (count, 6000-character
+ * total) is checked when it is sent.
  *
  * Only bots can send embeds, only in rooms that are not end-to-end encrypted, and only with the
  * Embed Links permission. External images are fetched through the instance's image proxy, so any
  * public URL works; `attachment://<file name>` shows a file sent with the same message.
+ *
+ * @remarks
+ * Coming from discord.js: the same setters as its `EmbedBuilder`.
  *
  * @example
  * ```ts

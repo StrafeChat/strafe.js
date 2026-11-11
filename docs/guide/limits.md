@@ -1,9 +1,10 @@
 # Limits and differences
 
-strafe.js keeps discord.js's shapes, but some things Discord bots do are not possible on Strafe,
-or work differently. The library does not paper over them: where the server would refuse, it
-refuses first with a typed error, and where an option cannot work, it does not exist. This page
-lists them in one place.
+Some things are not possible on Strafe, or work differently: rooms can be end-to-end encrypted,
+every instance is independent, and some features other platforms have do not exist here. The
+library does not paper over them: where the server would refuse, it refuses first with a typed
+error, and where an option cannot work, it does not exist. This page lists them in one place, with
+the discord.js name beside each for anyone porting a bot.
 
 ## Encryption and what a bot can see
 

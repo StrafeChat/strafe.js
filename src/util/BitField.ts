@@ -24,8 +24,11 @@ interface BitFieldStatics<N extends number | bigint> {
 }
 
 /**
- * A set of flags packed into a number or bigint, like discord.js's `BitField`.
- * {@link PermissionsBitField} is the one most bots use.
+ * A set of flags packed into a number or bigint. {@link PermissionsBitField} is the one most bots
+ * use.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `BitField`.
  *
  * @typeParam S - Flag names.
  * @typeParam N - `number` or `bigint`.

@@ -128,12 +128,14 @@ const DEFAULT_EVERYONE =
   F.EmbedLinks;
 
 /**
- * A set of permissions, like discord.js's `PermissionsBitField`: a `bigint` inside, Strafe's
- * {@link PermissionFlagsBits}, and Administrator counted as every permission by `has` / `any` /
- * `missing` unless you pass `checkAdmin = false`.
+ * A set of permissions: a `bigint` inside, Strafe's {@link PermissionFlagsBits}, and Administrator
+ * counted as every permission by `has` / `any` / `missing` unless you pass `checkAdmin = false`.
  *
  * Strafe sends and accepts permissions as JSON numbers; `toJSON()` returns one, and the REST
  * client converts bigints in bodies for you.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `PermissionsBitField`, with Strafe's bit values.
  *
  * @example
  * ```ts

@@ -16,8 +16,11 @@ import type { User } from '../structures/User.js';
 import type { VoiceState } from '../structures/VoiceState.js';
 
 /**
- * Event names, like discord.js's `Events` (camelCase string values). Strafe has no intents: a bot
- * receives every event about what it can see.
+ * Event names (camelCase string values). Strafe has no intents: a bot receives every event about
+ * what it can see.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `Events`.
  *
  * @example
  * ```ts
@@ -114,7 +117,10 @@ export interface RoomPinsUpdateDetails {
 }
 
 /**
- * Each event's listener arguments, like discord.js's `ClientEvents`. Use it to type handler maps.
+ * Each event's listener arguments. Use it to type handler maps.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `ClientEvents`.
  *
  * @example
  * ```ts

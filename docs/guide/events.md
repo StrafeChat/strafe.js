@@ -1,8 +1,8 @@
 # Events
 
-The client is an event emitter with discord.js's method names: `on`, `once`, `off`, `emit`,
-`removeAllListeners`, `listenerCount`. Event names are the camelCase values of the `Events` enum,
-and the `ClientEvents` interface types each listener's arguments.
+The client is an event emitter: `on`, `once`, `off`, `emit`, `removeAllListeners` and
+`listenerCount` (the same method names as discord.js). Event names are the camelCase values of the
+`Events` enum, and the `ClientEvents` interface types each listener's arguments.
 
 ```ts
 import { Events } from '@strafechat/strafe.js';

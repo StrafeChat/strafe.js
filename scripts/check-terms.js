@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
 const ROOTS = ['src', 'test', 'examples', 'docs', 'scripts', 'README.md', 'CHANGELOG.md'];
-const EXTENSIONS = /\.(ts|js|cjs|mjs|md|json)$/;
+const EXTENSIONS = /\.(ts|mts|js|cjs|mjs|vue|css|md|json)$/;
 const SKIP_DIRS = ['node_modules', 'dist', 'coverage', 'docs/.vitepress/cache', 'docs/.vitepress/dist', 'docs/public/api'];
 const ALLOWED_FILES = [/coming-from-discord/i, /^scripts\/check-terms\.js$/];
 

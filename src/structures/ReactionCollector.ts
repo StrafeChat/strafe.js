@@ -24,10 +24,13 @@ export interface AwaitReactionsOptions extends ReactionCollectorOptions {
 }
 
 /**
- * Collects the reactions added to one message, like discord.js's `ReactionCollector`. `collected`
- * is keyed like `message.reactions.cache` (a custom emoji's id, or the unicode emoji). It ends with
- * reason `'time'`, `'idle'`, `'limit'`, `'emojiLimit'`, `'userLimit'`, `'user'`, or
- * `'messageDelete'`, `'roomDelete'`, `'threadDelete'` or `'spaceDelete'` when the message goes away.
+ * Collects the reactions added to one message. `collected` is keyed like `message.reactions.cache`
+ * (a custom emoji's id, or the unicode emoji). It ends with reason `'time'`, `'idle'`, `'limit'`,
+ * `'emojiLimit'`, `'userLimit'`, `'user'`, or `'messageDelete'`, `'roomDelete'`, `'threadDelete'` or
+ * `'spaceDelete'` when the message goes away.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `ReactionCollector`.
  *
  * @example
  * ```ts

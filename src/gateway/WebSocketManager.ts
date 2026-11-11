@@ -112,7 +112,7 @@ interface PendingLogin {
 }
 
 /**
- * The gateway connection (`client.ws`), discord.js's `WebSocketManager` for Strafe's gateway:
+ * The connection to Strafe's gateway (`client.ws`):
  *
  * - one connection, authenticated with `Authorization: Bot <token>` on the handshake (there is no
  *   identify frame, no intents and no sharding);
@@ -126,6 +126,9 @@ interface PendingLogin {
  *
  * The server keeps at most 512 unsent frames per connection and drops events beyond that, so frames
  * are read immediately and handled in order from a local queue; slow listeners never block the socket.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `WebSocketManager`.
  */
 export class WebSocketManager {
   /** The client. */

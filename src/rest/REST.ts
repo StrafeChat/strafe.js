@@ -47,8 +47,8 @@ const MAX_IDLE_BUCKETS = 256;
 class TimeoutError extends Error {}
 
 /**
- * The Strafe REST client, like `@discordjs/rest`: queues, rate limits, retries and errors handled
- * for you. `client.rest` is one; it also works on its own.
+ * The Strafe REST client: queues, rate limits, retries and errors handled for you. `client.rest` is
+ * one; it also works on its own.
  *
  * - Every route has one budget per account (Strafe's limiter), learned from `X-RateLimit-*`.
  * - Requests to the same route and room (or space) run one at a time, in order, so messages to a
@@ -58,6 +58,9 @@ class TimeoutError extends Error {}
  * - Network errors, timeouts and 5xx are retried with backoff for GET/PUT/DELETE. POST and PATCH
  *   are retried only on 503 and on errors before the request was sent: Strafe has no idempotency
  *   key, so retrying a POST could post a message twice (discord.js retries them; this does not).
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of `@discordjs/rest`.
  *
  * @example
  * ```ts

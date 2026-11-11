@@ -22,7 +22,10 @@
     "invalidLink": true,
     "notDocumented": false
   },
-  "plugin": ["./scripts/typedoc-source-links.js"],
+  "plugin": [
+    "./scripts/typedoc-source-links.js",
+    "./docs/typedoc/plugin.js"
+  ],
   "disableGit": true,
   "displayBasePath": ".",
   "gitRevision": "dev",
@@ -30,6 +33,25 @@
   "navigationLinks": {
     "Guide": "/guide/getting-started.html",
     "Examples": "/examples.html",
+    "API": "/api/index.html",
+    "Changelog": "/changelog.html",
     "GitHub": "https://github.com/StrafeChat/strafe.js"
-  }
+  },
+  "navigation": {
+    "includeGroups": true
+  },
+  "locales": {
+    "en": {
+      "theme_search": "Search the API",
+      "theme_search_placeholder": "Search the API",
+      "theme_on_this_page": "On this page"
+    }
+  },
+  "titleLink": "/",
+  "customCss": "docs/typedoc/strafe.css",
+  "favicon": "docs/public/favicon-32.png",
+  "lightHighlightTheme": "one-light",
+  "darkHighlightTheme": "one-dark-pro",
+  "hideGenerator": true,
+  "customFooterHtml": "strafe.js documentation. Strafe is federated: every instance documents its own API at /docs/."
 }

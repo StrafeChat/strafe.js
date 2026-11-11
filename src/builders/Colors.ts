@@ -2,8 +2,11 @@ import { ErrorCodes } from '../errors/ErrorCodes.js';
 import { StrafeRangeError, StrafeTypeError } from '../errors/StrafeError.js';
 
 /**
- * Named colors, the same names and values as discord.js's `Colors`, so `setColor(Colors.Red)` and
- * `setColor('Red')` work unchanged.
+ * Named colors, for `setColor(Colors.Red)` or `setColor('Red')`.
+ *
+ * @remarks
+ * Coming from discord.js: the same names and values as its `Colors`, so ported code works
+ * unchanged.
  */
 export const Colors = {
   /** `#000000` */
