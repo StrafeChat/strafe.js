@@ -43,9 +43,12 @@ export interface CollectorEventsMap<V, Extras extends unknown[]> {
 }
 
 /**
- * Collects items from client events until a time, an idle period or a limit is reached, like
- * discord.js's `Collector`. Use {@link MessageCollector} (`room.createMessageCollector()`) and
- * {@link ReactionCollector} (`message.createReactionCollector()`), or their `await*` forms.
+ * Collects items from client events until a time, an idle period or a limit is reached. Use
+ * {@link MessageCollector} (`room.createMessageCollector()`) and {@link ReactionCollector}
+ * (`message.createReactionCollector()`), or their `await*` forms.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `Collector`.
  *
  * @typeParam V - What is collected.
  * @typeParam Extras - Event arguments after the item (the user, for reactions).

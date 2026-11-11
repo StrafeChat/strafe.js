@@ -1,5 +1,5 @@
 /**
- * The OAuth2 scopes Strafe knows, like discord.js's `OAuth2Scopes` with Strafe's names.
+ * The OAuth2 scopes Strafe knows.
  *
  * | Scope | What it grants |
  * | --- | --- |
@@ -11,6 +11,9 @@
  *
  * An access token reaches only those routes; everything else answers `403 insufficient_scope`, and
  * it can never open a gateway connection.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `OAuth2Scopes`, with Strafe's names.
  */
 export enum OAuth2Scopes {
   /** Read the account (`GET /users/@me`) without its email. */

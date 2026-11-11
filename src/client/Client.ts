@@ -84,8 +84,11 @@ export interface ClientOptionsResolved extends ClientOptions {
 }
 
 /**
- * The entry point of a bot, shaped like discord.js's `Client`: caches (`spaces`, `rooms`,
- * `users`, `emojis`), the REST client and, once logged in, the gateway connection.
+ * The entry point of a bot: caches (`spaces`, `rooms`, `users`, `emojis`), the REST client and,
+ * once logged in, the gateway connection.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `Client`, with the same shape.
  *
  * @typeParam Ready - Whether the client is ready; `Client<true>` has non-null `user`, `readyAt`...
  * @example
@@ -182,7 +185,7 @@ export class Client<Ready extends boolean = boolean> extends TypedEmitter<Client
    *
    * @param token - The bot token; defaults to the `STRAFE_TOKEN` environment variable. A leading
    *   `Bot ` is accepted.
-   * @returns The token, like discord.js.
+   * @returns The token.
    * @throws {@link StrafeError} `TokenMissing` without a token, `TokenInvalid` when the instance
    *   refuses it, `GatewayUnreachable` when the gateway cannot be reached after
    *   `ws.loginAttempts` tries, `WSConnectionExists` when already logged in, `ClientDestroyed`
@@ -303,8 +306,9 @@ export class Client<Ready extends boolean = boolean> extends TypedEmitter<Client
   }
 
   /**
-   * The bot's application, like discord.js's `client.application`: `{ id }`, where the id is the
-   * bot's user id (Strafe uses one id for both). `null` before `login()` has verified the token.
+   * The bot's application: `{ id }`, where the id is the bot's user id (Strafe uses one id for
+   * both). `null` before `login()` has verified the token. discord.js names it the same, with more
+   * fields.
    *
    * @example
    * ```ts

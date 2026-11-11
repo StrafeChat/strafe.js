@@ -86,7 +86,10 @@ export type CacheFactory = (manager: CacheManagerName) => Collection<string, unk
 export type CacheWithLimitsOptions = Partial<Record<CacheManagerName, number | LimitedCollectionOptions<string, unknown>>>;
 
 /**
- * Helpers for client options, like discord.js's `Options`.
+ * Helpers for client options.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `Options`.
  *
  * @example
  * ```ts

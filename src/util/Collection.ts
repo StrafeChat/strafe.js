@@ -1,9 +1,11 @@
 /**
- * A `Map` with array-like helpers, shaped like discord.js's `Collection` so the same habits work:
- * `client.spaces.cache.find((space) => space.name === 'Lobby')`.
+ * A `Map` with array-like helpers: `client.spaces.cache.find((space) => space.name === 'Lobby')`.
  *
  * Every callback receives `(value, key, collection)`. Methods that return a new collection never
  * change this one; `sort`, `reverse` and `sweep` work in place like their array counterparts.
+ *
+ * @remarks
+ * Coming from discord.js: shaped like its `Collection`, so the same habits work.
  *
  * @typeParam K - Key type (a {@link Snowflake} for every cache in this library).
  * @typeParam V - Value type.

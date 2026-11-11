@@ -21,10 +21,13 @@ export interface AwaitMessagesOptions extends MessageCollectorOptions {
 }
 
 /**
- * Collects the messages sent in one room, like discord.js's `MessageCollector`. It ends with reason
- * `'time'`, `'idle'`, `'limit'`, `'processedLimit'`, `'user'` (`stop()`), or `'roomDelete'`,
- * `'threadDelete'` or `'spaceDelete'` when the room goes away. Messages in end-to-end encrypted
- * rooms are collected too, with `content === null`.
+ * Collects the messages sent in one room. It ends with reason `'time'`, `'idle'`, `'limit'`,
+ * `'processedLimit'`, `'user'` (`stop()`), or `'roomDelete'`, `'threadDelete'` or `'spaceDelete'`
+ * when the room goes away. Messages in end-to-end encrypted rooms are collected too, with
+ * `content === null`.
+ *
+ * @remarks
+ * Coming from discord.js: the counterpart of its `MessageCollector`.
  *
  * @example
  * ```ts
