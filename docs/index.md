@@ -4,7 +4,6 @@ markdownStyles: false
 
 # Rendered by docs/.vitepress/theme/StrafeHome.vue. `{word}` in the headline is drawn in green.
 strafe:
-  badge: The official TypeScript library
   headline: Build on {Strafe} with TypeScript
   lede: strafe.js talks to any Strafe instance's gateway, REST API and OAuth2. Spaces, rooms, members and messages arrive as typed events, requests wait out rate limits on their own, and "Log in with Strafe" takes a few lines.
   actions:
