@@ -63,13 +63,13 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.5",
     "@eslint/js": "^10.0.1",
-    "@types/node": "^22.20.5",
+    "@types/node": "^26.6.6",
     "@vitest/coverage-v8": "^5.1.0",
     "eslint": "^10.14.0",
     "eslint-plugin-tsdoc": "^0.5.4",
     "publint": "^0.3.25",
     "typedoc": "^0.28.20",
-    "typescript": "~6.0.3",
+    "typescript": "~7.0.2",
     "typescript-eslint": "^8.72.1",
     "vitepress": "^1.6.4",
     "vitest": "^5.1.0"
