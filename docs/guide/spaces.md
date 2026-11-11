@@ -1,29 +1,13 @@
 # Spaces, members and roles
 
-A **space** holds rooms, roles, members, custom emojis, invites and bans. Each is reached through a
-manager on the `Space`: a `cache` (a [`Collection`](#collections)), `fetch()`, `resolve()` and
-`resolveId()`, plus `create`/`edit`/`delete` where the API allows.
-
-| Manager | Holds | Filled from |
-| --- | --- | --- |
-| `client.spaces` | Spaces the bot is in | `READY`, then events |
-| `client.rooms` | Every room: space rooms, threads, PMs | `READY`, then events |
-| `client.users` | Users the bot has seen | Messages, members, events |
-| `client.emojis` | Custom emojis of every space | `READY`, then events |
-| `space.rooms` | The space's rooms and sections | `READY` |
-| `space.members` | Members | **Fetches** and events (not in `READY`) |
-| `space.roles` | Roles | `READY` |
-| `space.emojis`, `space.bans`, `space.invites` | Emojis; bans and invites when fetched | |
-| `space.voiceStates` | Who is in which voice room | `READY` |
-| `member.roles` | The member's roles | The member |
-| `room.messages` | Messages of a room | Events and fetches |
-| `textRoom.threads` | Threads of a text room | `READY`, events |
+A space holds rooms, roles, members, emojis, invites and bans. Each has a manager with a `cache`, `fetch()`,
+`resolve()` and, where the API allows, `create`/`edit`/`delete`.
 
 ## Spaces
 
 ```ts
-const cached = client.spaces.cache.get(spaceId); // undefined when the bot is not in it
-const space = await client.spaces.fetch(spaceId); // asks the server
+const cached = client.spaces.cache.get(spaceId);
+const space = await client.spaces.fetch(spaceId);
 
 await space.edit({ name: 'Book club', description: 'Reading together' });
 await space.setIcon(new URL('./icon.png', import.meta.url));
@@ -31,19 +15,14 @@ const owner = await space.fetchOwner();
 await space.leave();
 ```
 
-A few settings have Strafe names: the inactive voice room (Discord's AFK room) is
-`space.inactiveRoomId` with `inactiveTimeout`, the system messages room is `space.systemRoomId`, and
-the space widget is `space.widgetEnabled` / `space.fetchWidget()`. `space.fetchAuditLogs()` reads the
-audit log (it needs Manage Space; Strafe has no separate View Audit Log permission). Transferring and deleting a space are for its
-owner only.
+The inactive voice room is `space.inactiveRoomId` with `inactiveTimeout`. The system messages room is
+`space.systemRoomId`. The space widget is `space.widgetEnabled` and `space.fetchWidget()`.
+`space.fetchAuditLogs()` needs Manage Space. Only the owner can transfer or delete a space.
 
-A space can be hosted on another instance and mirrored on the bot's own: then `space.federated` is
-`true` and `space.federation` names the origin. The API is the same; see
+A space hosted on another instance has `space.federated` set to `true`. See
 [Instances and federation](./instances.md).
 
 ## Rooms and sections
-
-Rooms are typed by `type` (the `RoomType` enum) and the classes narrow with guards:
 
 | Class | `RoomType` | Guard |
 | --- | --- | --- |
@@ -54,68 +33,55 @@ Rooms are typed by `type` (the `RoomType` enum) and the classes narrow with guar
 | `SectionRoom` | `SpaceSection` (5) | `isSection()` |
 | `ThreadRoom` | `Thread` (6) | `isThread()` |
 
-`isTextBased()` (anything with messages, which includes a voice room's text chat), `isSendable()`
-(text-based and not encrypted), `isSpaceBased()` and `isEncrypted()` work on every room.
-
-A **section** groups rooms in the sidebar. Rooms in a section can keep
-their permissions synced with it.
+Every room also has `isTextBased()`, `isSendable()`, `isSpaceBased()` and `isEncrypted()`.
 
 ```ts
 import { RoomType } from '@strafechat/strafe.js';
 
 const section = await space.rooms.create({ name: 'Projects', type: RoomType.SpaceSection });
 const room = await space.rooms.create({ name: 'roadmap', parent: section, topic: 'What is next' });
-await room.setRateLimitPerUser(10); // slowmode, in seconds
-await room.setParent(null);         // out of the section
-await room.lockPermissions();       // sync with the section again
+await room.setRateLimitPerUser(10); // slowmode, seconds
+await room.setParent(null);
+await room.lockPermissions(); // sync with the section
 for (const child of section.children.values()) console.log(child.name);
 ```
 
-Creating, editing, moving and deleting rooms needs Manage Rooms. `room.permissionOverwrites` edits
-the room's overrides; see [Permissions](./permissions.md#overrides).
+Managing rooms needs Manage Rooms. For overrides, see [Permissions](./permissions.md#overrides).
 
 ## Members
 
-Member lists are **not** part of `READY`. `space.members.cache` holds only the members the bot has
-fetched or seen in events, so fetch before relying on it:
+Members are not in `READY`. Fetch them before reading `space.members.cache`.
 
 ```ts
-await space.members.fetch();                     // everyone, cached
-const member = await space.members.fetch(userId); // one (cached when possible)
-const me = await space.members.fetchMe();         // the bot itself
-```
+await space.members.fetch();
+const member = await space.members.fetch(userId);
+const me = await space.members.fetchMe(); // then space.members.me
 
-`space.members.me` is the bot's member once cached.
-
-```ts
 await member.setNickname('Helper');
-await member.edit({ nick: null, pronouns: null, bio: null }); // a moderator can clear profile fields
-await space.members.me?.edit({ pronouns: 'it/its' });          // ...but only set them for the bot itself
+await member.edit({ nick: null, pronouns: null, bio: null });
+await space.members.me?.edit({ pronouns: 'it/its' });
 await member.kick();
-await member.ban({ reason: 'Spam' }); // the reason goes to the audit log
+await member.ban({ reason: 'Spam' });
 await space.members.unban(userId);
 ```
 
-- Kick and ban need Kick Members and Ban Members, and the bot must outrank the member (the owner
-  outranks everyone; otherwise its highest role must be higher). `member.kickable`,
-  `member.bannable` and `member.manageable` check that from the cache.
-- Strafe records no reason for kicks; `kick(reason)` accepts one and ignores it. Bans keep theirs.
-- A member's space profile (nickname, avatar, banner, bio, pronouns) overrides their account's in
-  that space. `member.displayName` and `member.displayAvatarURL()` take it into account.
-- Only the nickname can be set on someone else (with Manage Nicknames). The bio, about me,
-  pronouns, avatar and banner can only be set by the member themselves; a moderator can only clear
-  them (`null`), and setting a value on another member fails with a `403` `StrafeAPIError` whose
-  `code` is `APIErrorCodes.CannotEditMemberProfile`.
+- Kick and ban need Kick Members and Ban Members, and the bot must outrank the member.
+  `member.kickable`, `member.bannable` and `member.manageable` check this.
+- Kicks record no reason. Bans do.
+- A member's space profile overrides their account's. `member.displayName` and
+  `member.displayAvatarURL()` use it.
+- On other members, a moderator can set the nickname (Manage Nicknames) and clear the other profile
+  fields with `null`. Setting them fails with `403` and `APIErrorCodes.CannotEditMemberProfile`.
 
 ### Adding people with OAuth2
 
-A website that logged someone in with the `spaces.join` scope can have the bot add them to a space:
+With a `spaces.join` token, the bot can add someone to a space. It needs Create Invite.
 
 ```ts
 await space.members.add(user, { accessToken: tokens });
 ```
 
-The bot needs Create Invite. See [OAuth2 login](./oauth2.md#adding-people-to-a-space).
+See [OAuth2 login](./oauth2.md#adding-people-to-a-space).
 
 ## Roles
 
@@ -128,19 +94,15 @@ const role = await space.roles.create({
 });
 await member.roles.add(role);
 await member.roles.remove(role);
-await member.roles.set([roleA, roleB]); // replace the list
+await member.roles.set([roleA, roleB]);
 await role.setPosition(3);
 await role.delete();
 ```
 
-- Strafe follows Discord's role hierarchy. With Manage Roles you may give or take away any role
-  **strictly below your own highest role**, on anyone, the owner included. Roles at or above yours
-  that the member holds are kept whatever you send.
-- New roles start at position 1, just above `@everyone`. The bot's managed role (the one it got
-  when it was installed, `space.roles.botRoleFor(client.user)`) also starts there and cannot be
-  given to anyone else; ask an admin to move it up if the bot hands out roles.
-- `member.roles.highest`, `member.roles.color` and `member.roles.hoist` work as in discord.js;
-  `space.roles.everyone` is `@everyone`. `role.members` lists cached members holding it.
+- With Manage Roles you can give or remove any role below your highest, on anyone.
+- New roles start at position 1, above `@everyone`. So does the bot's managed role
+  (`space.roles.botRoleFor(client.user)`), which can't be given to anyone else.
+- `space.roles.everyone` is `@everyone`. `role.members` lists cached members with the role.
 
 ## Invites, emojis, bans
 
@@ -157,20 +119,17 @@ await message.react(emoji);
 const bans = await space.bans.fetch();
 ```
 
-Invite codes from another instance look like `code@domain`; see
-[Instances and federation](./instances.md#invites-across-instances).
+For `code@domain` invites, see [Instances and federation](./instances.md#invites-across-instances).
 
 ## Voice
 
-`space.voiceStates` and `member.voice` show who is in which voice room, and moderators can act on
-them: `member.voice?.setMute(true)`, `setDeaf()`, `setRoom(otherVoiceRoom)`, `disconnect()`. A bot
-cannot join a voice call itself: calls are end-to-end encrypted with per-device keys that a bot does
-not have.
+`space.voiceStates` and `member.voice` show who is in voice. Moderators can call `setMute()`,
+`setDeaf()`, `setRoom()` and `disconnect()` on a voice state. Bots can't join calls, because calls are
+end-to-end encrypted.
 
 ## Caching
 
-The client caches what it sees. By default it keeps everything except messages, where it keeps the
-newest 200 per room. `makeCache` changes that per manager:
+By default the client caches everything except messages, where it keeps the newest 200 per room.
 
 ```ts
 import { Client, Options } from '@strafechat/strafe.js';
@@ -179,28 +138,23 @@ const client = new Client({
   instance: 'app.strafe.chat',
   makeCache: Options.cacheWithLimits({
     ...Options.DefaultMakeCacheSettings,
-    MessageManager: 50,  // newest 50 messages per room
-    ReactionManager: 0,  // do not cache reactions
+    MessageManager: 50,
+    ReactionManager: 0,
   }),
 });
 ```
 
-`Options.cacheEverything()` keeps everything. Anything missing from a cache can be fetched; events
-about uncached objects arrive with [partial objects](./events.md#partial-objects).
+`Options.cacheEverything()` removes the limits. Events about uncached objects carry
+[partial objects](./events.md#partial-objects).
 
-There is no user lookup on Strafe: `client.users.fetch(id)` works only for the bot itself. Other
-users reach the cache through messages, members, reactions and presence events; for a member,
-`space.members.fetch(id)` brings the user along.
+`client.users.fetch(id)` works only for the bot itself. Other users enter the cache through messages,
+members, reactions and presence.
 
 ## Collections
 
-`Collection<K, V>` extends `Map` with discord.js's helpers: `find`, `filter`, `map`, `mapValues`,
-`first`, `last`, `random`, `some`, `every`, `reduce`, `partition`, `sort`, `sorted`, `ensure`,
-`hasAll`, `hasAny`, `at`, `keyAt`, `concat`, `equals`, and more.
+`Collection<K, V>` is a `Map` with discord.js's helpers (`find`, `filter`, `first`, `sorted` and the rest).
 
 ```ts
 const admins = space.members.cache.filter((m) => m.permissions.has(PermissionFlagsBits.Administrator));
 const newest = space.members.cache.sorted((a, b) => (b.joinedTimestamp ?? 0) - (a.joinedTimestamp ?? 0)).first(5);
 ```
-
-`map()` returns an array and `filter()` a new `Collection`, as in discord.js.

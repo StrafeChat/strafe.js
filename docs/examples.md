@@ -1,47 +1,45 @@
 # Examples
 
-Each example is a complete program in the repository's `examples/` folder, typechecked with the
-library on every change. Run one with your instance and token in the environment:
+Complete programs from the repository's `examples/` folder. Run one with:
 
 ```sh
 STRAFE_INSTANCE=app.strafe.chat STRAFE_TOKEN=your-token node examples/ping-pong.ts
 ```
 
-Node.js 22.18 and newer run TypeScript files directly; on older versions use `npx tsx`.
+On Node.js older than 22.18, use `npx tsx`.
 
 ## Ping pong
 
-The smallest useful bot. See [Your first bot](./guide/first-bot.md) for a walk-through.
+The smallest bot. Walk-through in [Your first bot](./guide/first-bot.md).
 
 <<< @/../examples/ping-pong.ts
 
 ## Embeds and files
 
-An embed about the space, a generated file, and an uploaded image shown inside an embed with
-`attachment://`.
+An embed, a generated file, and an uploaded image inside an embed via `attachment://`.
 
 <<< @/../examples/embeds.ts
 
 ## Moderation
 
-Kick, ban, unban and purge commands with permission and hierarchy checks.
+Kick, ban, unban and purge, with permission checks.
 
 <<< @/../examples/moderation.ts
 
 ## Reaction roles
 
-A role menu: reacting gives a role, removing the reaction takes it away.
+React to get a role, unreact to lose it.
 
 <<< @/../examples/reaction-roles.ts
 
 ## OAuth2 login
 
-"Log in with Strafe" for a website, with PKCE and a `state` cookie, using only `node:http`.
+"Log in with Strafe" for a website, with PKCE, on `node:http`.
 
 <<< @/../examples/oauth2-login.ts
 
 ## REST only
 
-Post a message from a script without connecting to the gateway.
+Post from a script without the gateway.
 
 <<< @/../examples/rest-only.ts

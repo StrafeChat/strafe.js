@@ -1,9 +1,7 @@
 # Coming from discord.js
 
-strafe.js is modelled on discord.js v14: the same `Client`, `Events`, `Collection`, managers with
-`cache` and `fetch()`, `EmbedBuilder`, `PermissionsBitField`, and the same method names on
-messages, members and roles. What changes is the vocabulary, a handful of options that Strafe does
-not need, and a few things Strafe cannot do.
+strafe.js is modelled on discord.js v14: the same `Client`, `Events`, `Collection`, managers,
+builders and method names. The vocabulary changes, and a few options go away.
 
 ## The words
 
@@ -38,14 +36,14 @@ not need, and a few things Strafe cannot do.
 | `message.guild`, `message.guildId`, `message.inGuild()` | `message.space`, `message.spaceId`, `message.inSpace()` | |
 | `message.channel`, `message.channelId` | `message.room`, `message.roomId` | |
 | `user.createDM()`, `user.dmChannel` | `user.createPM()`, `user.pmRoom` | A bot cannot post in a PM |
-| `user.tag` | `user.tag` | The handle: `name`, or `name@domain` for other instances. No discriminators |
+| `user.tag` | `user.tag` | `name`, or `name@domain` for other instances |
 | `channelMention()` | `roomMention()` | `<#id>` |
 | `client.generateInvite({ guild, disableGuildSelect })` | `client.generateInvite({ space, disableSpaceSelect })` | |
-| `client.application.id` | `client.application.id` | The bot's user id: Strafe uses one id for the bot and its application. `client.application` has no other fields (no `fetch()`, owner or commands) |
-| `guild.memberCount` | none | Spaces carry no member count. `await space.members.fetch()`, then `space.members.cache.size`; an invite preview has `invite.memberCount` |
-| `channel.awaitMessages()`, `createMessageCollector()`, `message.awaitReactions()`, `createReactionCollector()` | the same, on rooms and messages | Same options and end reasons, plus `roomDelete`, `threadDelete` and `spaceDelete`; see [Waiting for replies and reactions](./messages.md#waiting-for-replies-and-reactions) |
+| `client.application.id` | `client.application.id` | The bot's user id. No other fields |
+| `guild.memberCount` | none | Use `space.members.cache.size` after `space.members.fetch()` |
+| `channel.awaitMessages()`, `createMessageCollector()`, `message.awaitReactions()`, `createReactionCollector()` | the same | Extra end reasons `roomDelete`, `threadDelete`, `spaceDelete` ([Collectors](./messages.md#waiting-for-replies-and-reactions)) |
 | `OAuth2Scopes.Guilds`, `GuildsJoin` | `OAuth2Scopes.Spaces`, `SpacesJoin` | |
-| `DiscordAPIError`, `DiscordjsError`, `RESTJSONErrorCodes` | `StrafeAPIError`, `StrafeError`, `APIErrorCodes` | Strafe's codes are string slugs, and most errors have none |
+| `DiscordAPIError`, `DiscordjsError`, `RESTJSONErrorCodes` | `StrafeAPIError`, `StrafeError`, `APIErrorCodes` | Codes are string slugs; most errors have none |
 | `SnowflakeUtil` | `SnowflakeUtil` | Strafe's epoch is 1288834974657 |
 
 ## Events
@@ -63,14 +61,14 @@ not need, and a few things Strafe cannot do.
 | `Events.Invalidated` | `Events.Invalidated` (the session was revoked) |
 | `Events.GuildBanAdd`, `GuildBanRemove`, `InviteCreate`, `InteractionCreate`, `WebhooksUpdate`... | none |
 
-These keep their names and arguments: `MessageCreate`, `MessageUpdate`, `MessageDelete`,
+Unchanged: `MessageCreate`, `MessageUpdate`, `MessageDelete`,
 `MessageReactionAdd`, `MessageReactionRemove`, `TypingStart`, `ThreadCreate`, `ThreadUpdate`,
 `ThreadDelete`, `ThreadMembersUpdate`, `PresenceUpdate`, `UserUpdate`, `VoiceStateUpdate`, `Raw`,
 `Debug`, `Warn`, `Error`.
 
 ## Permissions
 
-Strafe's bits have their own values: always use `PermissionFlagsBits`, never numbers from Discord.
+The bit values differ from Discord's. Always use `PermissionFlagsBits`.
 
 | discord.js `PermissionFlagsBits` | strafe.js |
 | --- | --- |
@@ -83,11 +81,11 @@ Strafe's bits have their own values: always use `PermissionFlagsBits`, never num
 | `SendMessagesInThreads`, `ManageThreads`, `CreatePublicThreads`, `CreatePrivateThreads` | the same |
 | `ViewAuditLog`, `ManageWebhooks`, `ModerateMembers`, `UseApplicationCommands`, `SendTTSMessages`, `ManageEvents` | none |
 
-The rest (`SendMessages`, `ReadMessageHistory`, `AddReactions`, `UseExternalEmojis`,
+Unchanged: `SendMessages`, `ReadMessageHistory`, `AddReactions`, `UseExternalEmojis`,
 `MentionEveryone`, `ManageMessages`, `ManageRoles`, `KickMembers`, `BanMembers`, `Administrator`,
 `Connect`, `Speak`, `MuteMembers`, `DeafenMembers`, `MoveMembers`, `UseVAD`, `PrioritySpeaker`,
-`AttachFiles`, `ChangeNickname`, `ManageNicknames`, `EmbedLinks`) keep their names. The role
-hierarchy rules are Discord's. See [Permissions](./permissions.md).
+`AttachFiles`, `ChangeNickname`, `ManageNicknames`, `EmbedLinks`. Role hierarchy follows Discord's
+([Permissions](./permissions.md)).
 
 ## Options you can drop
 
@@ -102,23 +100,15 @@ const client = new Client({
 const client = new Client({ instance: 'app.strafe.chat' });
 ```
 
-- **Intents**: none. A bot receives every event about what it can see, message text included
-  (unless the room is end-to-end encrypted).
-- **Partials**: always on. Events about uncached messages, reactions and members arrive with
-  partial objects.
-- **Sharding**: none. One connection carries everything.
-- **`allowedMentions`**: does not exist; Strafe cannot send a mention that does not notify. Use
-  `escapeMentions()`.
-
-Passing `intents`, `partials`, `shards` or `allowedMentions` anyway emits a warning explaining why.
+Intents, partials and sharding are not needed: a bot gets every event it can see, uncached objects
+arrive as partials, and one connection carries everything. `allowedMentions` does not exist; use
+`escapeMentions()`. Passing any of these emits a warning.
 
 ## What does not exist
 
-Slash commands and other interactions (buttons, select menus, modals, context menus), webhooks,
-stickers, polls, scheduled events, stage and forum channels, crossposting, and joining voice calls
-are not part of Strafe. Bots use message commands and reactions. [Limits and differences](./limits.md)
-lists every gap, including PMs (a bot cannot send one: they are always end-to-end encrypted) and
-user lookups (`client.users.fetch()` only works for the bot itself).
+No interactions (slash commands, buttons, menus, modals), webhooks, stickers, polls, scheduled
+events, stage or forum rooms, crossposting or voice joining. A bot cannot send a PM, and
+`client.users.fetch()` only finds the bot itself. See [Limits and differences](./limits.md).
 
 ## A bot, ported
 
@@ -169,14 +159,9 @@ client.on(Events.MessageCreate, async (message) => {
 await client.login(process.env.STRAFE_TOKEN);
 ```
 
-The differences: an instance instead of intents, `content === null` for encrypted rooms, a room
-that might be encrypted (`isSendable()`), and members fetched rather than assumed cached, because
-member lists are not part of `READY`.
+Members are fetched, not assumed cached, because member lists are not in `READY`.
 
 ## Upgrading from strafe.js 1.x
 
-strafe.js 1.x targeted Strafe's retired pre-2026 backend (msgpack over the old gateway). Nothing in
-2.0 is compatible with it: the endpoints, events and payloads all changed. Start from
-[Getting started](./getting-started.md). The few names that survive (`client.on('messageCreate')`,
-`room.send()`) behave as described in this guide, and the old `config` object is replaced by the
-`instance` option.
+strafe.js 1.x targeted Strafe's retired backend, and 2.0 is not compatible with it. Start from
+[Getting started](./getting-started.md). The old `config` object is now the `instance` option.

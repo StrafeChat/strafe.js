@@ -1,7 +1,6 @@
 # Your first bot
 
-This page walks through `examples/ping-pong.ts` from the repository: a bot that answers `!ping` with
-"Pong!" and the gateway latency.
+A bot that answers `!ping` with "Pong!" and the gateway latency (`examples/ping-pong.ts`):
 
 <<< @/../examples/ping-pong.ts
 
@@ -12,40 +11,27 @@ STRAFE_INSTANCE=app.strafe.chat STRAFE_TOKEN=your-token node bot.ts
 ```
 
 Say `!ping` in a room the bot can see. If nothing happens, check that the room is not end-to-end
-encrypted (a lock in the web client): a bot sees encrypted messages with `content === null` and
-cannot answer there.
+encrypted (a lock icon in the web client). Bots cannot read or answer there.
 
 ## Line by line
 
-**`new Client({ instance })`** creates the client. Nothing connects yet. The options are few
-because a Strafe bot has no intents to declare: it receives every event about what it can see.
-
-**`client.once(Events.ClientReady, ...)`** runs once, when the first `READY` has filled the
-caches. The argument is the client typed as `Client<true>`, whose `user`, `readyAt` and `uptime`
-are not `null`. `'ready'` is emitted at the same moment, for code written that way. After a
-reconnect the client emits `gatewayReady` and `reconnected` instead; see [Events](./events.md).
-
-**`client.on(Events.MessageCreate, ...)`** fires for every message in every room the bot can see:
-its own, other bots', and system notices (a member joined, a message was pinned) included. Two
-checks come first in almost every handler:
-
-- `message.author.bot` skips bots, including this one, so two bots never answer each other forever.
-- `message.content === null` skips what the bot cannot read: messages in end-to-end encrypted rooms
-  arrive with `encrypted === true` and no text.
-
-**`message.reply()`** sends a reply in the same room. `room.send()` sends without the reply link.
-Both return the sent `Message`.
-
-**`client.login()`** checks the token with the REST API (a wrong token rejects with
-`TokenInvalid` here, before any connection), reads the instance's public index, connects to the
-gateway and resolves with the token once `clientReady` has been emitted.
+- `new Client({ instance })` creates the client without connecting. There are no intents: the bot
+  receives every event about what it can see.
+- `Events.ClientReady` fires once, after the first `READY` fills the caches. Its argument is a
+  `Client<true>`, so `user` is not `null`. Reconnects emit `gatewayReady` and `reconnected`
+  instead ([Events](./events.md)).
+- `Events.MessageCreate` fires for every message the bot can see, including its own and system
+  notices. Skip `message.author.bot` so bots don't answer each other, and skip
+  `message.content === null`, which marks encrypted messages.
+- `message.reply()` replies in the same room; `room.send()` sends without the reply link. Both
+  return the sent `Message`.
+- `client.login()` validates the token (rejecting with `TokenInvalid`), connects, and resolves once
+  `clientReady` fires.
 
 ## Listeners can be async
 
-Event listeners may be `async`. When one throws or its promise rejects, the client emits the error
-as `Events.Error` (when something listens to it) and keeps going; the other listeners and later
-events are not affected. Without an `error` listener the error is rethrown asynchronously, like an
-uncaught exception.
+If a listener throws or rejects, the client emits `Events.Error` and keeps going. With no `error`
+listener, the error is rethrown as an uncaught exception.
 
 ## Presence
 
@@ -56,9 +42,8 @@ client.once(Events.ClientReady, async (ready) => {
 });
 ```
 
-Only "Playing" activities exist. The activity goes over the gateway and is sent again after every
-reconnect; status and custom status are saved through the API. `new Client({ presence })` applies a
-presence after the first `READY`.
+Only "Playing" activities exist. The activity is re-sent after every reconnect. You can also pass
+`new Client({ presence })`.
 
 ## Stopping
 
@@ -69,14 +54,12 @@ process.on('SIGINT', async () => {
 });
 ```
 
-`destroy()` closes the connection, stops reconnecting and forgets the token. The caches are kept and
-`login()` may be called again. `await using client = new Client(...)` destroys it at the end of the
-scope.
+`destroy()` closes the connection and forgets the token. The caches are kept and `login()` can be
+called again. `await using client = new Client(...)` destroys it at the end of the scope.
 
 ## Deploying
 
-One process and one connection are enough for any number of spaces: Strafe has no sharding. Run the
-bot under a process manager or in a container, pass the token through the environment, and let the
-client reconnect on its own after network trouble (it backs off up to a minute between attempts).
-If the token is reset or the account is banned from the instance, the client emits
-`Events.Invalidated` and stops for good; exit and alert someone.
+Strafe has no sharding: one process serves any number of spaces. Run it under a process manager or
+in a container, with the token in the environment. The client reconnects on its own, backing off up
+to a minute. If the token is reset or the account is banned, it emits `Events.Invalidated` and
+stops for good; exit and alert someone.
