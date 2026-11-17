@@ -69,7 +69,8 @@ await space.members.unban(userId);
   `member.kickable`, `member.bannable` and `member.manageable` check this.
 - Kicks record no reason. Bans do.
 - A member's space profile overrides their account's. `member.displayName` and
-  `member.displayAvatarURL()` use it.
+  `member.displayAvatarURL()` use it. Without any avatar, `displayAvatarURL()` returns the same
+  default avatar the web client shows (`user.defaultAvatarURL`).
 - On other members, a moderator can set the nickname (Manage Nicknames) and clear the other profile
   fields with `null`. Setting them fails with `403` and `APIErrorCodes.CannotEditMemberProfile`.
 

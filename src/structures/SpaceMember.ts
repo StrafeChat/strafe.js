@@ -220,11 +220,12 @@ export class SpaceMember extends Base {
   }
 
   /**
-   * The avatar shown in this space: the space avatar, else the account's.
+   * The avatar shown in this space: the space avatar, else the account's, else the account's
+   * {@link User.defaultAvatarURL}.
    *
    * @param options - Ignored.
    */
-  public displayAvatarURL(options?: ImageURLOptions): string | null {
+  public displayAvatarURL(options?: ImageURLOptions): string {
     return this.spaceAvatar ?? this.user.displayAvatarURL(options);
   }
 

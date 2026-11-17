@@ -40,6 +40,9 @@ gateway) and do not work with current instances.
   messages, reactions, permission overrides, threads, thread members and voice states.
 - Federation: `user.handle` (`name@domain`), `user.homeDomain`, `user.isRemote`, mirrored spaces
   (`space.federated`), and `code@domain` invites.
+- Default avatars as in the web client: `user.defaultAvatarURL` (`<web>/avatars/default/<0-7>.png`,
+  from the user's home id), `calculateUserDefaultAvatarIndex()` and `buildDefaultAvatarURL()`;
+  `displayAvatarURL()` on users, members and `OAuth2User` falls back to it.
 - Cache limits through `makeCache` and `Options.cacheWithLimits()` (200 messages per room by
   default).
 

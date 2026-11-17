@@ -9,6 +9,7 @@ export * from './util/Snowflake.js';
 export * from './util/Formatters.js';
 export * from './util/instance.js';
 export * from './util/invite.js';
+export * from './util/avatar.js';
 export { TypedEmitter, type Listener } from './util/EventEmitter.js';
 export { version } from './util/version.js';
 

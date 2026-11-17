@@ -37,6 +37,7 @@ builders and method names. The vocabulary changes, and a few options go away.
 | `message.channel`, `message.channelId` | `message.room`, `message.roomId` | |
 | `user.createDM()`, `user.dmChannel` | `user.createPM()`, `user.pmRoom` | A bot cannot post in a PM |
 | `user.tag` | `user.tag` | `name`, or `name@domain` for other instances |
+| `user.defaultAvatarURL`, `calculateUserDefaultAvatarIndex()` | the same | Eight PNGs on the web origin, `(id >> 22) % 8`; `displayAvatarURL()` falls back to it |
 | `channelMention()` | `roomMention()` | `<#id>` |
 | `client.generateInvite({ guild, disableGuildSelect })` | `client.generateInvite({ space, disableSpaceSelect })` | |
 | `client.application.id` | `client.application.id` | The bot's user id. No other fields |

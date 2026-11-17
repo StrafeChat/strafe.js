@@ -63,6 +63,7 @@ A bot connects only to its application's instance. Spaces it joins elsewhere are
 | `user.homeDomain` | this instance's domain (`null` if it does not federate) | `other.example` |
 | `user.isRemote` | `false` | `true` |
 | `user.originId` | the same as `id` | the user's id on their own instance |
+| `user.defaultAvatarURL` | from `id` | from `originId`, so it matches their own instance |
 
 Ids differ per instance. Use `user.id` locally and `handle`, which is unique, to identify someone across the network.
 

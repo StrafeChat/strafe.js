@@ -5,6 +5,7 @@ import { userMention } from '../util/Formatters.js';
 import { PermissionsBitField } from '../util/PermissionsBitField.js';
 import type { Snowflake } from '../util/Snowflake.js';
 import { SnowflakeUtil } from '../util/Snowflake.js';
+import { buildDefaultAvatarURL, calculateUserDefaultAvatarIndex } from '../util/avatar.js';
 import { UserFlagsBitField } from '../util/UserFlagsBitField.js';
 import { emptyToNull, parseTimestamp } from '../util/Util.js';
 
@@ -89,12 +90,17 @@ export class OAuth2User {
   public birthday: string | null;
   /** When the account was created (Unix ms). */
   public createdTimestamp: number;
+  /** The instance's web client origin, which serves the default avatars; `null` when none was given. */
+  public readonly web: string | null;
 
   /**
    * @param data - `GET /users/@me` (or the user in `GET /oauth2/@me`).
+   * @param web - The instance's web client origin, for {@link OAuth2User.defaultAvatarURL}.
+   *   {@link OAuth2Client} passes its own.
    */
-  public constructor(data: APIOAuth2UserLike) {
+  public constructor(data: APIOAuth2UserLike, web?: string | null) {
     this.id = data.id;
+    this.web = web ?? null;
     this.username = data.username ?? '';
     this.globalName = emptyToNull(data.display_name);
     this.avatar = emptyToNull(data.avatar);
@@ -145,9 +151,25 @@ export class OAuth2User {
     return this.avatar;
   }
 
-  /** Same as {@link OAuth2User.avatarURL}: Strafe has no default avatar image. */
+  /**
+   * Which of the instance's eight default avatars the account gets (0 to 7). A token is always for
+   * an account of the instance that issued it, so this comes from {@link OAuth2User.id}.
+   */
+  public get defaultAvatarIndex(): number {
+    return calculateUserDefaultAvatarIndex(this.id);
+  }
+
+  /**
+   * The default avatar the web client shows when the account has none
+   * (`<web>/avatars/default/<index>.png`), or `null` when this user was built without a web origin.
+   */
+  public get defaultAvatarURL(): string | null {
+    return this.web === null ? null : buildDefaultAvatarURL(this.web, this.defaultAvatarIndex);
+  }
+
+  /** The avatar URL, else the {@link OAuth2User.defaultAvatarURL}. */
   public displayAvatarURL(): string | null {
-    return this.avatar;
+    return this.avatar ?? this.defaultAvatarURL;
   }
 
   /** The banner URL, or `null`. */
@@ -281,12 +303,13 @@ export class OAuth2Authorization {
 
   /**
    * @param data - The `GET /oauth2/@me` body.
+   * @param web - The instance's web client origin, passed on to {@link OAuth2User}.
    */
-  public constructor(data: APIOAuth2CurrentAuthorization) {
+  public constructor(data: APIOAuth2CurrentAuthorization, web?: string | null) {
     this.application = toApplication(data.application);
     this.scopes = [...data.scopes];
     this.expiresTimestamp = parseTimestamp(data.expires) ?? 0;
-    this.user = data.user === undefined ? null : new OAuth2User(data.user);
+    this.user = data.user === undefined ? null : new OAuth2User(data.user, web);
   }
 
   /** When the access token expires. */

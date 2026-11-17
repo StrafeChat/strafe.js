@@ -35,7 +35,6 @@ A group PM with encryption turned off works like any plain room.
 | Bulk delete endpoint | `room.bulkDelete()` sends one `DELETE` per message (at most 100). |
 | Audit log reasons | Only bans record a reason. Other `reason` arguments are ignored. |
 | Message links | `message.url` is the room's URL. |
-| Default avatars | `user.displayAvatarURL()` is `null` without an avatar. |
 | `space.memberCount` | Use `space.members.cache.size` after `space.members.fetch()`, or `invite.memberCount`. |
 | `client.application.fetch()`, owner, commands | `client.application` is only `{ id }`, the bot's user id. |
 | Crossposting, stickers, polls, scheduled events, stage rooms, forum rooms | Not on Strafe. |

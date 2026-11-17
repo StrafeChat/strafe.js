@@ -281,7 +281,7 @@ export class OAuth2Client {
    */
   public async fetchUser(accessToken: OAuth2AccessTokenResolvable): Promise<OAuth2User> {
     const data = await this.bearer<APISelfUser>(Routes.user(), accessToken);
-    return new OAuth2User(data);
+    return new OAuth2User(data, this.web);
   }
 
   /**
@@ -305,7 +305,7 @@ export class OAuth2Client {
    */
   public async fetchCurrentAuthorization(accessToken: OAuth2AccessTokenResolvable): Promise<OAuth2Authorization> {
     const data = await this.bearer<APIOAuth2CurrentAuthorization>(Routes.oauth2CurrentAuthorization(), accessToken);
-    return new OAuth2Authorization(data);
+    return new OAuth2Authorization(data, this.web);
   }
 
   /** Plain JSON, without the client secret. */

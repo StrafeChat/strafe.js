@@ -289,6 +289,8 @@ describe('OAuth2Client with an access token', () => {
     expect(user.accentColor).toBe(0xff0000);
     expect(user.flags.has('Founder')).toBe(true);
     expect(user.avatarURL()).toBe(self.avatar);
+    expect(user.displayAvatarURL()).toBe(self.avatar);
+    expect(user.defaultAvatarURL).toMatch(/^https:\/\/app\.strafe\.chat\/avatars\/default\/[0-7]\.png$/);
     expect(user.createdAt.toISOString()).toBe('2026-09-21T00:00:00.000Z');
     expect(user.toString()).toBe(`<@${self.id}>`);
 

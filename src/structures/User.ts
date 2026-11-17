@@ -6,6 +6,7 @@ import type { APIUser } from '../types/api/user.js';
 import { userMention } from '../util/Formatters.js';
 import type { Snowflake } from '../util/Snowflake.js';
 import { SnowflakeUtil } from '../util/Snowflake.js';
+import { buildDefaultAvatarURL, calculateUserDefaultAvatarIndex } from '../util/avatar.js';
 import { UserFlagsBitField } from '../util/UserFlagsBitField.js';
 import { emptyToNull } from '../util/Util.js';
 import { Base } from './Base.js';
@@ -191,12 +192,31 @@ export class User extends Base {
   }
 
   /**
-   * The avatar URL, or `null` when there is none (Strafe has no default avatar image; clients draw initials).
+   * Which of the instance's eight default avatars this user gets (0 to 7), computed from the id
+   * their home instance knows them by: {@link User.originId} when the payload carried it (the
+   * server sends it whenever it federates, so users from other instances get the same picture
+   * everywhere), else {@link User.id}.
+   */
+  public get defaultAvatarIndex(): number {
+    return calculateUserDefaultAvatarIndex(this.originId ?? this.id);
+  }
+
+  /**
+   * The URL of the default avatar the web client shows when the user has none:
+   * `<web>/avatars/default/<index>.png` on this client's web origin ({@link Client.urls}), a 256 px
+   * PNG. Always set, even when the user has an avatar (like discord.js).
+   */
+  public get defaultAvatarURL(): string {
+    return buildDefaultAvatarURL(this.client.urls.web, this.defaultAvatarIndex);
+  }
+
+  /**
+   * The avatar URL, or the {@link User.defaultAvatarURL} when the user has none.
    *
    * @param options - Ignored.
    */
-  public displayAvatarURL(options?: ImageURLOptions): string | null {
-    return this.avatarURL(options);
+  public displayAvatarURL(options?: ImageURLOptions): string {
+    return this.avatarURL(options) ?? this.defaultAvatarURL;
   }
 
   /**
