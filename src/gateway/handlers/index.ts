@@ -5,6 +5,20 @@ import type { WebSocketManager } from '../WebSocketManager.js';
 import { messageCreate, messageDelete, messageReactionAdd, messageReactionRemove, messageUpdate, roomPinsUpdate, typingStart } from './messages.js';
 import { handleReady } from './ready.js';
 import {
+  bridgeCreate,
+  bridgeDelete,
+  bridgeMessageCreate,
+  bridgeMessageDelete,
+  bridgeMessageUpdate,
+  bridgeOptOut,
+  bridgePuppetBlock,
+  bridgePuppetUnblock,
+  bridgeReactionAdd,
+  bridgeReactionRemove,
+  bridgeUpdate,
+  webhooksUpdate,
+} from './bridges.js';
+import {
   pmRoomUpsert,
   roleOverrideDelete,
   roleOverrideUpdate,
@@ -84,6 +98,18 @@ export const DispatchHandlers: { [T in keyof GatewayDispatchDataMap]?: DispatchH
   USER_UPDATE: userUpdate,
   SESSION_REVOKED: sessionRevoked,
   VOICE_STATE_UPDATE: voiceStateUpdate,
+  WEBHOOKS_UPDATE: webhooksUpdate,
+  BRIDGE_CREATE: bridgeCreate,
+  BRIDGE_UPDATE: bridgeUpdate,
+  BRIDGE_DELETE: bridgeDelete,
+  BRIDGE_MESSAGE_CREATE: bridgeMessageCreate,
+  BRIDGE_MESSAGE_UPDATE: bridgeMessageUpdate,
+  BRIDGE_MESSAGE_DELETE: bridgeMessageDelete,
+  BRIDGE_REACTION_ADD: bridgeReactionAdd,
+  BRIDGE_REACTION_REMOVE: bridgeReactionRemove,
+  BRIDGE_OPTOUT: bridgeOptOut,
+  BRIDGE_PUPPET_BLOCK: bridgePuppetBlock,
+  BRIDGE_PUPPET_UNBLOCK: bridgePuppetUnblock,
 };
 
 /**

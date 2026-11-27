@@ -4,7 +4,9 @@
 // Space (not guild), Room (not channel), Section (not category), PM (not DM).
 // A line may opt out with the marker `terms-ok` (for example a discord.js comparison or a
 // server wire field that predates the rule). Files whose path matches ALLOWED_FILES are skipped
-// entirely (the "Coming from discord.js" guide must name both sides).
+// entirely (the "Coming from discord.js" guide must name both sides). In Markdown, the lines
+// between `<!-- terms-ok:start -->` and `<!-- terms-ok:end -->` opt out together (a code sample
+// written against discord.js's own API, such as the Discord bridge in the bridges guide).
 import { readdir, readFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -54,8 +56,11 @@ for (const start of ROOTS) {
     const rel = relative(root, file);
     if (ALLOWED_FILES.some((re) => re.test(rel))) continue;
     const lines = (await readFile(file, 'utf8')).split('\n');
+    let region = false;
     lines.forEach((line, index) => {
-      if (line.includes('terms-ok')) return;
+      if (line.includes('<!-- terms-ok:start -->')) region = true;
+      if (line.includes('<!-- terms-ok:end -->')) region = false;
+      if (region || line.includes('terms-ok')) return;
       let text = line;
       for (const token of WIRE_TOKENS) text = text.replace(token, '');
       for (const rule of RULES) {

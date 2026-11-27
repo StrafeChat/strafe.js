@@ -4,8 +4,11 @@ export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 /** A path relative to the API base, starting with `/` (what {@link Routes} returns). */
 export type RouteLike = `/${string}`;
 
-/** The authorization scheme: `Bot` for bot tokens, `Bearer` for OAuth2 access tokens. */
-export type AuthPrefix = 'Bot' | 'Bearer';
+/**
+ * The authorization scheme: `Bot` for bot tokens, `Bearer` for OAuth2 access tokens, `Webhook` for
+ * a webhook's token (its execute and token routes).
+ */
+export type AuthPrefix = 'Bot' | 'Bearer' | 'Webhook';
 
 /** A function with `fetch`'s shape, injectable for tests, proxies or a custom dispatcher. */
 export type FetchLike = (input: string, init: RequestInit) => Promise<Response>;
@@ -36,8 +39,9 @@ export interface AuthData {
 /** Options for one request (the second argument of `rest.get/post/...`). */
 export interface RequestData {
   /**
-   * The JSON body. Serialized with `JSON.stringify`; `bigint`s (permission bitfields) become JSON
-   * numbers, as Strafe expects. With `files`, each top-level key becomes a form field instead.
+   * The JSON body. Serialized with `JSON.stringify`; `bigint`s (permission bitfields) become
+   * decimal strings, the form Strafe takes for permission writes. With `files`, each top-level key
+   * becomes a form field instead.
    */
   body?: unknown;
   /** Files to send as `multipart/form-data`. */
@@ -68,6 +72,12 @@ export interface RequestData {
   raw?: boolean;
   /** Put the request in the queue of this id instead of the route's first id (advanced). */
   majorParameter?: string;
+  /**
+   * The request may safely be sent twice, so network errors, timeouts and 5xx are retried even for
+   * a POST or PATCH (a bridge send is: the server answers a repeated external message id with the
+   * message it already posted).
+   */
+  idempotent?: boolean;
   /**
    * Top-level body fields holding secrets (a person's access token, an OAuth2 code). They are sent
    * as given, but show as `[redacted]` wherever the request is reported: errors' `requestBody` and
@@ -112,9 +122,15 @@ export interface RateLimitData {
   global: boolean;
   /**
    * `user`: the route's per-account limit (a few routes count per IP; reported the same way).
-   * `shared`: a limit on one room, such as slowmode; only that room's queue waits.
+   * `shared`: a limit on one room, webhook, bridge or bridged user (slowmode, a webhook's execute
+   * budget...); only that queue waits.
    */
   scope: 'user' | 'global' | 'shared';
+  /**
+   * The server's own name for the limit, when it gave one: `webhook`, `room`, `bridge`, `puppet`
+   * (one bridged user), `token` (failed webhook tokens) on webhook and bridge routes; `null` otherwise.
+   */
+  serverScope?: string | null;
   /** Milliseconds to wait. */
   retryAfter: number;
   /** Always 0. */

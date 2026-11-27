@@ -72,7 +72,8 @@ export type CacheManagerName =
   | 'ReactionUserManager'
   | 'PermissionOverwriteManager'
   | 'ThreadMemberManager'
-  | 'VoiceStateManager';
+  | 'VoiceStateManager'
+  | 'BridgeManager';
 
 /**
  * Makes the cache collection of a manager. The default ({@link Options.DefaultMakeCacheSettings})

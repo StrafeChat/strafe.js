@@ -291,7 +291,18 @@ export type AuditLogActionType =
   | 'member_voice_move'
   | 'member_voice_disconnect'
   | 'member_nick_update'
-  | 'member_profile_reset';
+  | 'member_profile_reset'
+  | 'webhook_create'
+  | 'webhook_update'
+  | 'webhook_delete'
+  | 'webhook_token_reset'
+  | 'bridge_create'
+  | 'bridge_update'
+  | 'bridge_delete'
+  | 'bridge_token_reset'
+  | 'bridge_puppet_block'
+  | 'bridge_puppet_unblock'
+  | 'bridge_consent_update';
 
 /** One audit-log entry. */
 export interface APIAuditLogEntry {

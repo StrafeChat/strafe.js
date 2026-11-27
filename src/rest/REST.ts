@@ -1,4 +1,4 @@
-import { HTTPError, RateLimitError, StrafeAPIError, type APIErrorBody } from '../errors/APIErrors.js';
+import { BridgeAPIError, HTTPError, RateLimitError, StrafeAPIError, WebhookAPIError, type APIErrorBody } from '../errors/APIErrors.js';
 import { ErrorCodes } from '../errors/ErrorCodes.js';
 import { StrafeError, StrafeTypeError, errorDetails } from '../errors/StrafeError.js';
 import { TypedEmitter } from '../util/EventEmitter.js';
@@ -40,6 +40,13 @@ const UPLOAD_TIMEOUT = 120_000;
 const PRE_SEND_ERRORS = new Set(['ECONNREFUSED', 'ENOTFOUND', 'EAI_AGAIN', 'ENETUNREACH', 'EHOSTUNREACH', 'UND_ERR_CONNECT_TIMEOUT']);
 
 const IDEMPOTENT = new Set<RequestMethod>(['GET', 'PUT', 'DELETE']);
+
+/**
+ * The server's scopes (`X-RateLimit-Scope`, a 429's `scope`) of limits that are not the account's
+ * per-route budget: one webhook, one room shared by its webhooks and bridges, one bridge, one
+ * bridged user, failed webhook tokens. Such a 429 only holds up its own queue.
+ */
+const NON_ACCOUNT_SCOPES = new Set(['webhook', 'room', 'bridge', 'puppet', 'token']);
 
 /** Above this many rate-limit buckets, idle ones whose window is over are dropped (they only hold what the next response teaches again). */
 const MAX_IDLE_BUCKETS = 256;
@@ -92,12 +99,14 @@ export class REST extends TypedEmitter<RESTEventsMap> {
   }
 
   /**
-   * Sets the token. A leading `Bot ` or `Bearer ` is stripped (the scheme comes from `authPrefix`).
+   * Sets the token. A leading `Bot `, `Bearer ` or `Webhook ` is stripped (the scheme comes from
+   * `authPrefix`).
    *
-   * @param token - The bot token (or an OAuth2 access token with `authPrefix: 'Bearer'`).
+   * @param token - The bot token (or an OAuth2 access token with `authPrefix: 'Bearer'`, a webhook
+   *   token with `authPrefix: 'Webhook'`).
    */
   public setToken(token: string): this {
-    this.#token = token.replace(/^(Bot|Bearer)\s+/i, '').trim();
+    this.#token = token.replace(/^(Bot|Bearer|Webhook)\s+/i, '').trim();
     return this;
   }
 
@@ -170,22 +179,25 @@ export class REST extends TypedEmitter<RESTEventsMap> {
     const route = routeTemplate(request.fullRoute);
     const bucketKey = `${request.method} ${route}`;
     const major = request.majorParameter ?? majorParameter(request.fullRoute);
-    if (typeof request.auth === 'object') {
+    if (typeof request.auth === 'object' && request.auth.prefix !== 'Webhook') {
       // Another account's credentials (an OAuth2 access token): Strafe counts its limits per
       // account, so it neither shares the instance token's budget nor waits in its queues. Its
       // own 429s are still waited out.
       return (await this.run(request, route, major, new RateLimitBucket())) as T;
     }
-    const queueKey = `${bucketKey}:${major}`;
+    // A webhook token is not an account either, but its messages must keep their order: it gets
+    // queues and a budget of its own.
+    const namespace = typeof request.auth === 'object' ? 'webhook-token ' : '';
+    const queueKey = `${namespace}${bucketKey}:${major}`;
     let queue = this.queues.get(queueKey);
     if (!queue) {
       queue = new AsyncQueue();
       this.queues.set(queueKey, queue);
     }
-    let bucket = this.buckets.get(bucketKey);
+    let bucket = this.buckets.get(namespace + bucketKey);
     if (!bucket) {
       bucket = new RateLimitBucket();
-      this.buckets.set(bucketKey, bucket);
+      this.buckets.set(namespace + bucketKey, bucket);
     }
     bucket.users++;
     await queue.wait();
@@ -221,7 +233,7 @@ export class REST extends TypedEmitter<RESTEventsMap> {
       for (;;) {
         const wait = bucket.delay(Date.now());
         if (wait <= 0) break;
-        const data = this.rateLimitData(request, route, major, url, wait, bucket.limit, 'user');
+        const data = this.rateLimitData(request, route, major, url, wait, bucket.limit, 'user', null);
         await this.onRateLimit(data);
         await pause(wait + this.options.offset, request, url);
       }
@@ -237,7 +249,7 @@ export class REST extends TypedEmitter<RESTEventsMap> {
         if (request.signal?.aborted) {
           throw new StrafeError(ErrorCodes.RequestAborted, request.method, url, errorDetails({ cause: error }));
         }
-        if (retries < this.options.retries && this.canRetryError(request.method, error)) {
+        if (retries < this.options.retries && this.canRetryError(request, error)) {
           retries++;
           this.emit('debug', `[REST] ${request.method} ${route} failed (${describe(error)}); retry ${retries}/${this.options.retries}`);
           await pause(backoff(retries), request, url);
@@ -250,7 +262,10 @@ export class REST extends TypedEmitter<RESTEventsMap> {
       }
 
       const now = Date.now();
-      bucket.update(response.headers, now);
+      const headerScope = response.headers.get('x-ratelimit-scope');
+      // A webhook's or bridge's own counters say nothing about the account's budget for the route.
+      if (headerScope !== null && NON_ACCOUNT_SCOPES.has(headerScope)) bucket.release();
+      else bucket.update(response.headers, now);
       if (this.listenerCount('response') > 0) {
         const info: APIRequest = { method: request.method, path: request.fullRoute, route, url, data: requestBody, retries };
         this.emit('response', info, response.clone());
@@ -261,18 +276,21 @@ export class REST extends TypedEmitter<RESTEventsMap> {
         const parsed = parseJSON(text) as APIErrorBody | undefined;
         const retryAfterMs = retryAfterOf(response.headers, parsed);
         const remaining = Number(response.headers.get('x-ratelimit-remaining'));
+        const serverScope = typeof parsed?.scope === 'string' ? parsed.scope : headerScope;
         const perRoom =
           (typeof parsed?.error === 'string' && /slowmode/i.test(parsed.error)) ||
+          parsed?.code === 'slowmode' ||
+          (serverScope !== null && NON_ACCOUNT_SCOPES.has(serverScope)) ||
           (response.headers.has('x-ratelimit-remaining') && Number.isFinite(remaining) && remaining > 0);
         if (!perRoom) bucket.block(retryAfterMs, now);
-        const data = this.rateLimitData(request, route, major, url, retryAfterMs, bucket.limit, perRoom ? 'shared' : 'user');
+        const data = this.rateLimitData(request, route, major, url, retryAfterMs, bucket.limit, perRoom ? 'shared' : 'user', serverScope);
         this.emit('debug', `[REST] 429 on ${request.method} ${route} (${perRoom ? 'slowmode' : 'rate limit'}); waiting ${retryAfterMs} ms`);
         await this.onRateLimit(data);
         await pause(retryAfterMs + this.options.offset, request, url);
         continue;
       }
 
-      if (response.status >= 500 && retries < this.options.retries && this.canRetryStatus(request.method, response.status)) {
+      if (response.status >= 500 && retries < this.options.retries && this.canRetryStatus(request, response.status)) {
         retries++;
         await response.arrayBuffer().catch(() => undefined);
         this.emit('debug', `[REST] ${request.method} ${route} answered ${response.status}; retry ${retries}/${this.options.retries}`);
@@ -280,7 +298,7 @@ export class REST extends TypedEmitter<RESTEventsMap> {
         continue;
       }
 
-      if (!response.ok) throw await toError(response, request.method, url, requestBody);
+      if (!response.ok) throw await toError(response, request.method, url, requestBody, route);
       if (request.raw === true) return response;
       return parseBody(response);
     }
@@ -365,15 +383,15 @@ export class REST extends TypedEmitter<RESTEventsMap> {
     }
   }
 
-  private canRetryError(method: RequestMethod, error: unknown): boolean {
-    if (IDEMPOTENT.has(method)) return true;
+  private canRetryError(request: InternalRequest, error: unknown): boolean {
+    if (IDEMPOTENT.has(request.method) || request.idempotent === true) return true;
     if (error instanceof TimeoutError) return false;
     const code = errorCode(error);
     return code !== undefined && PRE_SEND_ERRORS.has(code);
   }
 
-  private canRetryStatus(method: RequestMethod, status: number): boolean {
-    if (IDEMPOTENT.has(method)) return status === 500 || status === 502 || status === 503 || status === 504;
+  private canRetryStatus(request: InternalRequest, status: number): boolean {
+    if (IDEMPOTENT.has(request.method) || request.idempotent === true) return status === 500 || status === 502 || status === 503 || status === 504;
     return status === 503;
   }
 
@@ -385,6 +403,7 @@ export class REST extends TypedEmitter<RESTEventsMap> {
     wait: number,
     limit: number,
     scope: RateLimitData['scope'],
+    serverScope: string | null,
   ): RateLimitData {
     return {
       timeToReset: wait,
@@ -396,6 +415,7 @@ export class REST extends TypedEmitter<RESTEventsMap> {
       majorParameter: major,
       global: false,
       scope,
+      serverScope,
       retryAfter: wait,
       sublimitTimeout: 0,
     };
@@ -527,13 +547,15 @@ function redactFields(body: unknown, fields: readonly string[] | undefined): unk
   return body;
 }
 
-async function toError(response: Response, method: string, url: string, requestBody: RequestBody): Promise<Error> {
+async function toError(response: Response, method: string, url: string, requestBody: RequestBody, route: string): Promise<Error> {
   const text = await response.text().catch(() => '');
   const type = response.headers.get('content-type') ?? '';
   const parsed = type.includes('json') || text.startsWith('{') ? parseJSON(text) : undefined;
   if (parsed !== undefined && typeof parsed === 'object' && parsed !== null) {
     const body = parsed as APIErrorBody;
     if (typeof body.error !== 'string') body.error = '';
+    if (/^\/bridges\/|^\/rooms\/:id\/bridges$/.test(route)) return new BridgeAPIError(body, response.status, method, url, requestBody);
+    if (/^\/webhooks\/|^\/(?:rooms|spaces)\/:id\/webhooks$/.test(route)) return new WebhookAPIError(body, response.status, method, url, requestBody);
     return new StrafeAPIError(body, response.status, method, url, requestBody);
   }
   return new HTTPError(response.status, response.statusText, method, url, text, requestBody);

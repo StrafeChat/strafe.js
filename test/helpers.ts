@@ -7,6 +7,8 @@ import type { APIRole, APISpace } from '../src/types/api/space.js';
 import { SpaceVerificationLevel } from '../src/types/api/space.js';
 import type { APISpaceRoom } from '../src/types/api/room.js';
 import type { APISelfUser } from '../src/types/api/user.js';
+import type { APIBridge } from '../src/types/api/bridge.js';
+import { WebhookType } from '../src/types/api/webhook.js';
 
 /** One recorded request. */
 export interface Call {
@@ -35,7 +37,7 @@ export function fakeAPI() {
     else if (typeof init.body === 'string') body = JSON.parse(init.body);
     const call: Call = { method: init.method ?? 'GET', path, query: url.searchParams, body, form };
     calls.push(call);
-    const match = handlers.find((h) => h.method === call.method && h.pattern.test(decodeURIComponent(path)));
+    const match = handlers.find((h) => h.method === call.method && (h.pattern.test(path) || h.pattern.test(decodeURIComponent(path))));
     if (!match) return new Response(JSON.stringify({ error: `no handler for ${call.method} ${path}` }), { status: 404, headers: { 'content-type': 'application/json' } });
     const result = await match.handler(call);
     if (result instanceof Response) return result;
@@ -206,4 +208,52 @@ export function setup(options: ClientOptions = {}) {
   client.rooms._add({ id: PM_ID, type: RoomType.PM, recipients: [BOT_ID, OWNER_ID], created_at: now });
   client.rooms._add({ id: GROUP_ID, type: RoomType.GroupPM, recipients: [BOT_ID, OWNER_ID], created_at: now, e2ee_enabled: false, name: 'friends', creator_id: OWNER_ID });
   return { api, client: client as Client<true>, space };
+}
+
+export const BRIDGE_ID = '1310000000000000009';
+export const PUPPET_ID = '1310000000000000077';
+
+export function apiBridge(extra: Partial<APIBridge> = {}): APIBridge {
+  return {
+    id: BRIDGE_ID,
+    type: WebhookType.Bridge,
+    space_id: SPACE_ID,
+    room_id: TEXT_ID,
+    name: 'Discord #general',
+    avatar: null,
+    platform: 'discord',
+    platform_name: null,
+    remote: { name: 'Example #general', url: 'https://discord.gg/example' },
+    driver: 'bot',
+    driver_id: BOT_ID,
+    application_id: BOT_ID,
+    driver_name: 'Helper',
+    state: 'active',
+    state_reason: null,
+    created_at: '2026-11-17T12:00:00Z',
+    settings: { relay_bots: false, relay_other_bridges: false, reply_pings: true, allow_colour: false, show_profile_links: false },
+    updated_at: '2026-11-17T12:00:00Z',
+    last_used_at: null,
+    creator: { id: BOT_ID, username: 'helper', display_name: 'Helper', avatar: '', bot: true },
+    ...extra,
+  };
+}
+
+/** A message as a bridge posted it: the bridged user's author shape, the bot as `via`. */
+export function bridgedMessage(id: string, extra: Record<string, unknown> = {}) {
+  return message(id, {
+    sender_id: BOT_ID,
+    plaintext: 'hello from discord',
+    author: { id: PUPPET_ID, username: 'Alice', display_name: 'Alice', avatar: '', banner: '', bio: '', about_me: '', pronouns: '', bot: true, public_flags: 0, webhook: true },
+    webhook_id: BRIDGE_ID,
+    masquerade: {
+      kind: 'bridge',
+      name: 'Alice',
+      avatar: 'https://chat.example/api/media/v1/external/sig/alice',
+      colour: 15158332,
+      bridge: { id: BRIDGE_ID, name: 'Discord #general', platform: 'discord', platform_name: null, puppet_id: PUPPET_ID, external_bot: false, profile_url: null },
+      via: { id: BOT_ID, username: 'helper', display_name: 'Helper', avatar: '', bot: true },
+    },
+    ...extra,
+  });
 }

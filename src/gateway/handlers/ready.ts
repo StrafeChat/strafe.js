@@ -102,6 +102,16 @@ export function handleReady(client: Client, data: GatewayReadyData, ws: WebSocke
     deletedRooms.push(room);
   }
 
+  // Bridges: each text room's (READY leaves `bridges` out of a room with none), then the full
+  // objects of those this bot drives.
+  for (const rooms of Object.values(data.space_rooms ?? {})) {
+    for (const raw of rooms) {
+      const room = client.rooms.cache.get(raw.id);
+      if (room?.isTextRoom()) room._setBridges(raw.bridges ?? []);
+    }
+  }
+  client.bridges._setFrom(data.bridges ?? []);
+
   for (const state of data.voice_states ?? []) {
     const spaceId = nonEmpty(state.space_id);
     if (spaceId !== undefined) client.spaces.cache.get(spaceId)?.voiceStates._add(state);

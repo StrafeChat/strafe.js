@@ -176,7 +176,12 @@ export function resolveMessageEdit(client: Client, options: string | MessageEdit
   return body;
 }
 
-function describeFile(file: FileResolvable): ResolvedMessage['files'][number] {
+/**
+ * What to upload for a file of a send: the source, its name and image size.
+ *
+ * @internal
+ */
+export function describeFile(file: FileResolvable): ResolvedMessage['files'][number] {
   if (file instanceof AttachmentBuilder) return { file: file.attachment, name: file.name, width: file.width, height: file.height };
   if (file instanceof Attachment) {
     return { file: file.url, name: file.name ?? undefined, width: file.width ?? undefined, height: file.height ?? undefined };

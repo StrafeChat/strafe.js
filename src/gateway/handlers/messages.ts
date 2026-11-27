@@ -3,6 +3,7 @@ import { Events } from '../../client/ClientEvents.js';
 import type { Message, PartialMessage } from '../../structures/Message.js';
 import type { TextBasedRoom } from '../../structures/rooms/index.js';
 import { Typing } from '../../structures/Typing.js';
+import { User } from '../../structures/User.js';
 import type {
   GatewayDispatchDataMap,
   GatewayEnvelope,
@@ -69,7 +70,10 @@ async function reaction(client: Client, data: GatewayMessageReactionData, envelo
   // count is unknown (null) until fetched.
   const entry =
     message.reactions.cache.get(key) ?? message.reactions._add(message.partial ? { emoji: data.emoji } : { emoji: data.emoji, count: 0, me: false }, added);
-  const user = client.users.cache.get(data.user_id) ?? client.users._add({ id: data.user_id });
+  // A bridged user's reaction: `user_id` is their puppet id, not an account, so it is never cached.
+  const user = data.puppet
+    ? new User(client, { id: data.user_id, username: data.puppet.name, display_name: data.puppet.name, avatar: data.puppet.avatar ?? '', bot: true, webhook: true })
+    : (client.users.cache.get(data.user_id) ?? client.users._add({ id: data.user_id }));
   if (added) {
     entry._add(user.id);
     client.emit(Events.MessageReactionAdd, entry, user);

@@ -1,6 +1,6 @@
 {
   "name": "@strafechat/strafe.js",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "The official TypeScript library for Strafe bots, the REST API and OAuth2.",
   "type": "module",
   "exports": {

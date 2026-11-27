@@ -99,7 +99,7 @@ describe('multipart', () => {
     expect(file.type).toBe('image/png');
     expect(form.get('width')).toBe('10');
     expect(form.has('skip')).toBe(false);
-    expect(form.get('nested')).toBe('{"a":1}');
+    expect(form.get('nested')).toBe('{"a":"1"}');
     const many = await buildFormData([
       { name: 'a.txt', data: 'a' },
       { name: 'b.txt', data: 'b', key: 'other' },
@@ -109,8 +109,9 @@ describe('multipart', () => {
     await expect(buildFormData([], 'nope')).rejects.toThrow(TypeError);
   });
 
-  it('serializes bigints as JSON numbers', () => {
-    expect(JSON.stringify({ allow: 2049n }, bigintReplacer)).toBe('{"allow":2049}');
+  it('serializes bigints as decimal strings', () => {
+    expect(JSON.stringify({ allow: 2049n }, bigintReplacer)).toBe('{"allow":"2049"}');
+    expect(JSON.stringify({ allow: (1n << 31n) | (1n << 32n) }, bigintReplacer)).toBe('{"allow":"6442450944"}');
     expect(() => JSON.stringify({ x: 1n << 60n }, bigintReplacer)).toThrow(RangeError);
   });
 });

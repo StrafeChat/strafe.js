@@ -25,6 +25,9 @@ import { federationRef } from './rooms/BaseRoom.js';
 import type { TextRoom } from './rooms/TextRoom.js';
 import type { VoiceRoom } from './rooms/VoiceRoom.js';
 import type { SpaceMember } from './SpaceMember.js';
+import { Webhook } from './Webhook.js';
+import type { APIWebhook } from '../types/api/webhook.js';
+import { Collection } from '../util/Collection.js';
 import type { ImageURLOptions } from './User.js';
 
 /** A flag name from {@link SpaceSystemRoomFlags}. */
@@ -417,6 +420,36 @@ export class Space extends Base {
     });
     this._patch(data);
     return this;
+  }
+
+  /**
+   * Fetches the space's webhooks: those in the rooms where the client has Manage Webhooks. Lists
+   * never carry tokens.
+   */
+  public async fetchWebhooks(): Promise<Collection<Snowflake, Webhook>> {
+    const list = await this.client.rest.get<APIWebhook[]>(Routes.spaceWebhooks(this.id));
+    return new Collection(list.map((data) => [data.id, new Webhook(this.client, data)] as const));
+  }
+
+  /**
+   * The space's bridge consent mode: `optout` (everyone's messages may be copied to bridged
+   * platforms unless they said no; the default) or `optin` (only people who said yes).
+   */
+  public async fetchBridgeConsentMode(): Promise<'optout' | 'optin'> {
+    const data = await this.client.rest.get<{ mode: 'optout' | 'optin' }>(Routes.spaceBridgeConsent(this.id));
+    return data.mode;
+  }
+
+  /**
+   * Sets the space's bridge consent mode (Manage Space; audit-logged). Switching to `optin` tells
+   * every bridge to delete the copies of people who did not opt in ({@link Events.BridgeOptOut}).
+   *
+   * @param mode - `optout` or `optin`.
+   * @param reason - Audit-log reason.
+   */
+  public async setBridgeConsentMode(mode: 'optout' | 'optin', reason?: string): Promise<'optout' | 'optin'> {
+    const data = await this.client.rest.put<{ mode: 'optout' | 'optin' }>(Routes.spaceBridgeConsent(this.id), { body: reason === undefined ? { mode } : { mode, reason } });
+    return data.mode;
   }
 
   /**

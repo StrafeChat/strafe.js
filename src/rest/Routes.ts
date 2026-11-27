@@ -62,6 +62,28 @@ function codeSegment(code: string): Segment {
   return new Segment(encoded);
 }
 
+/** A webhook token: `swh_` + base64url on Strafe (letters, digits, `_`, `-`, `.` for Discord-style tokens). */
+const WEBHOOK_TOKEN = /^[A-Za-z0-9_.-]{1,256}$/;
+
+function tokenSegment(token: string): Segment {
+  if (typeof token !== 'string' || !WEBHOOK_TOKEN.test(token) || token === '.' || token === '..') {
+    throw new StrafeTypeError(ErrorCodes.InvalidArgument, 'A webhook token holds only letters, digits, "_", "-" and ".".');
+  }
+  return new Segment(token);
+}
+
+/** An id on another platform (an external message or user id), percent-encoded. */
+function externalSegment(value: string): Segment {
+  const encoded = typeof value === 'string' && value.length > 0 && value.length <= 256 ? encodeSegment(value) : null;
+  if (encoded === null) throw new StrafeTypeError(ErrorCodes.InvalidArgument, `Invalid external id ${JSON.stringify(value)} (1-256 characters, not "." or "..").`);
+  return new Segment(encoded);
+}
+
+/** The `/webhooks/:id` or `/webhooks/:id/:token` base. */
+function webhookBase(webhookId: Snowflake, token?: string): RouteLike {
+  return token === undefined ? path`/webhooks/${webhookId}` : path`/webhooks/${webhookId}/${tokenSegment(token)}`;
+}
+
 /**
  * Paths of the Strafe REST API, relative to the API base, like `discord-api-types`' `Routes`.
  * Pass them to `rest.get/post/put/patch/delete`.
@@ -216,6 +238,54 @@ export const Routes = {
   /** `GET /emojis/:emojiId` (any emoji by id). */
   emoji: (emojiId: Snowflake): RouteLike => path`/emojis/${emojiId}`,
 
+  /** `GET`, `POST /rooms/:id/webhooks`. */
+  roomWebhooks: (roomId: Snowflake): RouteLike => path`/rooms/${roomId}/webhooks`,
+  /** `GET /spaces/:id/webhooks` (those in rooms where you have Manage Webhooks). */
+  spaceWebhooks: (spaceId: Snowflake): RouteLike => path`/spaces/${spaceId}/webhooks`,
+  /**
+   * `GET`, `PATCH`, `DELETE`, `POST` (execute) `/webhooks/:id`, or `/webhooks/:id/:token` with a
+   * token (Discord's form; prefer the `Authorization: Webhook <token>` header, which keeps the token
+   * out of URLs and logs).
+   */
+  webhook: (webhookId: Snowflake, token?: string): RouteLike => webhookBase(webhookId, token),
+  /** `POST /webhooks/:id/token` (reset the token; Manage Webhooks). */
+  webhookTokenReset: (webhookId: Snowflake): RouteLike => path`/webhooks/${webhookId}/token`,
+  /** `GET`, `PATCH`, `DELETE /webhooks/:id[/:token]/messages/:messageId`. */
+  webhookMessage: (webhookId: Snowflake, messageId: Snowflake, token?: string): RouteLike =>
+    `${webhookBase(webhookId, token)}${path`/messages/${messageId}`}` as RouteLike,
+
+  /** `GET`, `POST /rooms/:id/bridges`. */
+  roomBridges: (roomId: Snowflake): RouteLike => path`/rooms/${roomId}/bridges`,
+  /** `GET`, `PATCH`, `DELETE /bridges/:id`. */
+  bridge: (bridgeId: Snowflake): RouteLike => path`/bridges/${bridgeId}`,
+  /** `GET` (backlog), `POST` (send) `/bridges/:id/messages`. */
+  bridgeMessages: (bridgeId: Snowflake): RouteLike => path`/bridges/${bridgeId}/messages`,
+  /** `PATCH`, `DELETE /bridges/:id/messages/:messageId` (a message the bridge posted, by its Strafe id). */
+  bridgeMessage: (bridgeId: Snowflake, messageId: Snowflake): RouteLike => path`/bridges/${bridgeId}/messages/${messageId}`,
+  /** `GET` (lookup), `PATCH`, `DELETE /bridges/:id/messages/external/:externalMessageId`. */
+  bridgeExternalMessage: (bridgeId: Snowflake, externalMessageId: string): RouteLike =>
+    path`/bridges/${bridgeId}/messages/external/${externalSegment(externalMessageId)}`,
+  /** `GET`, `PUT /bridges/:id/messages/:messageId/external` (a Strafe message's copies; record one). */
+  bridgeMessageExternal: (bridgeId: Snowflake, messageId: Snowflake): RouteLike => path`/bridges/${bridgeId}/messages/${messageId}/external`,
+  /** `PUT`, `DELETE /bridges/:id/messages/:messageId/reactions/:emoji/:externalUserId`. */
+  bridgeMessageReaction: (bridgeId: Snowflake, messageId: Snowflake, emoji: string, externalUserId: string): RouteLike =>
+    path`/bridges/${bridgeId}/messages/${messageId}/reactions/${emojiSegment(emoji)}/${externalSegment(externalUserId)}`,
+  /** `PUT`, `DELETE /bridges/:id/messages/external/:externalMessageId/reactions/:emoji/:externalUserId`. */
+  bridgeExternalReaction: (bridgeId: Snowflake, externalMessageId: string, emoji: string, externalUserId: string): RouteLike =>
+    path`/bridges/${bridgeId}/messages/external/${externalSegment(externalMessageId)}/reactions/${emojiSegment(emoji)}/${externalSegment(externalUserId)}`,
+  /** `GET`, `PATCH`, `DELETE /bridges/:id/puppets/:externalUserId`. */
+  bridgePuppet: (bridgeId: Snowflake, externalUserId: string): RouteLike => path`/bridges/${bridgeId}/puppets/${externalSegment(externalUserId)}`,
+  /** `GET /bridges/:id/blocks`. */
+  bridgeBlocks: (bridgeId: Snowflake): RouteLike => path`/bridges/${bridgeId}/blocks`,
+  /** `PUT`, `DELETE /bridges/:id/blocks/:puppetId`. */
+  bridgeBlock: (bridgeId: Snowflake, puppetId: Snowflake): RouteLike => path`/bridges/${bridgeId}/blocks/${puppetId}`,
+  /** `GET`, `PUT /users/@me/bridge-consent`. */
+  userBridgeConsent: (): RouteLike => '/users/@me/bridge-consent',
+  /** `GET`, `PUT /spaces/:id/members/@me/bridge-consent`. */
+  spaceMemberBridgeConsent: (spaceId: Snowflake): RouteLike => path`/spaces/${spaceId}/members/@me/bridge-consent`,
+  /** `GET`, `PUT /spaces/:id/bridge-consent` (the space's mode; Manage Space to change it). */
+  spaceBridgeConsent: (spaceId: Snowflake): RouteLike => path`/spaces/${spaceId}/bridge-consent`,
+
   /** `POST /oauth2/token`. */
   oauth2Token: (): RouteLike => '/oauth2/token',
   /** `POST /oauth2/token/revoke`. */
@@ -224,10 +294,14 @@ export const Routes = {
   oauth2CurrentAuthorization: (): RouteLike => '/oauth2/@me',
 } as const;
 
+/** Segments after `/webhooks/:id/` that are routes, not a token. */
+const WEBHOOK_STATIC = new Set(['token', 'messages']);
+
 /**
  * The bucket key of a path: ids replaced with `:id`, invite codes with `:code`, reaction emoji
- * with `:emoji` (`/rooms/:id/messages/:id/reactions/:emoji`). Strafe limits each route per
- * account, whatever room or space it names, so this is the whole bucket.
+ * with `:emoji` (`/rooms/:id/messages/:id/reactions/:emoji`), a webhook token with `:token` and
+ * a bridge's external ids with `:external`. Strafe limits each route per account, whatever room or
+ * space it names, so this is the whole bucket.
  *
  * @param path - A path relative to the API base (query string allowed).
  */
@@ -235,10 +309,13 @@ export function routeTemplate(path: string): string {
   const [pathname = ''] = path.split('?');
   const parts = pathname.split('/');
   const out: string[] = [];
+  const bridge = parts[1] === 'bridges';
   for (let i = 0; i < parts.length; i++) {
     const part = parts[i] ?? '';
     const previous = parts[i - 1];
-    if (previous === 'reactions') out.push(':emoji');
+    if (parts[1] === 'webhooks' && i === 3 && !WEBHOOK_STATIC.has(part)) out.push(':token');
+    else if (bridge && (previous === 'external' || previous === 'puppets' || parts[i - 2] === 'reactions')) out.push(':external');
+    else if (previous === 'reactions') out.push(':emoji');
     else if (previous === 'invites' && part !== '' && !/^\d+$/.test(part)) out.push(':code');
     else if (/^\d+$/.test(part)) out.push(':id');
     else out.push(part);
@@ -247,13 +324,14 @@ export function routeTemplate(path: string): string {
 }
 
 /**
- * The id a request is queued under: the first id in the path (the room or space). Requests with the
- * same route template and major parameter run one at a time, in order, so messages to one room keep
- * their order while other rooms are not held up.
+ * The id a request is queued under: the first id in the path (the room, space, webhook or bridge).
+ * Requests with the same route template and major parameter run one at a time, in order, so
+ * messages to one room (or through one webhook or bridge) keep their order while others are not
+ * held up.
  *
  * @param path - A path relative to the API base.
  */
 export function majorParameter(path: string): string {
-  const match = /^\/(?:rooms|spaces)\/(\d+)/.exec(path);
+  const match = /^\/(?:rooms|spaces|webhooks|bridges)\/(\d+)/.exec(path);
   return match?.[1] ?? 'global';
 }

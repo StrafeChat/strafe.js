@@ -5,6 +5,7 @@ import { StrafeError } from '../../src/errors/StrafeError.js';
 import { REST } from '../../src/rest/REST.js';
 import { Routes } from '../../src/rest/Routes.js';
 import type { RateLimitData } from '../../src/rest/types.js';
+import { version } from '../../src/util/version.js';
 
 interface Call {
   url: string;
@@ -47,7 +48,7 @@ describe('REST basics', () => {
     const headers = fetch.calls[0]!.init.headers as Record<string, string>;
     expect(fetch.calls[0]!.url).toBe('https://x.test/api/users/@me');
     expect(headers.Authorization).toBe('Bot abc123');
-    expect(headers['User-Agent']).toMatch(/^StrafeBot \(https:\/\/github\.com\/StrafeChat\/strafe\.js, 2\.0\.0\)/);
+    expect(headers['User-Agent']!.startsWith(`StrafeBot (https://github.com/StrafeChat/strafe.js, ${version})`)).toBe(true);
     expect(fetch.calls[0]!.init.method).toBe('GET');
   });
 
@@ -84,10 +85,10 @@ describe('REST basics', () => {
     expect(fetch.calls[1]!.url).toBe('https://x.test/api/rooms/1/messages?q=a+b');
   });
 
-  it('sends JSON with bigints as numbers', async () => {
+  it('sends JSON with bigints as decimal strings (the full form of a permission write)', async () => {
     const fetch = fakeFetch(json({}));
-    await rest(fetch).patch(Routes.spaceRole('1', '2'), { body: { permissions: 2049n, name: 'Mod' } });
-    expect(fetch.calls[0]!.init.body).toBe('{"permissions":2049,"name":"Mod"}');
+    await rest(fetch).patch(Routes.spaceRole('1', '2'), { body: { permissions: 2049n | (1n << 32n), name: 'Mod' } });
+    expect(fetch.calls[0]!.init.body).toBe('{"permissions":"4294969345","name":"Mod"}');
     expect((fetch.calls[0]!.init.headers as Record<string, string>)['Content-Type']).toBe('application/json');
   });
 

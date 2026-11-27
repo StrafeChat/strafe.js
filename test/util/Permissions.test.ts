@@ -12,22 +12,24 @@ import {
 
 describe('PermissionFlagsBits', () => {
   it('matches the server (bits.go)', () => {
-    expect(Object.keys(P)).toHaveLength(31);
+    expect(Object.keys(P)).toHaveLength(33);
     expect(P.ViewRoom).toBe(1n);
     expect(P.SendMessages).toBe(2n);
     expect(P.Administrator).toBe(2048n);
     expect(P.ManageSpace).toBe(4096n);
     expect(P.AttachFiles).toBe(8388608n);
     expect(P.EmbedLinks).toBe(1073741824n);
+    expect(P.ManageWebhooks).toBe(2147483648n);
+    expect(P.Masquerade).toBe(4294967296n);
     const values = Object.values(P);
-    expect(new Set(values).size).toBe(31);
+    expect(new Set(values).size).toBe(33);
     values.forEach((value, index) => expect(value).toBe(1n << BigInt(index)));
   });
 
   it('has the server masks', () => {
     expect(PermissionsBitField.Default).toBe(1436786719n);
-    expect(PermissionsBitField.AllRoom).toBe(1342144639n);
-    expect(PermissionsBitField.All).toBe(2147483647n);
+    expect(PermissionsBitField.AllRoom).toBe(7784595583n);
+    expect(PermissionsBitField.All).toBe(8589934591n);
     expect(PermissionsBitField.AllVoice).toBe(8355840n);
     expect(PermissionsBitField.AllThreads).toBe(251658240n);
   });

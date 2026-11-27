@@ -1,6 +1,7 @@
 import type { Snowflake } from '../../util/Snowflake.js';
 import type { ISO8601Timestamp } from './common.js';
 import type { APIUser } from './user.js';
+import type { APIMasquerade } from './webhook.js';
 
 /** An uploaded file (`POST /rooms/:id/attachments`, and `attachments` on messages). */
 export interface APIAttachment {
@@ -119,7 +120,9 @@ export type MessageSystemType =
   | 'member_left'
   | 'room_renamed'
   | 'call_started'
-  | 'call_ended';
+  | 'call_ended'
+  | 'bridge_created'
+  | 'bridge_deleted';
 
 /** The decoded `system_payload` of each {@link MessageSystemType}. */
 export interface MessageSystemPayloads {
@@ -147,6 +150,30 @@ export interface MessageSystemPayloads {
   call_started: { actor_id: Snowflake };
   /** A call ended. */
   call_ended: { actor_id: Snowflake; duration_seconds: number };
+  /** The room was bridged with another platform. */
+  bridge_created: APIBridgeNoticePayload;
+  /** A bridge was removed. */
+  bridge_deleted: APIBridgeNoticePayload;
+}
+
+/** The payload of the `bridge_created` and `bridge_deleted` notices. */
+export interface APIBridgeNoticePayload {
+  /** The bridge. */
+  bridge_id: Snowflake;
+  /** Its name. */
+  bridge_name: string;
+  /** Its platform. */
+  platform: string;
+  /** An `other` platform's label. */
+  platform_name?: string;
+  /** Who acted (the driving bot included). */
+  actor_id?: Snowflake;
+  /** What the room is bridged with. */
+  remote_name?: string;
+  /** The driving bot. */
+  driver_id?: Snowflake;
+  /** The driving bot's name. */
+  driver_name?: string;
 }
 
 /**
@@ -206,6 +233,13 @@ export interface APIMessage {
   mention_users?: APIUser[];
   /** The message replied to, one level deep (absent if deleted). */
   referenced_message?: APIMessage;
+  /**
+   * The webhook or bridge that posted it. Its `author` is then the webhook or bridged user (with
+   * `bot: true` and `webhook: true`), not an account: never cache it as a user.
+   */
+  webhook_id?: Snowflake;
+  /** The identity a webhook or bridge posted it under. */
+  masquerade?: APIMasquerade;
 }
 
 /** One pin (`GET /rooms/:id/pins`). */

@@ -50,7 +50,19 @@ export {
   type WebSocketConstructorLike,
   type WebSocketInitLike,
 } from './gateway/WebSocketManager.js';
-export { Events, type ClientEvents, type RoomPinsUpdateDetails } from './client/ClientEvents.js';
+export {
+  Events,
+  type ClientEvents,
+  type RoomPinsUpdateDetails,
+  type BridgeEventDetails,
+  type BridgeMessageCreateDetails,
+  type BridgeMessageUpdateDetails,
+  type BridgeMessageDeleteDetails,
+  type BridgeReactionDetails,
+  type BridgeOptOutDetails,
+  type BridgePuppetBlockDetails,
+} from './client/ClientEvents.js';
+export { WebhookClient, parseWebhookURL, type WebhookClientData, type WebhookClientOptions, type WebhookClientEditOptions } from './client/WebhookClient.js';
 
 // Structures
 export { Base } from './structures/Base.js';
@@ -62,7 +74,40 @@ export { SpaceMember, type PartialSpaceMember, type APIMemberLike } from './stru
 export { Role, type RoleTags, type RoleResolvable } from './structures/Role.js';
 export { PermissionOverwrites, OverwriteType, type PermissionOverwriteOptions, type ResolvedOverwriteOptions } from './structures/PermissionOverwrites.js';
 export * from './structures/rooms/index.js';
-export { Message, SystemSenderId, type PartialMessage, type MessageReference, type MessageSystemData } from './structures/Message.js';
+export {
+  Message,
+  SystemSenderId,
+  type PartialMessage,
+  type MessageReference,
+  type MessageSystemData,
+  type MessageMasquerade,
+  type MessageMasqueradeBridge,
+} from './structures/Message.js';
+export { Webhook, type WebhookCreateOptions, type WebhookEditOptions } from './structures/Webhook.js';
+export {
+  resolveAllowedMentions,
+  type AllowedMentions,
+  type WebhookMessageCreateOptions,
+  type WebhookMessageEditOptions,
+  type WebhookFetchMessageOptions,
+} from './structures/WebhookPayload.js';
+export {
+  Bridge,
+  type BridgeSettings,
+  type BridgeRemote,
+  type BridgeCreateOptions,
+  type BridgeEditOptions,
+  type BridgeExternalUser,
+  type BridgeMessageResolvable,
+  type BridgeSendOptions,
+  type BridgeSendResult,
+  type BridgeMessageEditOptions,
+  type BridgeExternalMessage,
+  type BridgeMessageLink,
+  type BridgeFeedMessage,
+  type BridgeBacklogOptions,
+  type BridgeReactOptions,
+} from './structures/Bridge.js';
 export { MessageMentions, type MessageMentionsHasOptions } from './structures/MessageMentions.js';
 export { MessageReaction } from './structures/MessageReaction.js';
 export {
@@ -121,6 +166,8 @@ export * from './managers/PermissionOverwriteManager.js';
 export * from './managers/ThreadManager.js';
 export * from './managers/ThreadMemberManager.js';
 export * from './managers/VoiceStateManager.js';
+export * from './managers/BridgeManager.js';
+export * from './managers/BridgePuppetManager.js';
 
 // OAuth2
 export * from './oauth2/index.js';

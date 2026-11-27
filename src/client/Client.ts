@@ -3,6 +3,7 @@ import { ErrorCodes } from '../errors/ErrorCodes.js';
 import { errorDetails, StrafeError } from '../errors/StrafeError.js';
 import type { ClientWebSocketOptions } from '../gateway/WebSocketManager.js';
 import { Status, WebSocketManager } from '../gateway/WebSocketManager.js';
+import { BridgeManager } from '../managers/BridgeManager.js';
 import { ClientEmojiManager } from '../managers/ClientEmojiManager.js';
 import { RoomManager } from '../managers/RoomManager.js';
 import { SpaceManager } from '../managers/SpaceManager.js';
@@ -13,6 +14,8 @@ import type { RESTOptions } from '../rest/types.js';
 import { ClientUser } from '../structures/ClientUser.js';
 import type { PresenceData } from '../structures/ClientUser.js';
 import { Invite } from '../structures/Invite.js';
+import { Webhook } from '../structures/Webhook.js';
+import type { APIWebhook } from '../types/api/webhook.js';
 import type { APIActivity } from '../types/api/common.js';
 import type { APIInstanceIndex } from '../types/api/instance.js';
 import type { APIInvitePreview } from '../types/api/space.js';
@@ -112,6 +115,8 @@ export class Client<Ready extends boolean = boolean> extends TypedEmitter<Client
   declare public readonly rooms: RoomManager;
   /** Custom emojis of every space. */
   declare public readonly emojis: ClientEmojiManager;
+  /** The bridges this bot drives, from READY (see {@link Bridge}). */
+  declare public readonly bridges: BridgeManager;
   /** The gateway connection (`client.ws.ping`, `client.ws.status`). */
   declare public readonly ws: WebSocketManager;
   /** The client's account, once ready. */
@@ -157,6 +162,7 @@ export class Client<Ready extends boolean = boolean> extends TypedEmitter<Client
     define('spaces', new SpaceManager(this));
     define('rooms', new RoomManager(this));
     define('emojis', new ClientEmojiManager(this));
+    define('bridges', new BridgeManager(this));
     define('ws', new WebSocketManager(this, options.ws));
     this._onActivityChange = (activity) => {
       this.ws._sendActivity(activity);
@@ -383,6 +389,27 @@ export class Client<Ready extends boolean = boolean> extends TypedEmitter<Client
     const clean = this.resolveInviteCode(code);
     const data = await this.rest.get<APIInvitePreview>(Routes.invite(clean), { auth: this.rest.hasToken });
     return new Invite(this, { ...data, code: clean });
+  }
+
+  /**
+   * Fetches a webhook: with its token (no permission needed; the answer has no creator), or without
+   * one as someone with Manage Webhooks in its room or the bot that made it. Passing the token keeps
+   * it on the returned {@link Webhook}, which can then send.
+   *
+   * @param id - The webhook id.
+   * @param token - Its token, when you have it.
+   * @example
+   * ```ts
+   * const hook = await client.fetchWebhook(id, process.env.WEBHOOK_TOKEN);
+   * await hook.send('Hello');
+   * ```
+   */
+  public async fetchWebhook(id: Snowflake, token?: string): Promise<Webhook> {
+    const data =
+      token === undefined
+        ? await this.rest.get<APIWebhook>(Routes.webhook(id))
+        : await this.rest.get<APIWebhook>(Routes.webhook(id), { auth: { prefix: 'Webhook', token } });
+    return new Webhook(this, token === undefined ? data : { ...data, token });
   }
 
   /**

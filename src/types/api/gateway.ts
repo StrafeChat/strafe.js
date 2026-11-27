@@ -4,6 +4,18 @@ import type { APIMessage } from './message.js';
 import type { APIPMRoom, APISpaceRoom } from './room.js';
 import type { APIEmoji, APIRole, APISpace } from './space.js';
 import type { APICall, APIVoiceState } from './voice.js';
+import type {
+  APIBridge,
+  GatewayBridgeData,
+  GatewayBridgeDeleteData,
+  GatewayBridgeMessageCreateData,
+  GatewayBridgeMessageDeleteData,
+  GatewayBridgeMessageUpdateData,
+  GatewayBridgeOptOutData,
+  GatewayBridgePuppetBlockData,
+  GatewayBridgeReactionData,
+  GatewayWebhooksUpdateData,
+} from './bridge.js';
 
 /** Gateway opcodes (`op` on every frame). */
 export enum GatewayOpcodes {
@@ -197,6 +209,24 @@ export interface GatewayMessageReactionData extends GatewayScopedIds {
   user_id: Snowflake;
   /** A unicode emoji, or `custom:<emoji id>` (the name is not included). */
   emoji: string;
+  /** A bridged user's reaction: who reacted (`user_id` is then their puppet id, not an account). */
+  puppet?: GatewayReactionPuppet;
+}
+
+/** The `puppet` block of a bridged user's reaction. */
+export interface GatewayReactionPuppet {
+  /** The bridge. */
+  bridge_id: Snowflake;
+  /** The bridged user's id on Strafe. */
+  puppet_id: Snowflake;
+  /** The platform. */
+  platform?: string;
+  /** The label to show on their tag ("Discord", "Mastodon"). */
+  platform_name: string;
+  /** Their name. */
+  name: string;
+  /** Their picture (through the media proxy), or `null`. */
+  avatar: string | null;
 }
 
 /** `ROOM_PINS_UPDATE`. */
@@ -605,6 +635,18 @@ export interface GatewayDispatchDataMap {
   CALL_CREATE: APICall;
   CALL_UPDATE: APICall;
   CALL_DELETE: APICall;
+  WEBHOOKS_UPDATE: GatewayWebhooksUpdateData;
+  BRIDGE_CREATE: GatewayBridgeData;
+  BRIDGE_UPDATE: GatewayBridgeData;
+  BRIDGE_DELETE: GatewayBridgeDeleteData;
+  BRIDGE_MESSAGE_CREATE: GatewayBridgeMessageCreateData;
+  BRIDGE_MESSAGE_UPDATE: GatewayBridgeMessageUpdateData;
+  BRIDGE_MESSAGE_DELETE: GatewayBridgeMessageDeleteData;
+  BRIDGE_REACTION_ADD: GatewayBridgeReactionData;
+  BRIDGE_REACTION_REMOVE: GatewayBridgeReactionData;
+  BRIDGE_OPTOUT: GatewayBridgeOptOutData;
+  BRIDGE_PUPPET_BLOCK: GatewayBridgePuppetBlockData;
+  BRIDGE_PUPPET_UNBLOCK: GatewayBridgePuppetBlockData;
 }
 
 /**
@@ -677,6 +719,8 @@ export interface GatewayReadyData {
   voice_states?: APIVoiceState[];
   /** Ongoing PM calls (when voice is configured). */
   calls?: APICall[];
+  /** Bots only: the bridges your application drives, as full objects. Their feed comes on this connection. */
+  bridges?: APIBridge[];
 }
 
 /** READY frame. */

@@ -144,7 +144,7 @@ export class RoleManager extends CachedManager<Snowflake, Role, Role> {
    */
   public async create(options: RoleCreateOptions = {}): Promise<Role> {
     const body: RESTPostAPISpaceRoleJSONBody = { name: options.name ?? 'new role' };
-    if (options.permissions !== undefined) body.permissions = Number(PermissionsBitField.resolve(options.permissions));
+    if (options.permissions !== undefined) body.permissions = PermissionsBitField.toWire(options.permissions);
     if (options.color !== undefined) body.color = resolveColor(options.color);
     if (options.hoist !== undefined) body.hoist = options.hoist;
     if (options.mentionable !== undefined) body.mentionable = options.mentionable;
@@ -164,7 +164,7 @@ export class RoleManager extends CachedManager<Snowflake, Role, Role> {
     const id = this.resolveId(role) ?? '';
     const body: RESTPatchAPISpaceRoleJSONBody = {};
     if (options.name !== undefined) body.name = options.name;
-    if (options.permissions !== undefined) body.permissions = Number(PermissionsBitField.resolve(options.permissions));
+    if (options.permissions !== undefined) body.permissions = PermissionsBitField.toWire(options.permissions);
     if (options.color !== undefined) body.color = resolveColor(options.color);
     if (options.hoist !== undefined) body.hoist = options.hoist;
     if (options.mentionable !== undefined) body.mentionable = options.mentionable;

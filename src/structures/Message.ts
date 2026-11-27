@@ -3,6 +3,7 @@ import { ReactionManager } from '../managers/ReactionManager.js';
 import type { ThreadCreateOptions } from '../managers/ThreadManager.js';
 import { Routes } from '../rest/Routes.js';
 import type { APIMessage, MessageSystemPayloads, MessageSystemType } from '../types/api/message.js';
+import type { APIMasquerade } from '../types/api/webhook.js';
 import { RoomType } from '../types/api/room.js';
 import { Collection } from '../util/Collection.js';
 import { PermissionFlagsBits } from '../util/PermissionsBitField.js';
@@ -23,7 +24,7 @@ import type { SpaceTextBasedRoom, TextBasedRoom } from './rooms/index.js';
 import type { ThreadRoom } from './rooms/ThreadRoom.js';
 import type { Space } from './Space.js';
 import type { SpaceMember } from './SpaceMember.js';
-import type { User } from './User.js';
+import { User } from './User.js';
 
 /** Where a reply points. */
 export interface MessageReference {
@@ -40,6 +41,47 @@ export type MessageSystemData = { [T in MessageSystemType]: { type: T; data: Mes
 
 /** The sender id of system notices. */
 export const SystemSenderId = '0';
+
+/** The bridge of a bridged message ({@link MessageMasquerade.bridge}). External user ids are never part of it. */
+export interface MessageMasqueradeBridge {
+  /** The bridge id. */
+  id: Snowflake;
+  /** The bridge's name. */
+  name: string;
+  /** Its platform (`discord`, `matrix`...). */
+  platform: string;
+  /** An `other` platform's label ("Mastodon"), or `null`. */
+  platformName: string | null;
+  /** The bridged user's id on Strafe: what moderators block. */
+  puppetId: Snowflake;
+  /** Whether the bridged user is a bot on the other platform. */
+  externalBot: boolean;
+  /** Their profile on the other platform, when the bridge shows it. */
+  profileURL: string | null;
+}
+
+/**
+ * The identity a webhook or a bridge posted a message under. It is always visibly a masquerade
+ * (a WEBHOOK or platform tag), and its real sender is one click away.
+ */
+export interface MessageMasquerade {
+  /** `webhook` or `bridge`. */
+  kind: 'webhook' | 'bridge';
+  /** The name it was posted under. */
+  name: string;
+  /** The picture (through the instance's media proxy), or `null`. */
+  avatarURL: string | null;
+  /** A name colour `0xRRGGBB` (bridges that allow it), or `null`. */
+  colour: number | null;
+  /** The bridge, for a bridged message. */
+  bridge: MessageMasqueradeBridge | null;
+  /** The real sender of a bridged message: the bot driving the bridge. */
+  via: User | null;
+  /** The webhook that posted it, for a webhook message. */
+  webhook: { id: Snowflake; name: string } | null;
+  /** A member of the space with the same name ("Not the Strafe account \@alice"), or `null`. */
+  lookalike: { id: Snowflake; username: string } | null;
+}
 
 /**
  * A message. In an end-to-end encrypted room `content` is `null` and {@link Message.encrypted} is
@@ -82,8 +124,17 @@ export class Message<InSpace extends boolean = boolean> extends Base {
   declare public editedTimestamp: number | null;
   /** Reactions. */
   declare public readonly reactions: ReactionManager;
+  /**
+   * The webhook or bridge that posted it, or `null`. Bots that are not bridges should usually skip
+   * such messages (they are copies of messages from elsewhere, or another integration's output).
+   */
+  declare public webhookId: Snowflake | null;
+  /** The name and picture a webhook or bridge posted it under, with its real sender; `null` for ordinary messages. */
+  declare public masquerade: MessageMasquerade | null;
   /** @internal */
   declare public _partial: boolean;
+  /** @internal */
+  declare public _webhookAuthor: User | null;
 
   /**
    * @param client - The client.
@@ -109,13 +160,25 @@ export class Message<InSpace extends boolean = boolean> extends Base {
     this.threadId = null;
     this.createdTimestamp = SnowflakeUtil.timestampFrom(data.id);
     this.editedTimestamp = null;
+    this.webhookId = null;
+    this.masquerade = null;
     this._partial = data.sender_id === undefined;
+    Object.defineProperty(this, '_webhookAuthor', { value: null, enumerable: false, writable: true });
     this._patch(data);
   }
 
   /** @internal */
   public _patch(data: Partial<APIMessage>): void {
-    if (data.sender_id !== undefined) {
+    if (data.webhook_id !== undefined && data.webhook_id !== '') this.webhookId = data.webhook_id;
+    if (data.masquerade !== undefined) this.masquerade = this.resolveMasquerade(data.masquerade);
+    if (data.sender_id !== undefined && this.webhookId !== null) {
+      // A webhook's or bridged user's `author` is not an account: one webhook posts under many
+      // names. It is kept on the message and never put in the user cache.
+      this._partial = false;
+      const author = data.author ?? { id: data.sender_id, username: this.masquerade?.name ?? 'Webhook', bot: true };
+      this.authorId = author.id;
+      this._webhookAuthor = new User(this.client, { ...author, bot: true });
+    } else if (data.sender_id !== undefined) {
       this.authorId = data.sender_id;
       this._partial = false;
       if (data.author) this.client.users._add(data.author);
@@ -171,6 +234,42 @@ export class Message<InSpace extends boolean = boolean> extends Base {
     if (data.reactions !== undefined) this.reactions._setFrom(data.reactions);
   }
 
+  /** @internal */
+  private resolveMasquerade(data: APIMasquerade): MessageMasquerade {
+    const api = this.client.rest.api;
+    const via = data.via !== undefined && !('webhook' in data.via) ? this.client.users._add(data.via) : null;
+    return {
+      kind: data.kind,
+      name: data.name,
+      avatarURL: data.avatar === null || data.avatar === '' ? null : (absoluteURL(data.avatar, api) ?? data.avatar),
+      colour: data.colour ?? null,
+      bridge: data.bridge
+        ? {
+            id: data.bridge.id,
+            name: data.bridge.name,
+            platform: data.bridge.platform,
+            platformName: data.bridge.platform_name,
+            puppetId: data.bridge.puppet_id,
+            externalBot: data.bridge.external_bot,
+            profileURL: data.bridge.profile_url,
+          }
+        : null,
+      via,
+      webhook: data.via !== undefined && 'webhook' in data.via ? { id: data.via.webhook.id, name: data.via.webhook.name } : null,
+      lookalike: data.lookalike ? { id: data.lookalike.id, username: data.lookalike.username } : null,
+    };
+  }
+
+  /** Whether a bridge posted it: a copy of a message from another platform (`masquerade.bridge` says which). */
+  public get isBridged(): boolean {
+    return this.masquerade?.kind === 'bridge';
+  }
+
+  /** Whether a webhook or a bridge posted it (discord.js's `message.webhookId !== null`). */
+  public get isWebhook(): boolean {
+    return this.webhookId !== null;
+  }
+
   /** Whether only the id is known (fetch it: `await message.fetch()`). */
   public get partial(): boolean {
     return this._partial;
@@ -193,15 +292,21 @@ export class Message<InSpace extends boolean = boolean> extends Base {
     return ('space' in room ? room.space : null) as If<InSpace, Space>;
   }
 
-  /** The author (a partial user with only the id when the payload did not include it). */
+  /**
+   * The author (a partial user with only the id when the payload did not include it). For a webhook
+   * or bridged message it is the webhook or bridged user as it posted (`bot: true`, not cached, not
+   * an account); the real sender of a bridged message is `masquerade.via`.
+   */
   public get author(): User {
+    if (this._webhookAuthor !== null) return this._webhookAuthor;
     // A partial message has no author; its type (PartialMessage) says so.
     // eslint-disable-next-line @typescript-eslint/non-nullable-type-assertion-style
     return (this.authorId === null ? null : this.client.users.cache.get(this.authorId)) as User;
   }
 
-  /** The author's member, when cached (member lists are not in READY; fetch them once). */
+  /** The author's member, when cached (member lists are not in READY; fetch them once). `null` for webhook and bridged messages. */
   public get member(): SpaceMember | null {
+    if (this.webhookId !== null) return null;
     return this.authorId === null ? null : (this.space?.members.cache.get(this.authorId) ?? null);
   }
 
@@ -267,9 +372,12 @@ export class Message<InSpace extends boolean = boolean> extends Base {
       .replace(/@(everyone|here)/g, '@​$1');
   }
 
-  /** Whether the client can edit it (its own, readable message). */
+  /**
+   * Whether the client can edit it (its own, readable message). Webhook and bridged messages are
+   * edited through their webhook or bridge instead (`webhook.editMessage()`, `bridge.editMessage()`).
+   */
   public get editable(): boolean {
-    return this.authorId === this.client._userId && !this.system && !this.encrypted;
+    return this.webhookId === null && this.authorId === this.client._userId && !this.system && !this.encrypted;
   }
 
   /**
@@ -277,7 +385,7 @@ export class Message<InSpace extends boolean = boolean> extends Base {
    * Manage Messages. Others' messages in PMs and voice-room chats can never be deleted.
    */
   public get deletable(): boolean {
-    if (this.authorId === this.client._userId) return true;
+    if (this.webhookId === null && this.authorId === this.client._userId) return true;
     const room = this.room;
     if (room.type !== RoomType.SpaceText && room.type !== RoomType.Thread) return false;
     const me = room.space.members.me;
@@ -436,6 +544,7 @@ export class Message<InSpace extends boolean = boolean> extends Base {
       embeds: this.embeds.map((embed) => embed.toJSON()),
       attachments: [...this.attachments.values()].map((a) => a.toJSON()),
       reactions: this.reactions.toJSON(),
+      masquerade: this.masquerade === null ? null : { ...this.masquerade, via: this.masquerade.via?.id ?? null },
     };
   }
 }

@@ -35,6 +35,7 @@ const guide = [
       { text: 'Messages and embeds', link: '/guide/messages' },
       { text: 'Spaces, members and roles', link: '/guide/spaces' },
       { text: 'Permissions', link: '/guide/permissions' },
+      { text: 'Bridging another platform', link: '/guide/bridges' },
     ],
   },
   {

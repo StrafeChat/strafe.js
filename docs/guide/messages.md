@@ -46,7 +46,8 @@ if (room?.isSendable()) await room.send('Still here.');
 ### No allowedMentions
 
 Strafe always notifies whoever the text mentions (`<@id>`, `<@&roleId>`, `@everyone`, `@here`), so
-there is no `allowedMentions` option. Passing one logs a warning. Escape text you did not write:
+there is no `allowedMentions` option on `room.send()`. Passing one logs a warning. (Webhook sends do
+take it: see [Webhooks](#webhooks).) Escape text you did not write:
 
 ```ts
 import { escapeMentions } from '@strafechat/strafe.js';
@@ -181,6 +182,7 @@ rooms return `searchable: false`.
 | `reference` | The replied-to message; `fetchReference()` fetches it. |
 | `system`, `systemData` | System notices and their parsed data. |
 | `pinned`, `createdAt`, `editedAt` | |
+| `webhookId`, `masquerade`, `isBridged` | Set on messages a webhook or a bridge posted. `author` is then the name the message was posted under, never an account, and is not cached. Skip these in a bot that relays messages, or you will loop. |
 
 `cleanContent` replaces mentions with names.
 
@@ -266,3 +268,93 @@ const standalone = await textRoom.threads.create({ name: 'Planning', private: tr
 
 Threads (`ThreadRoom`) live under space text rooms and inherit their permissions. Posting needs Send
 Messages in Threads.
+
+## Webhooks
+
+A webhook posts into one room through a secret token: a CI job, a monitor, a GitHub Action. Its
+messages show the name and avatar the send gave, with a **WEBHOOK** tag. Webhooks live in space text
+rooms and voice-room chats, never in end-to-end encrypted rooms or PMs. Discord tools that post to a
+webhook URL work after changing the host.
+
+### Making and managing them
+
+Creating, listing and editing webhooks needs **Manage Webhooks** in the room. A bot can always
+manage the webhooks it made.
+
+```ts
+const hook = await room.createWebhook({ name: 'CI', avatar: new URL('./ci.png', import.meta.url) });
+console.log(hook.url); // https://chat.example/api/webhooks/<id>/swh_... Store it now.
+
+const hooks = await room.fetchWebhooks(); // also space.fetchWebhooks()
+await hook.edit({ name: 'Builds', massMentions: false });
+await hook.edit({ room: otherRoom });     // move it to another plaintext room of the space
+await hook.resetToken();                  // the old URL stops working at once
+await hook.delete('No longer needed');
+```
+
+The token and URL come back only from `createWebhook()` and `resetToken()`, never from a list or a
+fetch (Discord returns them forever, Strafe does not). If you lose the URL, reset it. A webhook may
+ping `@everyone`, `@here` and roles only when someone with Mention Everyone turns `massMentions` on.
+
+`Events.WebhooksUpdate` fires with the room whenever one of its webhooks is created, edited, moved,
+reset or deleted. Like Discord's, it does not say which.
+
+### Sending
+
+```ts
+const message = await hook.send({
+  content: 'Build #42 passed',
+  username: 'CI (main)',             // this message only
+  avatarURL: 'https://ci.example/logo.png',
+  embeds: [new EmbedBuilder().setTitle('Coverage').setImage('attachment://coverage.png')],
+  files: [new AttachmentBuilder(png, { name: 'coverage.png' })],
+  allowedMentions: { parse: [] },     // nobody is notified
+});
+await hook.editMessage(message, { content: 'Build #42 passed (retried)' });
+await hook.deleteMessage(message);
+```
+
+`send()` waits for the message and returns it; pass `wait: false` to get nothing back. `threadId`
+posts into a thread of the webhook's room. A bot that did not make the webhook needs its token
+(`client.fetchWebhook(id, token)`).
+
+`allowedMentions` works as on Discord: `parse` lists the kinds that notify (`'users'`, `'roles'`,
+`'everyone'`), `users` and `roles` whitelist ids, `repliedUser` controls the reply ping. Leaving it
+out notifies all three kinds, `{}` notifies nobody, and `everyone` and `roles` still need
+`massMentions`.
+
+### Without a bot: WebhookClient
+
+`WebhookClient` needs only the URL or the id and token: no bot token, no login, no gateway.
+
+```ts
+import { WebhookClient } from '@strafechat/strafe.js';
+
+const hook = new WebhookClient({ url: process.env.STRAFE_WEBHOOK_URL! });
+// or: new WebhookClient({ id, token }, { instance: 'chat.example' })
+
+const message = await hook.send({ content: 'Deploy finished', allowedMentions: { parse: [] } });
+await hook.editMessage(message.id, 'Deploy finished in 42 s');
+await hook.edit({ name: 'Deploys' }); // only the name and avatar
+```
+
+It sends the token as an `Authorization: Webhook <token>` header, which keeps it out of URLs and
+proxy logs. Pass `tokenInURL: true` for Discord's form (`POST /webhooks/<id>/<token>`). Answers are
+wire objects (`APIMessage`, `APIWebhook`), since there is no cache to put a structure in. Treat the
+URL like a password: anyone holding it can post, edit and delete the webhook's messages, rename the
+webhook or delete it.
+
+### Errors and limits
+
+Webhook failures are `WebhookAPIError`s (a `StrafeAPIError`) with a string `code`:
+`invalid_webhook_token`, `unknown_webhook`, `invalid_name` (with `reason`), `invalid_allowed_mentions`,
+`webhook_limit` (with `max`), `room_encrypted`, `missing_permissions` (with `permission`). A room has
+at most 15 webhooks, and each webhook sends at most 5 messages per 2 seconds. Its `429`s wait in that
+webhook's own queue, so one busy webhook does not hold back the others.
+
+### Messages from webhooks
+
+Every message a webhook or a bridge posted has `message.webhookId`; `message.masquerade` holds the
+name and avatar it was posted under, and `message.isBridged` says whether a bridge sent it.
+`message.author` is that name, not an account: it is never put in `client.users`. A bot that relays
+or answers messages should skip these, or two bots can loop.

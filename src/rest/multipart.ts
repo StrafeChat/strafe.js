@@ -55,8 +55,9 @@ function formField(value: unknown): string {
 }
 
 /**
- * `JSON.stringify` replacer that writes bigints as JSON numbers (Strafe's wire type for permission
- * bits). Refuses values above `Number.MAX_SAFE_INTEGER` rather than silently losing precision.
+ * `JSON.stringify` replacer that writes bigints as decimal strings: Strafe's full form for
+ * permission writes (a JSON number there is the legacy 31-bit form, which drops bit 31 and up).
+ * Refuses values outside `Number.MAX_SAFE_INTEGER`, which no permission value reaches.
  *
  * @param _key - Property name.
  * @param value - Property value.
@@ -64,7 +65,7 @@ function formField(value: unknown): string {
 export function bigintReplacer(_key: string, value: unknown): unknown {
   if (typeof value !== 'bigint') return value;
   if (value > BigInt(Number.MAX_SAFE_INTEGER) || value < BigInt(Number.MIN_SAFE_INTEGER)) {
-    throw new RangeError(`${value} does not fit in a JSON number`);
+    throw new RangeError(`${value} is out of range for a Strafe value`);
   }
-  return Number(value);
+  return value.toString();
 }

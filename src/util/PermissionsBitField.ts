@@ -5,6 +5,10 @@ import type { Snowflake } from './Snowflake.js';
  * Strafe's permission bits (`equinox/internal/modules/permissions/bits.go`). The values differ from
  * Discord's (Send Messages is `1n << 1n` here), and some names use Strafe's nouns: `ViewRoom`,
  * `ManageRooms`, `ManageSpace`, `CreateInvite`, `ManageEmojis`, `Video`. Bits are append-only.
+ *
+ * Bits 31 and up (`ManageWebhooks`, `Masquerade`) do not fit 32-bit maths, which is why the library
+ * writes permission values as decimal strings (the server's full form; a JSON number is read as the
+ * legacy 31-bit form and keeps the stored bits above 30).
  */
 export const PermissionFlagsBits = {
   /** See the room and its messages exist (room). */
@@ -69,6 +73,17 @@ export const PermissionFlagsBits = {
   ManageNicknames: 1n << 29n,
   /** Send embeds, and have links previewed (room). */
   EmbedLinks: 1n << 30n,
+  /**
+   * Create, edit, move and delete the room's webhooks, reset their URLs, and manage its bridges'
+   * settings (room). Executing a webhook needs only its token. Discord's `ManageWebhooks`.
+   */
+  ManageWebhooks: 1n << 31n,
+  /**
+   * Run a bridge: post as people from another platform, each message tagged with its platform and
+   * its real sender (room). It exists only through bridges, never on an ordinary message, and is
+   * dropped without Send Messages. Creating a bridge needs it together with Manage Webhooks.
+   */
+  Masquerade: 1n << 32n,
 } as const;
 
 /** A permission flag name. */
@@ -95,7 +110,9 @@ const ALL_ROOM =
   F.AttachFiles |
   ALL_THREADS |
   ALL_VOICE |
-  F.EmbedLinks;
+  F.EmbedLinks |
+  F.ManageWebhooks |
+  F.Masquerade;
 /** Every bit. */
 const ALL_SPACE =
   ALL_ROOM |
@@ -131,8 +148,9 @@ const DEFAULT_EVERYONE =
  * A set of permissions: a `bigint` inside, Strafe's {@link PermissionFlagsBits}, and Administrator
  * counted as every permission by `has` / `any` / `missing` unless you pass `checkAdmin = false`.
  *
- * Strafe sends and accepts permissions as JSON numbers; `toJSON()` returns one, and the REST
- * client converts bigints in bodies for you.
+ * Strafe sends permissions as JSON numbers (exact below 2^53) and takes writes as decimal strings:
+ * `toJSON()` returns a number for reading, {@link PermissionsBitField.toWire} the string a write
+ * sends, and the REST client writes every bigint in a body as such a string for you.
  *
  * @remarks
  * Coming from discord.js: the counterpart of its `PermissionsBitField`, with Strafe's bit values.
@@ -245,6 +263,23 @@ export class PermissionsBitField extends BitField<PermissionsString, bigint> {
   }
 
   /**
+   * The value as a write sends it: a decimal string, the server's full form. A JSON number would be
+   * read as the legacy 31-bit form, losing `ManageWebhooks`, `Masquerade` and any later bit.
+   */
+  public toWire(): string {
+    return this.bitfield.toString();
+  }
+
+  /**
+   * Turns a resolvable into the decimal string a permission write sends.
+   *
+   * @param permission - Names, bigints, wire numbers or strings, arrays of those.
+   */
+  public static toWire(permission: PermissionResolvable): string {
+    return PermissionsBitField.resolve(permission).toString();
+  }
+
+  /**
    * Turns a resolvable (names, bigints, wire numbers, numeric strings, arrays) into a bigint.
    *
    * @param permission - What to resolve.
@@ -346,8 +381,8 @@ export function computeSpacePermissions(space: PermissionSpaceData, member: Perm
  * 2. Otherwise start from `@everyone` plus the member's roles, then apply the effective overrides
  *    (a thread uses its room's, a synced room its section's): the `@everyone` override, then all of
  *    the member's role overrides together (deny, then allow), then the member's own override.
- * 3. Without View Room nothing is held; without Send Messages, Attach Files, Embed Links and
- *    Mention Everyone are dropped.
+ * 3. Without View Room nothing is held; without Send Messages, Attach Files, Embed Links,
+ *    Mention Everyone and Masquerade are dropped.
  * 4. A private thread is invisible to anyone who has not joined it and lacks Manage Threads.
  *
  * @param space - Owner, `@everyone` role id and role permissions.
@@ -378,7 +413,7 @@ export function computeRoomPermissions(space: PermissionSpaceData, room: Permiss
   if (own) perms = (perms & ~big(own.deny)) | big(own.allow);
 
   if ((perms & F.ViewRoom) === 0n) perms = 0n;
-  else if ((perms & F.SendMessages) === 0n) perms &= ~(F.AttachFiles | F.MentionEveryone | F.EmbedLinks);
+  else if ((perms & F.SendMessages) === 0n) perms &= ~(F.AttachFiles | F.MentionEveryone | F.EmbedLinks | F.Masquerade);
 
   if (room.type === 6 && room.privateThread === true && (perms & F.ManageThreads) === 0n && member.isThreadMember !== true) {
     return 0n;

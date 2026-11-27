@@ -7,6 +7,9 @@ import type { MessageReaction } from '../structures/MessageReaction.js';
 import type { Presence } from '../structures/Presence.js';
 import type { Role } from '../structures/Role.js';
 import type { AnyRoom, TextBasedRoom } from '../structures/rooms/index.js';
+import type { TextRoom } from '../structures/rooms/TextRoom.js';
+import type { VoiceRoom } from '../structures/rooms/VoiceRoom.js';
+import type { Bridge, BridgeExternalMessage } from '../structures/Bridge.js';
 import type { ThreadRoom } from '../structures/rooms/ThreadRoom.js';
 import type { Space } from '../structures/Space.js';
 import type { SpaceMember } from '../structures/SpaceMember.js';
@@ -96,6 +99,30 @@ export enum Events {
   UserUpdate = 'userUpdate',
   /** Someone's voice state changed. */
   VoiceStateUpdate = 'voiceStateUpdate',
+  /** A room's webhooks changed (created, edited, moved, reset or deleted): refetch them if you show them. */
+  WebhooksUpdate = 'webhooksUpdate',
+  /** A room was bridged with another platform (any bridge in a room the client can see). */
+  BridgeCreate = 'bridgeCreate',
+  /** A bridge changed: paused, resumed, disabled, renamed, settings. */
+  BridgeUpdate = 'bridgeUpdate',
+  /** A bridge was removed. */
+  BridgeDelete = 'bridgeDelete',
+  /** Bridge feed: a message to copy to the platform (already filtered by consent, loops and settings). */
+  BridgeMessageCreate = 'bridgeMessageCreate',
+  /** Bridge feed: a message was edited, with where the bridge copied it. */
+  BridgeMessageUpdate = 'bridgeMessageUpdate',
+  /** Bridge feed: a message with a copy (or one the bridge posted) was deleted. */
+  BridgeMessageDelete = 'bridgeMessageDelete',
+  /** Bridge feed: someone reacted to a message. */
+  BridgeReactionAdd = 'bridgeReactionAdd',
+  /** Bridge feed: someone removed a reaction. */
+  BridgeReactionRemove = 'bridgeReactionRemove',
+  /** Bridge feed: someone said no to bridges; delete the copies of their messages. */
+  BridgeOptOut = 'bridgeOptOut',
+  /** Bridge feed: a moderator blocked a bridged user. */
+  BridgePuppetBlock = 'bridgePuppetBlock',
+  /** Bridge feed: a moderator unblocked a bridged user. */
+  BridgePuppetUnblock = 'bridgePuppetUnblock',
   /** Every gateway frame, raw. */
   Raw = 'raw',
   /** Diagnostic messages. */
@@ -114,6 +141,62 @@ export interface RoomPinsUpdateDetails {
   pinned: boolean;
   /** Who did it. */
   userId: Snowflake;
+}
+
+/** What every bridge feed event says besides its message: the bridge. */
+export interface BridgeEventDetails {
+  /** The bridge (from `client.bridges`). */
+  bridge: Bridge;
+}
+
+/** `bridgeMessageCreate`'s details. */
+export interface BridgeMessageCreateDetails extends BridgeEventDetails {
+  /** The copy of the message it answers, when the bridge has one: reply to that on the platform. */
+  replyExternal: BridgeExternalMessage | null;
+}
+
+/** `bridgeMessageUpdate`'s details. */
+export interface BridgeMessageUpdateDetails extends BridgeMessageCreateDetails {
+  /** Where the bridge copied the message: edit these on the platform. */
+  external: BridgeExternalMessage[];
+}
+
+/** `bridgeMessageDelete`'s details. */
+export interface BridgeMessageDeleteDetails extends BridgeEventDetails {
+  /** Where the bridge copied the message (or, for one it posted, its original): delete these on the platform. */
+  external: BridgeExternalMessage[];
+  /** A moderator deleted it (for a message the bridge posted: anyone but the bridge's bot). */
+  byModerator: boolean;
+}
+
+/** `bridgeReactionAdd` / `bridgeReactionRemove`'s details. */
+export interface BridgeReactionDetails extends BridgeEventDetails {
+  /** The message (a partial one when not cached). */
+  message: Message | PartialMessage;
+  /** A unicode emoji, or `custom:<id>`. */
+  emoji: string;
+  /** Who reacted: a person or a bot, or another bridge's bridged user (then `puppet` is set). */
+  user: User;
+  /** Set when the reactor is another bridge's bridged user. */
+  puppet: { bridgeId: Snowflake; puppetId: Snowflake; platform: string; platformName: string } | null;
+  /** Where the bridge copied the message: react there. */
+  external: BridgeExternalMessage[];
+}
+
+/** `bridgeOptOut`'s details. */
+export interface BridgeOptOutDetails extends BridgeEventDetails {
+  /** Who said no (the bridge never gets a list of who did, only this, to delete copies). */
+  userId: Snowflake;
+  /** The copies of their messages the bridge made: delete them on the platform. */
+  external: (BridgeExternalMessage & { messageId: Snowflake })[];
+}
+
+/** `bridgePuppetBlock` / `bridgePuppetUnblock`'s details. */
+export interface BridgePuppetBlockDetails extends BridgeEventDetails {
+  /** The bridged user's id on Strafe. */
+  puppetId: Snowflake;
+  /** Their id on the other platform: tell them there. */
+  externalUserId: string;
 }
 
 /**
@@ -198,6 +281,30 @@ export interface ClientEvents {
   userUpdate: [oldUser: User, newUser: User];
   /** Voice state changed. */
   voiceStateUpdate: [oldState: VoiceState, newState: VoiceState];
+  /** A room's webhooks changed. */
+  webhooksUpdate: [room: TextRoom | VoiceRoom];
+  /** A room was bridged. */
+  bridgeCreate: [bridge: Bridge];
+  /** A bridge changed: the copy before, and after. */
+  bridgeUpdate: [oldBridge: Bridge, newBridge: Bridge];
+  /** A bridge was removed. */
+  bridgeDelete: [bridge: Bridge];
+  /** Bridge feed: copy this message. */
+  bridgeMessageCreate: [message: Message, details: BridgeMessageCreateDetails];
+  /** Bridge feed: a copied message was edited. */
+  bridgeMessageUpdate: [message: Message, details: BridgeMessageUpdateDetails];
+  /** Bridge feed: a message was deleted (partial when it was not cached). */
+  bridgeMessageDelete: [message: Message | PartialMessage, details: BridgeMessageDeleteDetails];
+  /** Bridge feed: a reaction was added. */
+  bridgeReactionAdd: [details: BridgeReactionDetails];
+  /** Bridge feed: a reaction was removed. */
+  bridgeReactionRemove: [details: BridgeReactionDetails];
+  /** Bridge feed: someone opted out. */
+  bridgeOptOut: [details: BridgeOptOutDetails];
+  /** Bridge feed: a bridged user was blocked. */
+  bridgePuppetBlock: [details: BridgePuppetBlockDetails];
+  /** Bridge feed: a bridged user was unblocked. */
+  bridgePuppetUnblock: [details: BridgePuppetBlockDetails];
   /** A raw gateway frame. */
   raw: [packet: unknown];
   /** Diagnostics. */

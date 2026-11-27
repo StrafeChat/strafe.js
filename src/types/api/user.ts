@@ -63,6 +63,8 @@ export interface APIUser {
   origin_id?: Snowflake;
   /** Accent color (`#rrggbb` or `""`), in some payloads. */
   accent_color?: string;
+  /** Set on the `author` of a webhook or bridged message: not an account. */
+  webhook?: boolean;
 }
 
 /** The current account (`GET /users/@me`). */

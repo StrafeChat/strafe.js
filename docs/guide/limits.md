@@ -26,8 +26,8 @@ A group PM with encryption turned off works like any plain room.
 | Gateway intents, `partials` | Not needed. A bot gets every event about what it can see; uncached objects arrive as [partial objects](./events.md#partial-objects). Passing either emits a warning. |
 | Sharding, `ShardingManager`, `shards` | Not needed. One connection carries everything. |
 | Slash commands, context menus, buttons, select menus, modals | Use message commands (`!help`) and reactions. |
-| Webhooks | A bot can post where it has permission. |
-| `allowedMentions` | Every mention notifies. Use `escapeMentions()` on text you did not write. Passing the option emits a warning. |
+| Outgoing webhooks, followed announcements | Only incoming webhooks exist ([Webhooks](./messages.md#webhooks)). A webhook token is never returned by a list or a fetch, only by create and `resetToken()`. |
+| `allowedMentions` (outside webhook sends) | Every mention notifies. Use `escapeMentions()` on text you did not write. Passing the option emits a warning. |
 | Joining voice (`@discordjs/voice`) | Calls are end-to-end encrypted. A bot can see voice states and move, mute or disconnect people. |
 | Session resume | Every reconnect is a fresh `READY` ([Reconnects](./events.md#reconnects)). |
 | `client.users.fetch(id)` | Only the bot's own user. `space.members.fetch(id)` brings a member's user along. |

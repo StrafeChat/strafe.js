@@ -49,6 +49,15 @@ There are no intents. The bot receives every event about the spaces, rooms and t
 | `PresenceUpdate` | `oldPresence \| null`, `newPresence` | Status or activity changed |
 | `UserUpdate` | `oldUser`, `newUser` | A profile changed |
 | `VoiceStateUpdate` | `oldState`, `newState` | Someone joined, left, moved or was muted in voice |
+| `WebhooksUpdate` | `room` | Something about the room's webhooks changed: refetch with `room.fetchWebhooks()` |
+| `BridgeCreate`, `BridgeDelete` | `bridge` | A room was bridged, or a bridge was removed |
+| `BridgeUpdate` | `oldBridge`, `newBridge` | A bridge was paused, resumed, disabled or changed |
+| `BridgeMessageCreate` | `message`, `details` | Bridge feed: copy this message ([Bridges](./bridges.md#the-feed)) |
+| `BridgeMessageUpdate` | `message`, `details` | Bridge feed: edit its copies (`details.external`) |
+| `BridgeMessageDelete` | `message`, `details` | Bridge feed: delete its copies |
+| `BridgeReactionAdd`, `BridgeReactionRemove` | `details` | Bridge feed: someone reacted to a message with copies |
+| `BridgeOptOut` | `details` | Bridge feed: someone said no to bridges; delete their copies |
+| `BridgePuppetBlock`, `BridgePuppetUnblock` | `details` | Bridge feed: a moderator blocked or unblocked a bridged user |
 | `Raw` | `packet` | Every gateway frame |
 | `Debug` | `message: string` | Diagnostics |
 | `Warn` | `message: string` | A non-fatal problem, such as a gateway error frame or an unsupported option |

@@ -46,6 +46,13 @@ builders and method names. The vocabulary changes, and a few options go away.
 | `OAuth2Scopes.Guilds`, `GuildsJoin` | `OAuth2Scopes.Spaces`, `SpacesJoin` | |
 | `DiscordAPIError`, `DiscordjsError`, `RESTJSONErrorCodes` | `StrafeAPIError`, `StrafeError`, `APIErrorCodes` | Codes are string slugs; most errors have none |
 | `SnowflakeUtil` | `SnowflakeUtil` | Strafe's epoch is 1288834974657 |
+| `channel.createWebhook({ name, avatar })`, `fetchWebhooks()`, `guild.fetchWebhooks()` | `room.createWebhook()`, `room.fetchWebhooks()`, `space.fetchWebhooks()` | Text and voice rooms, never encrypted ones. The token comes back only from create and `resetToken()` ([Webhooks](./messages.md#webhooks)) |
+| `Webhook`, `webhook.send()`, `editMessage()`, `deleteMessage()`, `fetchMessage()` | the same | `send()` waits for the message by default |
+| `new WebhookClient({ id, token })`, `new WebhookClient({ url })` | the same | Sends `Authorization: Webhook <token>` instead of putting the token in the path (`tokenInURL: true` for Discord's form). Answers are wire objects |
+| `client.fetchWebhook(id, token)` | the same | |
+| `message.webhookId` | `message.webhookId` | Plus `message.masquerade` and `message.isBridged` |
+| `allowedMentions` on webhook sends | the same (`parse`, `users`, `roles`, `repliedUser`) | `@everyone` and roles notify only when the webhook has `massMentions` |
+| Bridge bots built on webhooks (one webhook per channel, a database of message ids) | `room.createBridge()`, `bridge.send()`, `client.bridges` | The server keeps the id map, consent and loop prevention ([Bridges](./bridges.md)) |
 
 ## Events
 
@@ -60,7 +67,9 @@ builders and method names. The vocabulary changes, and a few options go away.
 | `Events.ChannelPinsUpdate` | `Events.RoomPinsUpdate` (with the message id and who did it) |
 | `Events.ShardReady`, `ShardReconnecting`, `ShardResume` | `Events.GatewayReady`, `Reconnecting`, `Reconnected` |
 | `Events.Invalidated` | `Events.Invalidated` (the session was revoked) |
-| `Events.GuildBanAdd`, `GuildBanRemove`, `InviteCreate`, `InteractionCreate`, `WebhooksUpdate`... | none |
+| `Events.WebhooksUpdate` | `Events.WebhooksUpdate` (`'webhooksUpdate'`, with the room) |
+| none | `Events.BridgeCreate`, `BridgeUpdate`, `BridgeDelete`, and the bridge feed: `BridgeMessageCreate`, `BridgeMessageUpdate`, `BridgeMessageDelete`, `BridgeReactionAdd`, `BridgeReactionRemove`, `BridgeOptOut`, `BridgePuppetBlock`, `BridgePuppetUnblock` ([Bridges](./bridges.md#the-feed)) |
+| `Events.GuildBanAdd`, `GuildBanRemove`, `InviteCreate`, `InteractionCreate`... | none |
 
 Unchanged: `MessageCreate`, `MessageUpdate`, `MessageDelete`,
 `MessageReactionAdd`, `MessageReactionRemove`, `TypingStart`, `ThreadCreate`, `ThreadUpdate`,
@@ -80,13 +89,16 @@ The bit values differ from Discord's. Always use `PermissionFlagsBits`.
 | `ManageGuildExpressions`, `ManageEmojisAndStickers` | `ManageEmojis` |
 | `Stream` | `Video` (camera and screen) |
 | `SendMessagesInThreads`, `ManageThreads`, `CreatePublicThreads`, `CreatePrivateThreads` | the same |
-| `ViewAuditLog`, `ManageWebhooks`, `ModerateMembers`, `UseApplicationCommands`, `SendTTSMessages`, `ManageEvents` | none |
+| `ManageWebhooks` | `ManageWebhooks` (`1n << 31n`) |
+| none | `Masquerade` (`1n << 32n`): run a bridge |
+| `ViewAuditLog`, `ModerateMembers`, `UseApplicationCommands`, `SendTTSMessages`, `ManageEvents` | none |
 
 Unchanged: `SendMessages`, `ReadMessageHistory`, `AddReactions`, `UseExternalEmojis`,
 `MentionEveryone`, `ManageMessages`, `ManageRoles`, `KickMembers`, `BanMembers`, `Administrator`,
 `Connect`, `Speak`, `MuteMembers`, `DeafenMembers`, `MoveMembers`, `UseVAD`, `PrioritySpeaker`,
 `AttachFiles`, `ChangeNickname`, `ManageNicknames`, `EmbedLinks`. Role hierarchy follows Discord's
-([Permissions](./permissions.md)).
+([Permissions](./permissions.md)). Bits 31 and up are written as decimal strings
+([Bits past 30](./permissions.md#bits-past-30)).
 
 ## Options you can drop
 
@@ -102,12 +114,12 @@ const client = new Client({ instance: 'app.strafe.chat' });
 ```
 
 Intents, partials and sharding are not needed: a bot gets every event it can see, uncached objects
-arrive as partials, and one connection carries everything. `allowedMentions` does not exist; use
-`escapeMentions()`. Passing any of these emits a warning.
+arrive as partials, and one connection carries everything. `allowedMentions` exists only on webhook
+sends; elsewhere use `escapeMentions()`. Passing any of these to the client emits a warning.
 
 ## What does not exist
 
-No interactions (slash commands, buttons, menus, modals), webhooks, stickers, polls, scheduled
+No interactions (slash commands, buttons, menus, modals), outgoing webhooks, followed announcements, stickers, polls, scheduled
 events, stage or forum rooms, crossposting or voice joining. A bot cannot send a PM, and
 `client.users.fetch()` only finds the bot itself. See [Limits and differences](./limits.md).
 

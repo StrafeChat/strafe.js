@@ -67,7 +67,7 @@ export class PermissionOverwriteManager extends CachedManager<Snowflake, Permiss
   private async write(id: Snowflake, type: OverwriteType, allow: bigint, deny: bigint): Promise<PermissionOverwrites> {
     const { space } = this.room;
     const route = type === OverwriteType.Role ? Routes.spaceRoomOverride(space.id, this.room.id, id) : Routes.spaceRoomUserOverride(space.id, this.room.id, id);
-    await this.client.rest.put(route, { body: { allow, deny } });
+    await this.client.rest.put(route, { body: { allow: allow.toString(), deny: deny.toString() } });
     const now = new Date().toISOString();
     const data =
       type === OverwriteType.Role

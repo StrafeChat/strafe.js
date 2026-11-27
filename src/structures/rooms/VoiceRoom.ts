@@ -12,6 +12,8 @@ import type { SpaceMember } from '../SpaceMember.js';
 import type { APIRoomLike } from './BaseRoom.js';
 import { BaseSpaceRoom } from './BaseSpaceRoom.js';
 import { bulkDelete, sendMessage, sendTyping } from './TextBased.js';
+import type { Webhook, WebhookCreateOptions } from '../Webhook.js';
+import { createWebhook, fetchWebhooks } from './webhooks.js';
 
 /**
  * A space voice room (`RoomType.SpaceVoice`). It also has a text chat. Bots can read voice states
@@ -52,6 +54,21 @@ export class VoiceRoom extends BaseSpaceRoom {
     if (data.bitrate !== undefined) this.bitrate = data.bitrate;
     if (data.slowmode_seconds !== undefined) this.rateLimitPerUser = data.slowmode_seconds;
     if (data.last_message_id !== undefined) this.lastMessageId = data.last_message_id;
+  }
+
+  /**
+   * Creates a webhook posting into the room's chat (Manage Webhooks). The answer is the only time
+   * its token and URL are shown: store them.
+   *
+   * @param options - Name, avatar, mass mentions, reason.
+   */
+  public createWebhook(options: WebhookCreateOptions): Promise<Webhook> {
+    return createWebhook(this, options);
+  }
+
+  /** Fetches the room's webhooks (Manage Webhooks). Lists never carry tokens. */
+  public fetchWebhooks(): Promise<Collection<Snowflake, Webhook>> {
+    return fetchWebhooks(this);
   }
 
   /** Members connected to the room (from cached voice states and members). */

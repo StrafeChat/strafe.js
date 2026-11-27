@@ -1,6 +1,7 @@
 import type { Snowflake } from '../../util/Snowflake.js';
 import type { APIFederationRef, ISO8601Timestamp } from './common.js';
 import type { APIParticipant } from './user.js';
+import type { APIBridgeSummary } from './bridge.js';
 
 /** Room types (`type` on every room). */
 export enum RoomType {
@@ -125,6 +126,8 @@ export interface APISpaceRoom {
   room_id?: Snowflake;
   /** `THREAD_CREATE` broadcasts set this on a brand-new thread. */
   newly_created?: boolean;
+  /** What a text room is bridged with (left out when nothing): everyone who can view it may know. */
+  bridges?: APIBridgeSummary[];
 }
 
 /**

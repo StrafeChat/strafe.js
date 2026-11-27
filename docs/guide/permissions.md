@@ -31,7 +31,7 @@ and `AllThreads` are the bits valid in room overrides, voice and threads.
 | Flag | Value | Notes |
 | --- | --- | --- |
 | `ViewRoom` | `1 << 0` | Required for anything else in the room |
-| `SendMessages` | `1 << 1` | Required for Attach Files, Embed Links, Mention Everyone |
+| `SendMessages` | `1 << 1` | Required for Attach Files, Embed Links, Mention Everyone, Masquerade |
 | `ReadMessageHistory` | `1 << 2` | |
 | `AddReactions` | `1 << 3` | New reactions only |
 | `UseExternalEmojis` | `1 << 4` | |
@@ -61,8 +61,25 @@ and `AllThreads` are the bits valid in room overrides, voice and threads.
 | `ChangeNickname` | `1 << 28` | |
 | `ManageNicknames` | `1 << 29` | Includes space profiles |
 | `EmbedLinks` | `1 << 30` | Bot embeds |
+| `ManageWebhooks` | `1 << 31` | Webhooks and bridge settings ([Webhooks](./messages.md#webhooks)) |
+| `Masquerade` | `1 << 32` | Run a bridge; dropped without Send Messages ([Bridges](./bridges.md)) |
 
-There is no View Audit Log, Manage Webhooks or Moderate Members.
+There is no View Audit Log or Moderate Members.
+
+### Bits past 30
+
+`ManageWebhooks` and `Masquerade` do not fit in 32 bits, so the library writes permission values
+as decimal strings (`'6442450944'`), the server's full form. A JSON number is read by the server as
+the legacy 31-bit form, which keeps the stored bits above 30 untouched. Values you read are still
+numbers. When you build a request body yourself, use `PermissionsBitField.toWire()`:
+
+```ts
+PermissionsBitField.toWire(['ManageWebhooks', 'Masquerade']); // '6442450944'
+new PermissionsBitField('ManageWebhooks').toWire();           // '2147483648'
+```
+
+Role edits, role creation and room overrides already send strings. The REST client writes any
+`bigint` in a body as a string too.
 
 ## A member's permissions
 

@@ -93,6 +93,13 @@ export enum ErrorCodes {
   OAuth2CodeMissing = 'OAuth2CodeMissing',
   /** An invite code or link could not be read. */
   InviteInvalid = 'InviteInvalid',
+
+  /** A webhook URL could not be read (expected `https://<instance>/api/webhooks/<id>/<token>`). */
+  WebhookURLInvalid = 'WebhookURLInvalid',
+  /** Executing a webhook needs its token (only create and token resets return it), or the bot that made it. */
+  WebhookTokenMissing = 'WebhookTokenMissing',
+  /** A bridge send needs `externalUser` (`id` and `name`) and `externalMessageId`. */
+  BridgeSendInvalid = 'BridgeSendInvalid',
 }
 
 /** A message, or a function that builds one from an error's arguments. */
@@ -150,6 +157,11 @@ export const ErrorMessages: Record<ErrorCodes, MessageFormatter> = {
   [ErrorCodes.OAuth2StateMismatch]: 'The OAuth2 state does not match the one this login started with; the redirect was forged or is stale.',
   [ErrorCodes.OAuth2CodeMissing]: 'The OAuth2 redirect has no code.',
   [ErrorCodes.InviteInvalid]: (input: string) => `"${input}" is not an invite code (code, code@domain) or invite link.`,
+  [ErrorCodes.WebhookURLInvalid]: (input: string) =>
+    `"${input}" is not a webhook URL (expected https://<instance>/api/webhooks/<id>/<token>, as create and token resets return it).`,
+  [ErrorCodes.WebhookTokenMissing]:
+    'This webhook has no token here: only create and token resets return it. Keep the token (or URL) you got then, reset it, or execute it as the bot that made it.',
+  [ErrorCodes.BridgeSendInvalid]: (detail: string) => `Invalid bridge send: ${detail}.`,
 };
 
 function formatValue(value: unknown): string {

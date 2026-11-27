@@ -1,5 +1,5 @@
 import type { Snowflake } from '../../util/Snowflake.js';
-import type { APIPresence, ISO8601Timestamp, PresenceStatus } from './common.js';
+import type { APIPermissionsWrite, APIPresence, ISO8601Timestamp, PresenceStatus } from './common.js';
 import type { APIEmbed, APIMessage, APIPin, APIReactionSummary } from './message.js';
 import type { APISpaceRoom } from './room.js';
 import type { APICall, APIVoiceState } from './voice.js';
@@ -163,8 +163,11 @@ export interface RESTPatchAPISpaceJSONBody {
 export interface RESTPostAPISpaceRoleJSONBody {
   /** Name. */
   name: string;
-  /** Permission bits as a JSON NUMBER. */
-  permissions?: number;
+  /**
+   * Permission bits: a decimal string (the full value, every bit) or, for old callers, a JSON number
+   * (the legacy 31-bit form: the server keeps the stored bits 31 and up).
+   */
+  permissions?: APIPermissionsWrite;
   /** `0xRRGGBB`. */
   color?: number;
   /** List separately. */
@@ -238,10 +241,10 @@ export interface RESTPostAPISpaceRoomsMoveJSONBody {
 
 /** `PUT .../overrides/:roleId` and `.../overrides/users/:userId`. */
 export interface RESTPutAPIRoomOverwriteJSONBody {
-  /** Bits granted, as a JSON NUMBER. */
-  allow: number;
-  /** Bits refused, as a JSON NUMBER. */
-  deny: number;
+  /** Bits granted ({@link APIPermissionsWrite}: a decimal string, or the legacy 31-bit number). */
+  allow: APIPermissionsWrite;
+  /** Bits refused ({@link APIPermissionsWrite}). */
+  deny: APIPermissionsWrite;
 }
 
 /** `POST /spaces/:id/invites`. */

@@ -214,13 +214,13 @@ describe('space managers', () => {
     expect(space.bans.cache.has('700')).toBe(false);
   });
 
-  it('creates and edits roles with numeric permissions', async () => {
+  it('creates and edits roles, writing permissions as strings', async () => {
     const { api, space } = setup();
-    api.on('POST /spaces/:id/roles', (call: { body: { name: string; permissions: number; color: number } }) => role('3000000000000000010', 1, call.body.permissions, { name: call.body.name, color: call.body.color }));
+    api.on('POST /spaces/:id/roles', (call: { body: { name: string; permissions: string; color: number } }) => role('3000000000000000010', 1, Number(call.body.permissions), { name: call.body.name, color: call.body.color }));
     api.on('PATCH /spaces/:id/roles/:id', (call: { body: { position: number } }) => role('3000000000000000010', call.body.position, 64));
     const created = await space.roles.create({ name: 'Helpers', color: 'Blue', permissions: [P.ManageMessages, 'AddReactions'], position: 2 });
     const post = api.calls.find((c) => c.method === 'POST')!;
-    expect(post.body).toEqual({ name: 'Helpers', permissions: 72, color: 0x3498db });
+    expect(post.body).toEqual({ name: 'Helpers', permissions: '72', color: 0x3498db });
     expect(created.position).toBe(2);
     expect(space.roles.cache.get(created.id)).toBe(created);
   });
@@ -245,9 +245,9 @@ describe('space managers', () => {
       `PUT /spaces/${SPACE_ID}/rooms/${room.id}/overrides/${EVERYONE_ID}`,
     ]);
     expect(api.calls[0]!.body).toEqual({ name: 'news', type: 3, parent_id: SECTION_ID });
-    expect(api.calls[2]!.body).toEqual({ allow: 0, deny: 2 });
+    expect(api.calls[2]!.body).toEqual({ allow: '0', deny: '2' });
     await room.permissionOverwrites.edit(EVERYONE_ID, { AddReactions: false });
-    expect(api.last().body).toEqual({ allow: 0, deny: 10 });
+    expect(api.last().body).toEqual({ allow: '0', deny: '10' });
 
     await room.setPosition(0);
     expect(api.last().body).toEqual({ scope: 'channels', parent_section_id: SECTION_ID, room_ids: [room.id, TEXT_ID, VOICE_ID] }); // terms-ok: wire value
